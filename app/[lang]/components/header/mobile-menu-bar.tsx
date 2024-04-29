@@ -26,7 +26,7 @@ export default function MobileNavigationBar() {
         <SheetHeader>
           <SheetTitle>Edit profile</SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. Click save when you're done.
+            {" Make changes to your profile here. Click save when you're done."}
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4"></div>
