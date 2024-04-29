@@ -1,0 +1,44 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model University {
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  origin           String?
+  overViewMsgGoals String?
+  titles           Title[]
+}
+
+model Title {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  index        Int         @default(0)
+  Title        String?
+  images       String[]
+  description  String?
+  Univeristy   University? @relation(fields: [univeristyId], references: [id])
+  univeristyId String?     @db.ObjectId
+}
+
+model Static {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  index   Int     @default(0)
+  Title   String?
+  content Int?
+}
+
+model List {
+  id    String  @id @default(auto()) @map("_id") @db.ObjectId
+  title String?
+}
+
+model ListItem {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  title   String?
+  images  String?
+  content String?
+}

@@ -1,0 +1,20 @@
+{
+  "language": {
+    "name": "english",
+    "symbol": "en",
+    "direction": "ltr",
+    "link": "'/en'"
+  },
+  "server-component": {
+    "welcome": "Welcome"
+  },
+  "counter": {
+    "increment": "Increment",
+    "decrement": "Decrement"
+  },
+  "content": {
+    "home": {
+      "title": "home page"
+    }
+  }
+}
