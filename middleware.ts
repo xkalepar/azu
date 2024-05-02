@@ -39,9 +39,9 @@ export function middleware(request: NextRequest) {
   //   return
 
   // Check if there is any supported locale in the pathname
-  const pathnameIsMissingLocale = i18n.locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
-  );
+  const pathnameIsMissingLocale = i18n.locales.every((locale) => {
+    return !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`;
+  });
 
   // Redirect if there is no locale
   if (pathnameIsMissingLocale) {
@@ -49,9 +49,10 @@ export function middleware(request: NextRequest) {
 
     // e.g. incoming request is /products
     // The new URL is now /en-US/products
+
     return NextResponse.redirect(
       new URL(
-        `/${locale}${pathname.startsWith("/") ? "" : "/"}${pathname}`,
+        `/ar${pathname.startsWith("/") ? "" : "/"}${pathname}`,
         request.url
       )
     );
@@ -60,5 +61,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   // Matcher ignoring `/_next/` and `/api/`
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  // matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/((?!dashboard|api|_next/static|_next/image|favicon.ico).*)"],
 };

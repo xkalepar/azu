@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 
 import { Suspense } from "react";
+import Footer from "../components/footer";
 const list = [
   "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   "https://images.unsplash.com/photo-1714041691623-35d1b8c5e28b?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -17,10 +18,10 @@ const page = async () => {
       <section className={cn("mt-4 ")}>
         <div
           id="#overview"
-          className="flex flex-col-reverse sm:flex-row gap-2 "
+          className="flex flex-col-reverse sm:flex-row gap-4 my-3"
         >
           <div className="flex-0 sm:w-3/4 sm:text-justify">
-            <h1 className="group font-bold text-xl transition-all hover:text-primary w-fit">
+            <h1 className="group mb-4 font-bold text-xl transition-all hover:text-primary w-fit">
               <span className=" hidden group-hover:inline-block transition-all">
                 #
               </span>{" "}
@@ -52,7 +53,7 @@ const page = async () => {
         </div>
         <div id="#goals">
           <div className="my-4" />
-          <h2 className="group font-bold text-xl  hover:text-primary w-fit">
+          <h2 className="group  mb-4 font-bold text-xl  hover:text-primary w-fit">
             <span className="hidden group-hover:inline-block transition-all">
               #
             </span>{" "}
@@ -68,7 +69,7 @@ const page = async () => {
         <div id="#statiscs">
           <div className="my-4" />
           <Statiscs>
-            <h3 className="group font-bold text-xl hover:text-primary w-fit mb-2">
+            <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
               <span className="hidden group-hover:inline-block transition-all">
                 #
               </span>{" "}
@@ -78,11 +79,11 @@ const page = async () => {
         </div>
         <div id="#rating">
           <div className="my-4" />
-          <h3 className="group font-bold text-xl hover:text-primary w-fit">
+          <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
             <span className="hidden group-hover:inline-block transition-all">
               #
             </span>{" "}
-            الاعمتاد و التصنيف{" "}
+            الأعتماد و التصنيف{" "}
           </h3>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
@@ -91,11 +92,10 @@ const page = async () => {
             quaerat eius tempora temporibus modi.
           </p>
         </div>
-
         {/*  */}
         <div id="#management">
           <div className="my-4" />
-          <h3 className="group font-bold text-xl hover:text-primary w-fit">
+          <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
             <span className="hidden group-hover:inline-block transition-all">
               #
             </span>{" "}
@@ -108,14 +108,13 @@ const page = async () => {
             quaerat eius tempora temporibus modi.
           </p>
         </div>
-
         <AnimatedCard>
           {/*  */}
           <div id="#desk">
             <div className="my-4" />
             <h3
               id="#desk"
-              className="group font-bold text-xl hover:text-primary w-fit"
+              className="group  mb-4 font-bold text-xl hover:text-primary w-fit"
             >
               <span className="hidden group-hover:inline-block transition-all">
                 #
@@ -137,7 +136,7 @@ const page = async () => {
             <div className="my-4" />
             <h3
               id="#desksetup"
-              className="group font-bold text-xl hover:text-primary w-fit"
+              className="group  mb-4 font-bold text-xl hover:text-primary w-fit"
             >
               <span className="hidden group-hover:inline-block transition-all">
                 #
@@ -157,7 +156,7 @@ const page = async () => {
           {/*  */}
           <div id="#shoon">
             <div className="my-4" />
-            <h3 className="group font-bold text-xl hover:text-primary w-fit">
+            <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
               <span className="hidden group-hover:inline-block transition-all">
                 #
               </span>{" "}
@@ -176,7 +175,7 @@ const page = async () => {
           {/*  */}
           <div id="#structure">
             <div className="my-4" />
-            <h3 className="group font-bold text-xl hover:text-primary w-fit">
+            <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
               <span className="hidden group-hover:inline-block transition-all">
                 #
               </span>{" "}
@@ -191,12 +190,13 @@ const page = async () => {
             {/* ################ */}
           </div>
         </AnimatedCard>
+
         <AnimatedCard>
           <div id="#lists">
             <div className="my-4" />
             <h3
               id="#lists"
-              className="group font-bold text-xl hover:text-primary w-fit"
+              className="group  mb-4 font-bold text-xl hover:text-primary w-fit"
             >
               <span className="hidden group-hover:inline-block transition-all">
                 #
@@ -231,6 +231,7 @@ const page = async () => {
             </ol>
           </div>
         </AnimatedCard>
+        <Footer />
         {/*  */}
       </section>
       <section></section>

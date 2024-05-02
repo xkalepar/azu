@@ -10,7 +10,7 @@ const Statiscs = ({ children }: props) => {
       {children}
 
       <ScrollArea
-        className="w-full transition-all h-22 flex rounded-md flex-row"
+        className="w-full bg-secondary transition-all h-22 flex rounded-md flex-row"
         dir="rtl"
       >
         <div className="flex w-max space-x-4 px-2 py-8  transition-all">

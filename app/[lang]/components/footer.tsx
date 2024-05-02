@@ -1,7 +1,7 @@
 import React from "react";
 
-const footer = () => {
-  return <div>footer</div>;
+const Footer = () => {
+  return <div className="py-10 px-4">Footer</div>;
 };
 
-export default footer;
+export default Footer;

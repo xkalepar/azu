@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  @apply selection:bg-primary selection:text-white;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -60,4 +64,17 @@
 
 .flex-between {
   @apply flex justify-between items-center;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-animation {
+  animation: spin 1s infinite ease-in-out;
 }

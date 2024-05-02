@@ -7,38 +7,94 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model University {
-  id               String  @id @default(auto()) @map("_id") @db.ObjectId
-  origin           String?
-  overViewMsgGoals String?
-  titles           Title[]
+// model University {
+//   id               String  @id @default(auto()) @map("_id") @db.ObjectId
+//   origin           String?
+//   overViewMsgGoals String?
+//   titles           Title[]
+// }
+
+// model Title {
+//   id           String      @id @default(auto()) @map("_id") @db.ObjectId
+//   index        Int         @default(0)
+//   Title        String?
+//   images       String[]
+//   description  String?
+//   Univeristy   University? @relation(fields: [univeristyId], references: [id])
+//   univeristyId String?     @db.ObjectId
+// }
+
+// model Static {
+//   id      String  @id @default(auto()) @map("_id") @db.ObjectId
+//   index   Int     @default(0)
+//   Title   String?
+//   content Int?
+// }
+
+// model List {
+//   id    String  @id @default(auto()) @map("_id") @db.ObjectId
+//   title String?
+// }
+
+// model ListItem {
+//   id      String  @id @default(auto()) @map("_id") @db.ObjectId
+//   title   String?
+//   images  String?
+//   content String?
+// }
+
+model Collage {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  logo          String
+  ArCollageData ArCollageData? @relation(fields: [arabicId], references: [id])
+  arabicId      String?        @db.ObjectId
+  EnCollageData EnCollageData? @relation(fields: [englishId], references: [id])
+  englishId     String?        @db.ObjectId
+  category      Category       @default(one)
 }
 
-model Title {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  index        Int         @default(0)
-  Title        String?
-  images       String[]
-  description  String?
-  Univeristy   University? @relation(fields: [univeristyId], references: [id])
-  univeristyId String?     @db.ObjectId
+model ArCollageData {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  origin     String
+  goals      String
+  rating     String
+  management String
+  desk       String
+  shoan      String
+  structure  String
+  List       List[]
+  Collage    Collage[]
+
+  @@map("arCollageData")
 }
 
-model Static {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  index   Int     @default(0)
-  Title   String?
-  content Int?
+model EnCollageData {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  name       String
+  origin     String
+  goals      String
+  rating     String
+  management String
+  desk       String
+  shoan      String
+  structure  String
+  List       List[]
+  Collage    Collage[]
 }
 
 model List {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  title String?
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  content         String
+  Collage         ArCollageData? @relation(fields: [collageId], references: [id])
+  collageId       String?        @db.ObjectId
+  EnCollageData   EnCollageData? @relation(fields: [enCollageDataId], references: [id])
+  enCollageDataId String?        @db.ObjectId
 }
 
-model ListItem {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  title   String?
-  images  String?
-  content String?
+enum Category {
+  one
+  two
+  three
 }

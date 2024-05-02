@@ -5,13 +5,14 @@ import Header from "./components/header/header";
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
-import { Tajawal } from "next/font/google";
-const tajawal = Tajawal({
+import { Cairo } from "next/font/google";
+const cairo = Cairo({
   weight: "500",
-  subsets: ["latin"],
+  subsets: ["arabic"],
   display: "swap",
 });
 import "../globals.css";
+import "../styles.css";
 export default function Root({
   children,
   params,
@@ -27,7 +28,7 @@ export default function Root({
       dir={params.lang == "ar" ? "rtl" : "ltr"}
     >
       {/* <Providers> */}
-      <body className={tajawal.className}>
+      <body className={cairo.className}>
         <Header />
         <main> {children}</main>
       </body>

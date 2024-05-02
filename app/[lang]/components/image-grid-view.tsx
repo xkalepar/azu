@@ -30,7 +30,7 @@ const ImageGridView = ({ list, className }: props) => {
                 loading="lazy"
                 width={1000}
                 height={1000}
-                className=" object-cover w-full h-full"
+                className="object-cover w-full scale-110 transition-all duration-300 hover:scale-100"
               />
             </Suspense>
           </div>
