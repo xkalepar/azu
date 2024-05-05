@@ -7,90 +7,255 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// model University {
-//   id               String  @id @default(auto()) @map("_id") @db.ObjectId
-//   origin           String?
-//   overViewMsgGoals String?
-//   titles           Title[]
-// }
+/// model University {
+///   id               String  @id @default(auto()) @map("_id") @db.ObjectId
+///   origin           String?
+///   overViewMsgGoals String?
+///   titles           Title[]
+/// }
 
-// model Title {
-//   id           String      @id @default(auto()) @map("_id") @db.ObjectId
-//   index        Int         @default(0)
-//   Title        String?
-//   images       String[]
-//   description  String?
-//   Univeristy   University? @relation(fields: [univeristyId], references: [id])
-//   univeristyId String?     @db.ObjectId
-// }
+/// model Title {
+///   id           String      @id @default(auto()) @map("_id") @db.ObjectId
+///   index        Int         @default(0)
+///   Title        String?
+///   images       String[]
+///   description  String?
+///   Univeristy   University? @relation(fields: [univeristyId], references: [id])
+///   univeristyId String?     @db.ObjectId
+/// }
 
-// model Static {
-//   id      String  @id @default(auto()) @map("_id") @db.ObjectId
-//   index   Int     @default(0)
-//   Title   String?
-//   content Int?
-// }
+/// model Static {
+///   id      String  @id @default(auto()) @map("_id") @db.ObjectId
+///   index   Int     @default(0)
+///   Title   String?
+///   content Int?
+/// }
 
-// model List {
-//   id    String  @id @default(auto()) @map("_id") @db.ObjectId
-//   title String?
-// }
+/// model List {
+///   id    String  @id @default(auto()) @map("_id") @db.ObjectId
+///   title String?
+/// }
 
-// model ListItem {
-//   id      String  @id @default(auto()) @map("_id") @db.ObjectId
-//   title   String?
-//   images  String?
-//   content String?
-// }
+/// model ListItem {
+///   id      String  @id @default(auto()) @map("_id") @db.ObjectId
+///   title   String?
+///   images  String?
+///   content String?
+/// }
 
 model Collage {
-  id            String         @id @default(auto()) @map("_id") @db.ObjectId
-  logo          String
-  ArCollageData ArCollageData? @relation(fields: [arabicId], references: [id])
-  arabicId      String?        @db.ObjectId
-  EnCollageData EnCollageData? @relation(fields: [englishId], references: [id])
-  englishId     String?        @db.ObjectId
-  category      Category       @default(one)
+  id                                       String                                  @id @default(auto()) @map("_id") @db.ObjectId
+  logo                                     String
+  ArCollageData                            ArCollageData?                          @relation(fields: [arabicId], references: [id])
+  arabicId                                 String?                                 @db.ObjectId
+  EnCollageData                            EnCollageData?                          @relation(fields: [englishId], references: [id])
+  englishId                                String?                                 @db.ObjectId
+  category                                 Category                                @default(one)
+  gallery                                  String[]
+  views                                    Int                                     @default(0)
+  Statics                                  Statics[]
+  Links                                    Link[]
+  welcome                                  String
+  SocialMedia                              SocialMedia?                            @relation(fields: [socialMediaId], references: [id])
+  TheOfficesAndAdministrativeDepartments   TheOfficesAndAdministrativeDepartments? @relation(fields: [theOfficesAndAdministrativeDepartmentsId], references: [id])
+  GraduateStudies                          GraduateStudies?                        @relation(fields: [graduateStudiesId], references: [id])
+  ScientificResearch                       ScientificResearch?                     @relation(fields: [scientificResearchId], references: [id])
+  Students                                 Students?                               @relation(fields: [studentsId], references: [id])
+  Graduates                                Graduates?                              @relation(fields: [graduatesId], references: [id])
+  CollegeActivities                        CollegeActivities?                      @relation(fields: [collegeActivitiesId], references: [id])
+  EServices                                EServices?                              @relation(fields: [eServicesId], references: [id])
+  FormsAndApplications                     FormsAndApplications?                   @relation(fields: [formsAndApplicationsId], references: [id])
+  ScientificSection                        ScientificSection[]
+  socialMediaId                            String?                                 @db.ObjectId
+  graduateStudiesId                        String?                                 @db.ObjectId
+  theOfficesAndAdministrativeDepartmentsId String?                                 @db.ObjectId
+  scientificResearchId                     String?                                 @db.ObjectId
+  studentsId                               String?                                 @db.ObjectId
+  graduatesId                              String?                                 @db.ObjectId
+  collegeActivitiesId                      String?                                 @db.ObjectId
+  eServicesId                              String?                                 @db.ObjectId
+  formsAndApplicationsId                   String?                                 @db.ObjectId
+  News                                     News[]
+}
+
+/// االأقسام العلمية
+model ScientificSection {
+  id             String           @id @default(auto()) @map("_id") @db.ObjectId
+  title          String
+  content        String
+  News           News[]
+  gallery        String[]
+  WordsGraduates WordsGraduates[]
+  Links          Link[]
+  views          Int              @default(0)
+  Collage        Collage?         @relation(fields: [collageId], references: [id])
+  collageId      String?          @db.ObjectId
+}
+
+/// المكاتب واالقسام االدارية
+model TheOfficesAndAdministrativeDepartments {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+///الدراسات العليا
+model GraduateStudies {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+///البحث العلمي
+model ScientificResearch {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+///الطلاب 
+model Students {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+///الخريجون 
+model Graduates {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+///انشطة الكلية 
+model CollegeActivities {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+/// الخدمات االإكترونية
+model EServices {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+/// نماذج واستمارات
+model FormsAndApplications {
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  Pages   Page[]
+  Collage Collage[]
+}
+
+model Statics {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  Collage   Collage? @relation(fields: [collageId], references: [id])
+  collageId String?  @db.ObjectId
+}
+
+model SocialMedia {
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  facebook String?
+  whatsapp String?
+  youtube  String?
+  telegram String?
+  phone1   String?
+  phone2   String?
+  fax      String?
+  X        String?
+  Collage  Collage[]
+}
+
+model News {
+  id                  String             @id @default(auto()) @map("_id") @db.ObjectId
+  image               String
+  ScientificSection   ScientificSection? @relation(fields: [scientificSectionId], references: [id])
+  scientificSectionId String?            @db.ObjectId
+  Collage             Collage?           @relation(fields: [collageId], references: [id])
+  collageId           String?            @db.ObjectId
+  arContent           ArContent?         @relation(fields: [arContentId], references: [id])
+  enContent           EnContent?         @relation(fields: [enContentId], references: [id])
+  arContentId         String?            @db.ObjectId
+  enContentId         String?            @db.ObjectId
+}
+
+/// [ArContent] put the data into it in  ar
+model ArContent {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  body  String
+  News  News[]
+}
+
+/// [EnContent] put the data into it in  ar
+model EnContent {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  body  String
+  News  News[]
+}
+
+model Link {
+  id                  String             @id @default(auto()) @map("_id") @db.ObjectId
+  content             String
+  href                String
+  blank               Boolean            @default(false)
+  Collage             Collage?           @relation(fields: [collageId], references: [id])
+  collageId           String?            @db.ObjectId
+  ScientificSection   ScientificSection? @relation(fields: [scientificSectionId], references: [id])
+  scientificSectionId String?            @db.ObjectId
 }
 
 model ArCollageData {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  origin     String
-  goals      String
-  rating     String
-  management String
-  desk       String
-  shoan      String
-  structure  String
-  List       List[]
-  Collage    Collage[]
-
-  @@map("arCollageData")
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  content String
+  Collage Collage[]
 }
 
 model EnCollageData {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  origin     String
-  goals      String
-  rating     String
-  management String
-  desk       String
-  shoan      String
-  structure  String
-  List       List[]
-  Collage    Collage[]
+  id      String    @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  content String
+  Collage Collage[]
 }
 
-model List {
-  id              String         @id @default(auto()) @map("_id") @db.ObjectId
-  title           String
-  content         String
-  Collage         ArCollageData? @relation(fields: [collageId], references: [id])
-  collageId       String?        @db.ObjectId
-  EnCollageData   EnCollageData? @relation(fields: [enCollageDataId], references: [id])
-  enCollageDataId String?        @db.ObjectId
+//// dynamic page
+////` return 
+////  `title String`
+////  `body String`
+////`
+model Page {
+  id                                       String                                  @id @default(auto()) @map("_id") @db.ObjectId
+  title                                    String
+  body                                     String
+  TheOfficesAndAdministrativeDepartments   TheOfficesAndAdministrativeDepartments? @relation(fields: [theOfficesAndAdministrativeDepartmentsId], references: [id])
+  theOfficesAndAdministrativeDepartmentsId String?                                 @db.ObjectId
+  GraduateStudies                          GraduateStudies?                        @relation(fields: [graduateStudiesId], references: [id])
+  graduateStudiesId                        String?                                 @db.ObjectId
+  ScientificResearch                       ScientificResearch?                     @relation(fields: [scientificResearchId], references: [id])
+  scientificResearchId                     String?                                 @db.ObjectId
+  Students                                 Students?                               @relation(fields: [studentsId], references: [id])
+  studentsId                               String?                                 @db.ObjectId
+  Graduates                                Graduates?                              @relation(fields: [graduatesId], references: [id])
+  graduatesId                              String?                                 @db.ObjectId
+  CollegeActivities                        CollegeActivities?                      @relation(fields: [collegeActivitiesId], references: [id])
+  collegeActivitiesId                      String?                                 @db.ObjectId
+  EServices                                EServices?                              @relation(fields: [eServicesId], references: [id])
+  eServicesId                              String?                                 @db.ObjectId
+  FormsAndApplications                     FormsAndApplications?                   @relation(fields: [formsAndApplicationsId], references: [id])
+  formsAndApplicationsId                   String?                                 @db.ObjectId
+}
+
+model WordsGraduates {
+  id                  String             @id @default(auto()) @map("_id") @db.ObjectId
+  avatar              String
+  content             String
+  ScientificSection   ScientificSection? @relation(fields: [scientificSectionId], references: [id])
+  scientificSectionId String?            @db.ObjectId
 }
 
 enum Category {

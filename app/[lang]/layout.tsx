@@ -12,14 +12,15 @@ const cairo = Cairo({
   display: "swap",
 });
 import "../globals.css";
-import "../styles.css";
-export default function Root({
+import { getCollages } from "@/prisma/seed";
+export default async function Root({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: { lang: Locale };
 }) {
+  const collages = await getCollages();
   return (
     <html
       style={{ scrollBehavior: "smooth" }}
@@ -29,7 +30,7 @@ export default function Root({
     >
       {/* <Providers> */}
       <body className={cairo.className}>
-        <Header />
+        {collages && <Header collages={collages} />}
         <main> {children}</main>
       </body>
       {/* </Providers> */}

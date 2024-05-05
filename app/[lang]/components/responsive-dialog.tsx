@@ -26,8 +26,9 @@ interface Props {
   trigger: React.ReactNode;
   dialogTitle?: string;
   dialogDescription?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
+  dir?: "rtl" | "ltr";
 }
 export default function ResponiseDialog({
   children,
@@ -35,6 +36,7 @@ export default function ResponiseDialog({
   dialogDescription,
   dialogTitle,
   className,
+  dir = "rtl",
 }: Props) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -43,11 +45,13 @@ export default function ResponiseDialog({
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className={cn("sm:max-w-[425px]", className)}>
-          <DialogHeader>
-            {dialogTitle && <DialogTitle>{dialogTitle}</DialogTitle>}
+        <DialogContent dir={dir} className={cn("sm:max-w-[425px]", className)}>
+          <DialogHeader dir={dir}>
+            {dialogTitle && <DialogTitle dir={dir}>{dialogTitle}</DialogTitle>}
             {dialogDescription && (
-              <DialogDescription>{dialogDescription}</DialogDescription>
+              <DialogDescription dir={dir}>
+                {dialogDescription}
+              </DialogDescription>
             )}
           </DialogHeader>
           {children}
@@ -59,7 +63,7 @@ export default function ResponiseDialog({
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>{trigger}</DrawerTrigger>
-      <DrawerContent className={cn("px-2", className)}>
+      <DrawerContent dir={dir} className={cn("px-2", className)}>
         <DrawerHeader className="text-left">
           {dialogTitle && <DrawerTitle>{dialogTitle}</DrawerTitle>}
           {dialogDescription && (
@@ -68,9 +72,7 @@ export default function ResponiseDialog({
         </DrawerHeader>
         {children}
         <DrawerFooter className="pt-2">
-          <DrawerClose asChild>
-            <Button variant="outline"></Button>
-          </DrawerClose>
+          <DrawerClose asChild>{/* <Button></Button> */}</DrawerClose>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
