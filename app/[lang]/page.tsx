@@ -1,7 +1,7 @@
 import { Locale } from "../../i18n-config";
 import NewsBar from "./components/news/newsBar";
 import ImageGridView from "./components/image-grid-view";
-import { getCollages } from "@/prisma/seed";
+import { getCollages, getUniversity } from "@/prisma/seed";
 import Header from "./components/header/header";
 import Image from "next/image";
 import { getDictionary } from "@/get-dictionary";
@@ -33,13 +33,14 @@ const list = [
   "https://images.unsplash.com/photo-1714224806668-9d8dc105f71e?q=80&w=1370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
 ];
 
-export default async function IndexPage({
+export default async function home({
   params: { lang },
 }: {
   params: { lang: Locale };
 }) {
   const dictionary = await getDictionary(lang);
   const collages = await getCollages();
+  const univeristy = await getUniversity();
   console.log(dictionary);
   return (
     <div>
@@ -83,12 +84,19 @@ export default async function IndexPage({
       <main className=" container ">
         {/* {collages && <Header collages={collages} />} */}
         {/* <div className="mt-20" /> */}
-        <NewsBar
-          className="py-8"
-          content={dictionary.pages["univeristy"]["overview"]["info"]}
-        />
-
-        <ImageGridView list={list} />
+        <AnimatedCard XorY="x" intialX={100}>
+          <NewsBar
+            className="py-8"
+            content={dictionary.pages["univeristy"]["overview"]["info"]}
+          />
+        </AnimatedCard>
+        {univeristy !== undefined &&
+        univeristy !== null &&
+        univeristy.gallery.length > 0 ? (
+          <ImageGridView list={univeristy.gallery} />
+        ) : (
+          <div>لا يوجد صور بعد</div>
+        )}
       </main>
     </div>
   );
