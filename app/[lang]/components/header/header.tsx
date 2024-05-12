@@ -32,15 +32,14 @@ type Props = {
     englishId: string | null;
     category: $Enums.Category;
   })[];
+  lang?: "ar" | "en";
 };
 
-const Header = ({ collages }: Props) => {
-  // const dictionary = await getDictionary("ar");
-  // const isDesktop = useMediaQuery("(min-width: 840px)");
+const Header = ({ collages, lang = "en" }: Props) => {
   return (
     <Fragment>
-      <header className="flex-between px-8 py-4">
-        <Logo />
+      <header className="flex-between w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
+        <Logo href="/" src="basic-logo.jpeg" />
         <ParseToScreenMoreThanWidth>
           <Fragment>
             <NavigationMenuHeader collages={collages} />
@@ -50,9 +49,9 @@ const Header = ({ collages }: Props) => {
                 buttonVariants.variants.variant.ghost,
                 "px-2 py-1"
               )}
-              href={`/ar`}
+              href={`${lang === "en" ? "/ar" : "/en"}`}
             >
-              {"العربية"}
+              {lang === "en" ? "العربية" : "english"}
             </Link>
           </Fragment>
         </ParseToScreenMoreThanWidth>

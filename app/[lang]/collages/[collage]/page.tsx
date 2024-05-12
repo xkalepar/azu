@@ -37,7 +37,77 @@ const collagePage = async ({ params }: { params: { collage: string } }) => {
   const collage = await getCollageById(params.collage);
   if (!collage) return notFound();
   return (
-    <div className="px-4 py-2">
+    <div className="container xl:mx-4 xl:px-4">
+      <Suspense
+        fallback={
+          <>
+            <Skeleton className=" min-w-full max-w-full min-h-full"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
+          </>
+        }
+      ></Suspense>
       <ParseData content={collage.ArCollageData!.content} />
     </div>
   );

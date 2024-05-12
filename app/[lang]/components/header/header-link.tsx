@@ -47,11 +47,14 @@ export function NavigationMenuHeader({ collages }: Props) {
     <NavigationMenu dir="rtl">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>عن الجامعة</NavigationMenuTrigger>
+          <Link href={"/"}>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              عن الجامعة
+            </NavigationMenuLink>
+          </Link>
         </NavigationMenuItem>
 
         <CollageMenu collages={collages} />
-
         <NavigationMenuItem>
           <Link href="/docs" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>

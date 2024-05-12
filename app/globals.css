@@ -96,6 +96,9 @@ p {
   min-height: 100px;
 }
 
+.ProseMirror > img {
+  @apply mx-auto max-w-full min-w-full rounded-md;
+}
 .ProseMirror > * + * {
   margin-top: 0.75em;
 }
@@ -165,4 +168,8 @@ p {
 }
 .heading1 {
   font-size: 22px;
+}
+
+.transform-center {
+  transform: translate(-50, -50);
 }

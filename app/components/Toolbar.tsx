@@ -49,7 +49,6 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { UploadButton } from "../dashboard/components/upload";
 
@@ -123,8 +122,6 @@ const Toolbar = ({ editor, content }: ToolbarProps) => {
   if (!editor) {
     return null;
   }
-  // const [image, setImage] = useState<string>("");
-
   return (
     <div
       className="px-4 py-3 rounded-t-lg flex justify-between items-start

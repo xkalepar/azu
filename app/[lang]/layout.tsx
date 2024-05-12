@@ -5,14 +5,19 @@ import Header from "./components/header/header";
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
-import { Cairo } from "next/font/google";
+import { Cairo, Noto_Naskh_Arabic } from "next/font/google";
 const cairo = Cairo({
   weight: "500",
   subsets: ["arabic"],
   display: "swap",
 });
+const notoNaskhArabic = Noto_Naskh_Arabic({
+  weight: "500",
+  subsets: ["arabic"],
+  display: "swap",
+});
 import "../globals.css";
-import { getCollages } from "@/prisma/seed";
+// import { getCollages } from "@/prisma/seed";
 export default async function Root({
   children,
   params,
@@ -20,7 +25,7 @@ export default async function Root({
   children: React.ReactNode;
   params: { lang: Locale };
 }) {
-  const collages = await getCollages();
+  // const collages = await getCollages();
   return (
     <html
       style={{ scrollBehavior: "smooth" }}
@@ -30,7 +35,6 @@ export default async function Root({
     >
       {/* <Providers> */}
       <body className={cairo.className}>
-        {collages && <Header collages={collages} />}
         <main> {children}</main>
       </body>
       {/* </Providers> */}

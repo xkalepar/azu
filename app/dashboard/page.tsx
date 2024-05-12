@@ -1,12 +1,11 @@
+import { Metadata } from "next";
 import React from "react";
-import Title from "./components/title";
+export const metadata: Metadata = {
+  title: "لوحة التحكم | عن الجامعة",
+};
 
-const dashboardPage = () => {
-  return (
-    <main>
-      {/* <Title className="text-xl font-normal pr-4 pt-4" title={"لوحة التحكم"} /> */}
-    </main>
-  );
+const dashboardPage = async () => {
+  return <main></main>;
 };
 
 export default dashboardPage;

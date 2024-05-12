@@ -63,4 +63,7 @@ export const config = {
   // Matcher ignoring `/_next/` and `/api/`
   // matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
   matcher: ["/((?!dashboard|api|_next/static|_next/image|favicon.ico).*)"],
+  // matcher: [
+  //   "/((?!dashboard|api|_next/static/|_next/image/|_next/logos/|favicon.ico).*)",
+  // ],
 };

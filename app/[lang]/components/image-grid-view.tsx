@@ -13,7 +13,7 @@ const ImageGridView = ({ list, className }: props) => {
   return (
     <div
       className={cn(
-        "grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4",
+        "grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4",
         className
       )}
     >
@@ -21,7 +21,7 @@ const ImageGridView = ({ list, className }: props) => {
         return (
           <div
             key={index}
-            className="w-full h-[300px] rounded-sm overflow-hidden"
+            className="w-full h-[200px] rounded-sm overflow-hidden"
           >
             <Suspense fallback={<Skeleton className="w-full h-full" />}>
               <Image

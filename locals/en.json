@@ -1,0 +1,26 @@
+{
+  "language": {
+    "name": "english",
+    "symbol": "en",
+    "direction": "ltr",
+    "link": "'/en'"
+  },
+  "pages": {
+    "univeristy": {
+      "overview": {
+        "title": "Al Zaytuna University - Libya",
+        "bio": "Welcome to Al Zaytuna University - Libya! Discover excellence in education and limitless opportunities for growth.",
+        "info": "Al Zaytuna University is one of the government universities in Libya. It was established in 1986 by Decree No. 46. It was formerly known as Nasser International University and later changed its name to Al Zaytuna University. The university's colleges are located within the geographical boundaries of Tarhuna municipality, as well as the Al-Awata and Sidi Al-Sayeh areas. The university awards bachelor's degrees in various scientific disciplines, as well as master's and doctoral degrees in some specialties.",
+        "news": "Latest News",
+        "statistics": "Statistics and Figures",
+        "readMore": "Read More",
+        "allnews": "All News",
+        "sign": {
+          "title": "How to Register with Us?",
+          "content": "To register at the university for academic and postgraduate studies, as well as for faculty members or participation in events."
+        },
+        "gallery": "Photo Gallery"
+      }
+    }
+  }
+}

@@ -8,7 +8,7 @@ interface Props {
   ar: ReactNode;
   en: ReactNode;
 }
-const Tabs = ({ ar, en }: Props) => {
+const LangTabs = ({ ar, en }: Props) => {
   const [lang, setLang] = useState<"ar" | "en">("ar");
   return (
     <div className="flex flex-col gap-3">
@@ -35,7 +35,7 @@ const Tabs = ({ ar, en }: Props) => {
         </button>
       </div>
       <Separator />
-      <div className="px-16 py-2">
+      <div className="py-2">
         <div
           dir="rtl"
           className={cn("hidden transition-all", lang === "ar" && "block")}
@@ -53,4 +53,4 @@ const Tabs = ({ ar, en }: Props) => {
   );
 };
 
-export default Tabs;
+export default LangTabs;

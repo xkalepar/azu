@@ -11,6 +11,7 @@ import {
   PrismaClient,
 } from "@prisma/client";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import { env } from "process";
 const prisma = new PrismaClient();
 interface NewCollageProps {
   arProps: ArCollageData;
@@ -19,6 +20,94 @@ interface NewCollageProps {
   logo: string;
   welcome: string;
 }
+const uniId: string = env.UniveristyId as string;
+
+export const imagesGalleryUni = async ({ list }: { list: string[] }) => {
+  try {
+    console.log("... starting upload images ");
+    const images = await prisma.university.update({
+      where: { id: uniId },
+      data: {
+        gallery: {
+          set: list,
+        },
+      },
+    });
+    console.log("... finshing upload images ");
+
+    console.log(images);
+    revalidatePath("/");
+    revalidateTag("university");
+    if (!images) {
+      return [];
+    }
+    console.log(images);
+    return images;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+export const addImageGalleryUniversity = async ({
+  image,
+}: {
+  image: string;
+}) => {
+  try {
+    console.log("... starting upload images ");
+    const images = await prisma.university.update({
+      where: { id: uniId },
+      data: {
+        gallery: {
+          push: image,
+        },
+      },
+    });
+    console.log("... finshing upload images ");
+
+    console.log(images);
+    revalidatePath("/");
+    revalidateTag("university");
+    if (!images) {
+      return [];
+    }
+    console.log(images);
+    return images;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+export const getUniversity = unstable_cache(
+  async () => {
+    try {
+      const university = await prisma.university.findFirst({
+        include: { News: true },
+      });
+      if (!university) {
+        const newUniversity = await prisma.university.create({
+          data: {
+            logo: "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
+          },
+          include: {
+            News: true,
+          },
+        });
+        if (!newUniversity) {
+          return undefined;
+        }
+      }
+
+      return university;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
+  },
+  ["university", "news"],
+  { tags: ["university", "news"] }
+);
+
 export const newCollage = async ({
   arProps,
   enProps,
@@ -86,12 +175,20 @@ export const newCollage = async ({
 };
 
 export const getCollages = unstable_cache(
-  async () => {
+  async (ScientificSection: boolean = false) => {
     try {
       const collages = await prisma.collage.findMany({
         include: {
           ArCollageData: true,
           EnCollageData: true,
+          ScientificSection: ScientificSection
+            ? {
+                include: {
+                  ArContent: true,
+                  EnContent: true,
+                },
+              }
+            : false,
         },
       });
       if (!collages) {
@@ -106,10 +203,7 @@ export const getCollages = unstable_cache(
   { tags: ["collages"] }
 );
 
-export const getCollageById = async (
-  id: string,
-  ScientificSection: boolean = false
-) => {
+export const getCollageById = async (id: string, sections: boolean = false) => {
   // Function body...
   try {
     const collage = await prisma.collage.findUnique({
@@ -117,7 +211,28 @@ export const getCollageById = async (
       include: {
         ArCollageData: true,
         EnCollageData: true,
-        ScientificSection: ScientificSection,
+        ScientificSection: sections,
+      },
+    });
+    if (!collage) return undefined;
+    return collage;
+  } catch (error) {
+    return undefined;
+  }
+};
+export const getCollageByIdForSection = async (id: string) => {
+  // Function body...
+  try {
+    const collage = await prisma.collage.findUnique({
+      where: { id },
+      include: {
+        ArCollageData: true,
+        ScientificSection: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
       },
     });
     if (!collage) return undefined;
@@ -127,6 +242,113 @@ export const getCollageById = async (
   }
 };
 
+export const getSectionById = async (id: string) => {
+  // console.log("..........#############..........");
+  try {
+    const section = await prisma.scientificSection.findUnique({
+      where: { id },
+      include: {
+        ArContent: true,
+        EnContent: true,
+        Collage: {
+          select: {
+            id: true,
+            ArCollageData: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+        AcademicAffairs: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
+        departmentCoordinators: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
+        AcademicGuidanceHandbook: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
+        DepartmentFormsAndGuidelines: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
+        DepartmentLaboratories: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
+        DepartmentStaffs: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
+
+        // Collage: {
+        //   select: {
+        //     title
+        //   }
+        // }
+      },
+    });
+    if (!section) {
+      return undefined;
+    }
+    return section;
+  } catch (error) {
+    return undefined;
+  }
+};
+
+/* export const getSections = async (id: string) => {
+  // console.log("..........#############..........");
+  try {
+    const section = await prisma.scientificSection.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        ArContent: true,
+        EnContent: true,
+        Collage: {
+          select: {
+            ArCollageData: {
+              select: {
+                title: true,
+              },
+            },
+          },
+        },
+        departmentCoordinators: {
+          include: {
+            ArContent: true,
+            EnContent: true,
+          },
+        },
+      },
+    });
+    if (!section) {
+      return undefined;
+    }
+    return section;
+  } catch (error) {
+    return undefined;
+  }
+};
+ */
 export const getNews = unstable_cache(
   async ({
     collageId,
@@ -167,6 +389,57 @@ export const getNews = unstable_cache(
   ["news"],
   { tags: ["news", "collages"] }
 );
+export const getNewsForSection = unstable_cache(
+  async ({
+    collageId,
+    id,
+    query,
+    sectinoId,
+  }: {
+    collageId?: string;
+    query?: string;
+    id?: string;
+    sectinoId: string;
+  }) => {
+    try {
+      const news = await prisma.news.findMany({
+        where: {
+          id: id,
+          collageId: collageId,
+          scientificSectionId: sectinoId,
+          arContent: {
+            body: {
+              contains: query,
+            },
+          },
+        },
+
+        include: {
+          arContent: true,
+          enContent: true,
+          Collage: {
+            include: {
+              ArCollageData: true,
+            },
+          },
+          ScientificSection: {
+            include: {
+              ArContent: true,
+            },
+          },
+        },
+      });
+      if (!news) {
+        return [];
+      }
+      return news;
+    } catch (error) {
+      return [];
+    }
+  },
+  ["news"],
+  { tags: ["news", "collages"] }
+);
 interface newNewsProps {
   image: string;
   arContent: Content;
@@ -187,6 +460,7 @@ export const newNews = async ({
     const newCollage = await prisma.news.create({
       data: {
         image,
+
         arContent: {
           create: arContent,
         },
@@ -201,7 +475,7 @@ export const newNews = async ({
       },
     });
     if (!newCollage) {
-      return { message: "فشل انشاء خبر جديدة" };
+      return { message: "فشل انشاء خبر جديد" };
     }
     revalidateTag("collages");
     revalidateTag("news");
@@ -329,6 +603,55 @@ export const addImageGallery = async ({
     return [];
   }
 };
+
+interface NewSectionProps {
+  body: string;
+  enbody: string;
+  title: string;
+  entitle: string;
+  collageId: string;
+}
+/// new section
+export const newSection = async ({
+  collageId,
+  body,
+  enbody,
+  entitle,
+  title,
+}: NewSectionProps) => {
+  try {
+    const newSection = await prisma.scientificSection.create({
+      data: {
+        ArContent: {
+          create: {
+            title,
+            body,
+          },
+        },
+        EnContent: {
+          create: {
+            title: entitle,
+            body: enbody,
+          },
+        },
+        Collage: {
+          connect: {
+            id: collageId,
+          },
+        },
+      },
+    });
+    if (!newSection) {
+      return { message: "فشل انشاء خبر جديدة" };
+    }
+    revalidateTag("collages");
+    // revalidateTag("sections");
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    return { message: "فشلت العملية" };
+  }
+};
+
 export const aa = async () => {
   // await prisma.collage.updateMany({ data: { category: "one" } });
   // await prisma.collage.deleteMany();

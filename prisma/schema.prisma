@@ -7,41 +7,12 @@ generator client {
   provider = "prisma-client-js"
 }
 
-/// model University {
-///   id               String  @id @default(auto()) @map("_id") @db.ObjectId
-///   origin           String?
-///   overViewMsgGoals String?
-///   titles           Title[]
-/// }
-
-/// model Title {
-///   id           String      @id @default(auto()) @map("_id") @db.ObjectId
-///   index        Int         @default(0)
-///   Title        String?
-///   images       String[]
-///   description  String?
-///   Univeristy   University? @relation(fields: [univeristyId], references: [id])
-///   univeristyId String?     @db.ObjectId
-/// }
-
-/// model Static {
-///   id      String  @id @default(auto()) @map("_id") @db.ObjectId
-///   index   Int     @default(0)
-///   Title   String?
-///   content Int?
-/// }
-
-/// model List {
-///   id    String  @id @default(auto()) @map("_id") @db.ObjectId
-///   title String?
-/// }
-
-/// model ListItem {
-///   id      String  @id @default(auto()) @map("_id") @db.ObjectId
-///   title   String?
-///   images  String?
-///   content String?
-/// }
+model University {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  logo    String
+  gallery String[]
+  News    News[]
+}
 
 model Collage {
   id                                       String                                  @id @default(auto()) @map("_id") @db.ObjectId
@@ -80,16 +51,51 @@ model Collage {
 
 /// االأقسام العلمية
 model ScientificSection {
-  id             String           @id @default(auto()) @map("_id") @db.ObjectId
-  title          String
-  content        String
-  News           News[]
-  gallery        String[]
-  WordsGraduates WordsGraduates[]
-  Links          Link[]
-  views          Int              @default(0)
-  Collage        Collage?         @relation(fields: [collageId], references: [id])
-  collageId      String?          @db.ObjectId
+  id                     String           @id @default(auto()) @map("_id") @db.ObjectId
+  ArContent              ArContent?       @relation(fields: [arContentId], references: [id])
+  EnContent              EnContent?       @relation(fields: [enContentId], references: [id])
+  News                   News[]
+  gallery                String[]
+  WordsGraduates         WordsGraduates[]
+  Links                  Link[]
+  views                  Int              @default(0)
+  Collage                Collage?         @relation(fields: [collageId], references: [id])
+  collageId              String?          @db.ObjectId
+  arContentId            String?          @db.ObjectId
+  enContentId            String?          @db.ObjectId
+  /// منسقي القسم
+  departmentCoordinators SectionPage[]    @relation("DepartmentCoordinators")
+
+  /// الشؤون االكاديمية
+  AcademicAffairs              SectionPage[] @relation("AcademicAffairs")
+  /// معامل القسم
+  DepartmentLaboratories       SectionPage[] @relation("DepartmentLaboratories")
+  /// كادر القسم
+  DepartmentStaffs             SectionPage[] @relation("DepartmentStaff")
+  /// دليل االرشاد االكاديمي
+  AcademicGuidanceHandbook     SectionPage[] @relation("AcademicGuidanceHandbook")
+  /// نماذج وادلة القسم
+  DepartmentFormsAndGuidelines SectionPage[] @relation("DepartmentFormsAndGuidelines")
+}
+
+model SectionPage {
+  id                             String             @id @default(auto()) @map("_id") @db.ObjectId
+  ArContent                      ArContent?         @relation(fields: [arContentId], references: [id])
+  EnContent                      EnContent?         @relation(fields: [enContentId], references: [id])
+  arContentId                    String?            @db.ObjectId
+  enContentId                    String?            @db.ObjectId
+  DepartmentCoordinators         ScientificSection? @relation("DepartmentCoordinators", fields: [departmentCoordinatorsId], references: [id])
+  departmentCoordinatorsId       String?            @db.ObjectId
+  AcademicAffairs                ScientificSection? @relation("AcademicAffairs", fields: [academicAffairsId], references: [id])
+  academicAffairsId              String?            @db.ObjectId
+  DepartmentLaboratories         ScientificSection? @relation("DepartmentLaboratories", fields: [departmentLaboratoriesid], references: [id])
+  departmentLaboratoriesid       String?            @db.ObjectId
+  DepartmentStaff                ScientificSection? @relation("DepartmentStaff", fields: [departmentStaffId], references: [id])
+  departmentStaffId              String?            @db.ObjectId
+  AcademicGuidanceHandbook       ScientificSection? @relation("AcademicGuidanceHandbook", fields: [academicGuidanceHandbookId], references: [id])
+  academicGuidanceHandbookId     String?            @db.ObjectId
+  DepartmentFormsAndGuidelines   ScientificSection? @relation("DepartmentFormsAndGuidelines", fields: [departmentFormsAndGuidelinesId], references: [id])
+  departmentFormsAndGuidelinesId String?            @db.ObjectId
 }
 
 /// المكاتب واالقسام االدارية
@@ -161,6 +167,7 @@ model SocialMedia {
   facebook String?
   whatsapp String?
   youtube  String?
+  email    String?
   telegram String?
   phone1   String?
   phone2   String?
@@ -180,22 +187,28 @@ model News {
   enContent           EnContent?         @relation(fields: [enContentId], references: [id])
   arContentId         String?            @db.ObjectId
   enContentId         String?            @db.ObjectId
+  University          University?        @relation(fields: [universityId], references: [id])
+  universityId        String?            @db.ObjectId
 }
 
 /// [ArContent] put the data into it in  ar
 model ArContent {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  body  String
-  News  News[]
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  body              String
+  News              News[]
+  ScientificSection ScientificSection[]
+  SectionPage       SectionPage[]
 }
 
 /// [EnContent] put the data into it in  ar
 model EnContent {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-  body  String
-  News  News[]
+  id                String              @id @default(auto()) @map("_id") @db.ObjectId
+  title             String
+  body              String
+  News              News[]
+  ScientificSection ScientificSection[]
+  SectionPage       SectionPage[]
 }
 
 model Link {

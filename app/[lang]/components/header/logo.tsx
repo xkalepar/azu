@@ -1,7 +1,19 @@
-import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 
-const Logo = () => {
-  return <Button>Logo</Button>;
+type LogoProps = {
+  href?: string;
+  src?: string;
+};
+const Logo = ({ href, src }: LogoProps) => {
+  return (
+    <Link href={href ?? "/"}>
+      <Avatar>
+        <AvatarFallback>Logo</AvatarFallback>
+        <AvatarImage src={src}></AvatarImage>
+      </Avatar>
+    </Link>
+  );
 };
 
 export default Logo;

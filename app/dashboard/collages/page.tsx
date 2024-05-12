@@ -15,7 +15,7 @@ import { getCollages, aa } from "@/prisma/seed";
 import CardPreview from "../../components/card-preview";
 
 const collagesPage = async () => {
-  // aa();
+  aa();
   const collages = await getCollages();
   console.log(collages);
   return (

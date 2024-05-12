@@ -24,7 +24,7 @@ interface Props {
 }
 /**
  * @param {replaceLink} replaceLink is string will be redirected to, the default is "/" home page
- * @param {sucess} sucess is string msg that will be displayed when the action is successful
+ * {sucess} sucess is string msg that will be displayed when the action is successful
  */
 const Form = ({
   className,

@@ -15,16 +15,17 @@ import Link from "next/link";
 export async function generateMetadata({
   params,
 }: {
-  params: { collage: string };
+  params: { id: string };
 }): Promise<Metadata> {
-  const collage = await getCollageById(params.collage);
+  const collage = await getCollageById(params.id);
+
   if (!collage) {
     return {
       title: "404 غير موجود",
     };
   }
   return {
-    title: collage.ArCollageData!.title,
+    title: `${collage.ArCollageData!.title} | ادارة`,
   };
 }
 

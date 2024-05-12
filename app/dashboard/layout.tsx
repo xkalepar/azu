@@ -1,16 +1,16 @@
 import NavigationRail from "./components/side-bar";
-
-export const metadata = {
-  title: "جامعة ترهونة | لوحة التحكم",
-};
 import "../globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { Cairo } from "next/font/google";
-const cairo = Cairo({
+import { Noto_Naskh_Arabic } from "next/font/google";
+import { Metadata } from "next";
+const notoNaskhArabic = Noto_Naskh_Arabic({
   weight: "500",
   subsets: ["arabic"],
   display: "swap",
 });
+export const metadata: Metadata = {
+  title: "جامعة ترهونة | لوحة التحكم",
+};
 export default function RootLayout({
   children,
 }: {
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl">
-      <body className={cairo.className}>
+      <body className={notoNaskhArabic.className}>
         <main className="flex flex-start gap-1 min-h-screen">
           <section className="">
             <NavigationRail />

@@ -31,11 +31,11 @@ interface TabLinkProps {
 export function TabLink({ href, content, className }: TabLinkProps) {
   const pathname = usePathname();
   return (
-    <div className="relative w-fit">
+    <div className="relative w-fit my-1">
       <Link
         className={cn(
           className,
-          "flex-center text-sm  h-12 px-4 transition-all rounded-none",
+          "flex-center text-sm  h-12 px-4 transition-all",
           pathname.startsWith(href)
             ? "text-primary"
             : "dark:text-white text-black hover:bg-green-200"

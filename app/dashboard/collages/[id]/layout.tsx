@@ -2,10 +2,8 @@ import { getCollageById } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import React from "react";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NavigationTabs, { HomeTabLink, TabLink } from "../../components/tab";
 import Title from "../../components/title";
-import { Separator } from "@/components/ui/separator";
 
 const layout = async ({
   children,
@@ -50,10 +48,7 @@ const layout = async ({
               href={`/dashboard/collages/${collage.id}/welcome`}
               content="ترحيب"
             />
-            <TabLink
-              href={`/dashboard/collages/${collage.id}/scientific-section`}
-              content="الأقسام العلمية"
-            />
+
             <TabLink
               href={`/dashboard/collages/${collage.id}/offices-and-administrative-departments`}
               content="المكاتب والأقسام الإدارية"
@@ -62,7 +57,10 @@ const layout = async ({
               href={`/dashboard/collages/${collage.id}/links`}
               content="روابط خارجية"
             />
-
+            <TabLink
+              href={`/dashboard/sections/${collage.id}`}
+              content="الأقسام العلمية"
+            />
             <TabLink
               href={`/dashboard/collages/${collage.id}/graduate-studies`}
               content="الدراسات العليا"

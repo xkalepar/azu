@@ -14,7 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Editor from "@/app/components/editor";
-import Tabs from "@/app/components/tabs";
+import LangTabs from "@/app/components/tabs";
 
 interface NewsFormProps {
   collageId: string;
@@ -75,7 +75,7 @@ export const NewsForm = ({ collageId }: NewsFormProps) => {
           حفظ
         </SubmitButton>
       </div>
-      <Tabs
+      <LangTabs
         ar={
           <>
             <Input value={body} type={"hidden"} name="body" />
@@ -191,7 +191,7 @@ export const EditNewsForm = ({
           تعديل
         </SubmitButton>
       </div>
-      <Tabs
+      <LangTabs
         ar={
           <>
             <Input value={body} type={"hidden"} name="body" />
