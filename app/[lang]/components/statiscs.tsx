@@ -50,12 +50,12 @@ type itemProps = {
 };
 const StatiscItem = ({ title, content, children }: itemProps) => {
   return (
-    <div className="text-center transition-all hover:scale-105 rounded-md group mx-4 shadow-sm bg-card m-2 px-8 py-4 gap-2 md:gap-3 lg:gap-5">
+    <div className="text-center min-h-32 flex justify-center items-center flex-col transition-all hover:scale-105 rounded-md group mx-4 shadow-sm shadow-primary bg-card m-2 px-8 py-4 gap-2 md:gap-3 lg:gap-5">
       {children}
-      <div className=" transition-all group-hover:text-primary text-xl">
-        {title}
+      <div className=" transition-all group-hover:text-primary">{title}</div>
+      <div className="group-hover:text-primary  text-xl transition-all">
+        {content}
       </div>
-      <div className="group-hover:text-primary transition-all">{content}</div>
     </div>
   );
 };

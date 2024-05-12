@@ -82,8 +82,6 @@ export default async function home({
         </div>
       </div>
       <main className=" container ">
-        {/* {collages && <Header collages={collages} />} */}
-        {/* <div className="mt-20" /> */}
         <AnimatedCard XorY="x" intialX={100}>
           <NewsBar
             className="py-8"
