@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import AnimatedCard from "./components/animated-card";
+import Statiscs from "./components/statiscs";
 
 const list = [
   "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -41,14 +42,13 @@ export default async function home({
   const dictionary = await getDictionary(lang);
   const collages = await getCollages();
   const univeristy = await getUniversity();
-  console.log(dictionary);
   return (
     <div>
       <AnimatedCard intialX={60} XorY="x">
         <Header lang={lang} collages={collages} logo={univeristy?.logo} />
       </AnimatedCard>
       <div className="bg-[url('https://www.azu.edu.ly/assets/img/hero-bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
-        <div className="z-10 min-w-full min-h-full bg-black  absolute top-0 left-0 opacity-30"></div>
+        <div className="z-10 min-w-full min-h-full bg-black  absolute top-0 left-0 opacity-40"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
           <AnimatedCard className="" XorY="x">
             <div
@@ -97,6 +97,10 @@ export default async function home({
         ) : (
           <div>لا يوجد صور بعد</div>
         )}
+        <h2 className="text-xl text-center my-2 font-bold">
+          {dictionary.pages.univeristy["overview"]["statistics"]}
+        </h2>
+        <Statiscs />
       </main>
     </div>
   );
