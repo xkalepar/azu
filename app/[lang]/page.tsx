@@ -45,9 +45,9 @@ export default async function home({
   return (
     <div>
       <AnimatedCard intialX={60} XorY="x">
-        <Header lang={lang} collages={collages} />
+        <Header lang={lang} collages={collages} logo={univeristy?.logo} />
       </AnimatedCard>
-      <div className="bg-[url('https://www.azu.edu.ly/assets/img/hero-bg.jpeg')] bg-center bg-cover h-[90vh] min-h-[90vh] relative -z-[1] container text-center">
+      <div className="bg-[url('https://www.azu.edu.ly/assets/img/hero-bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
         <div className="z-10 min-w-full min-h-full bg-black  absolute top-0 left-0 opacity-30"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
           <AnimatedCard className="" XorY="x">

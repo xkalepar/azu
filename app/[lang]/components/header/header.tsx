@@ -33,13 +33,18 @@ type Props = {
     category: $Enums.Category;
   })[];
   lang?: "ar" | "en";
+  logo?: string;
 };
 
-const Header = ({ collages, lang = "en" }: Props) => {
+const Header = ({
+  collages,
+  lang = "en",
+  logo = "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
+}: Props) => {
   return (
     <Fragment>
       <header className="flex-between w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
-        <Logo href="/" src="basic-logo.jpeg" />
+        <Logo href="/" src={logo} />
         <ParseToScreenMoreThanWidth>
           <Fragment>
             <NavigationMenuHeader collages={collages} />
