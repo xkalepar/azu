@@ -8,31 +8,20 @@ import {
 } from "@/components/ui/breadcrumb";
 import Title from "../components/title";
 import Link from "next/link";
-import { getCollages, aa } from "@/prisma/seed";
+import { getCollages } from "@/prisma/seed";
 import CardPreview from "../../components/card-preview";
-
-const collagesPage = async () => {
-  // aa();
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: "جامعة ترهونة | لوحة التحكم | الأقسام",
+};
+const page = async () => {
   const collages = await getCollages();
-  console.log(collages);
+  // console.log(collages);
   return (
     <main>
       <Title className="text-xl font-normal pr-4 pt-4" title={"الأقسام"}>
         <div className="w-full relative">
           <Breadcrumbs />
-          {/* <Link
-            href={"/dashboard/collages/new"}
-            className={cn(
-              "absolute left-2 top-2",
-              buttonVariants.default,
-              buttonVariants.variants.variant.default,
-              buttonVariants.variants.size.default
-            )}
-          >
-            كلية جديدة
-            <IoIosAdd className="mr-2 h-4 w-4" />
-          </Link> */}
         </div>
       </Title>
       <div className="px-4 py-2 grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
@@ -52,7 +41,7 @@ const collagesPage = async () => {
   );
 };
 
-export default collagesPage;
+export default page;
 const Breadcrumbs = () => {
   return (
     <Breadcrumb>

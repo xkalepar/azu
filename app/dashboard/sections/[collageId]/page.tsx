@@ -40,10 +40,10 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  const collages = await getCollages();
-  return collages.map((collage) => ({ id: collage.id }));
-}
+// export async function generateStaticParams() {
+//   const collages = await getCollages();
+//   return collages.map((collage) => ({ id: collage.id }));
+// }
 
 const collagePage = async ({ params }: { params: { collageId: string } }) => {
   const { collageId } = params;

@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+
 const page = async ({
   params,
 }: {

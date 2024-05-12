@@ -2,12 +2,8 @@
 
 import {
   ArCollageData,
-  ArContent,
   Category,
-  Collage,
   EnCollageData,
-  EnContent,
-  News,
   PrismaClient,
 } from "@prisma/client";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
