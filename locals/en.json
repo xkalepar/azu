@@ -19,7 +19,13 @@
           "title": "How to Register with Us?",
           "content": "To register at the university for academic and postgraduate studies, as well as for faculty members or participation in events."
         },
-        "gallery": "Photo Gallery"
+        "gallery": "Photo Gallery",
+        "links": {
+          "education": "Online education",
+          "library": "Digital library",
+          "admission": "Registration and Admission",
+          "archive": "Digital archive"
+        }
       }
     }
   }

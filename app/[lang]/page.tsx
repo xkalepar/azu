@@ -13,6 +13,10 @@ import { SearchIcon } from "lucide-react";
 import AnimatedCard from "./components/animated-card";
 import Statiscs from "./components/statiscs";
 import CardPreview from "../components/card-preview";
+import Link from "next/link";
+import { buttonVariants } from "@/lib/constant";
+import { ReactNode } from "react";
+import { GiTeacher } from "react-icons/gi";
 
 const list = [
   "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -103,63 +107,108 @@ export default async function home({
         <Statiscs />
         <h3 className="text-xl text-center my-2 font-bold">اخر الأخبار</h3>
         {news.length === 0 && <div>لا يوجد أخبار</div>}
-        {news.map((item, i) => (
-          <CardPreview
-            key={i}
-            title={item.arContent?.title}
-            src={item.image}
-            href={`/news/${item.id}`}
+        <div className="grid md:grid-cols-2 my-2 sm:grid-cols-3 lg:grid-cols-4">
+          {news.map((item, i) => (
+            <CardPreview
+              key={i}
+              title={item?.arContent?.title}
+              src={item.image}
+              href={`/news/${item.id}`}
+            >
+              <div className="w-full">
+                {lang === "ar"
+                  ? cutString(item.arContent?.title ?? "", 200, "المزيد")
+                  : cutString(item.enContent?.title ?? "", 200, "more")}
+              </div>
+            </CardPreview>
+          ))}
+        </div>
+        <Link
+          className={cn(
+            buttonVariants.variants.variant.link,
+            buttonVariants.variants.size.default,
+            buttonVariants.default,
+            "mx-auto w-fit mb-2"
+          )}
+          href={`${lang}/news`}
+        >
+          {dictionary.pages.univeristy.overview.allnews}
+        </Link>
+        <h3 className="text-xl text-center my-2 font-bold">روابط سريعة</h3>
+        <div className="grid md:grid-cols-2 my-2 sm:grid-cols-3 lg:grid-cols-4">
+          <FastLink
+            title={dictionary.pages.univeristy.overview.links.education}
           >
-            <div className="w-full">
-              {lang === "ar"
-                ? cutString(item.arContent?.title ?? "", 200, "المزيد")
-                : cutString(item.enContent?.title ?? "", 200, "more")}
-            </div>
-          </CardPreview>
-        ))}
+            <GiTeacher />
+          </FastLink>
+          <FastLink
+            title={dictionary.pages.univeristy.overview.links.admission}
+          >
+            <GiTeacher />
+          </FastLink>
+          <FastLink title={dictionary.pages.univeristy.overview.links.library}>
+            <GiTeacher />
+          </FastLink>
+          <FastLink title={dictionary.pages.univeristy.overview.links.archive}>
+            <GiTeacher />
+          </FastLink>
+        </div>
+        <h4 className=" font-semibold text-xs my-2">
+          {dictionary.pages.univeristy.overview.sign.title}
+        </h4>
+        <p>{dictionary.pages.univeristy.overview.sign.content}</p>
+        <Link
+          href={"/soon"}
+          className={cn(
+            buttonVariants.default,
+            buttonVariants.variants.size.default,
+            buttonVariants.variants.variant.default,
+            "my-2"
+          )}
+        >
+          من هنا
+        </Link>
+        <h3 className="text-xl text-center my-2 font-bold">الكليات</h3>
+        <div className="grid gap-1 md:grid-cols-2 my-2 sm:grid-cols-3 xl:gap-5 sm:gap-3 lg:grid-cols-4">
+          {collages?.map((collage, i) => (
+            <CardPreview
+              key={i}
+              href={`/collages/${collage.id}`}
+              src={collage.logo}
+              title={collage.ArCollageData?.title}
+            />
+          ))}
+        </div>
       </main>
     </div>
   );
 }
 
-/* 
+interface FastLinkProps {
+  href?: string;
+  title?: string;
+  children: ReactNode;
+  className?: string;
+}
 
-  <div className="w-full mt-20 h-[90vh] rounded-sm overflow-hidden">
-        <Image
-          src={"https://www.azu.edu.ly/assets/img/hero-bg.jpeg"}
-          alt={"https://www.azu.edu.ly/assets/img/hero-bg.jpeg"}
-          loading="lazy"
-          width={1000}
-          height={1000}
-          className="object-cover z-20 select-none w-full h-full scale-110 transition-all duration-300 hover:scale-100"
-        />
-        <div className="object-cover z-30 w-full h-full bg-black relative opacity-10" />
-        <div className="absolute transform-center top-1/2 text-secondary mx-auto w-full transition-all z-50 text-center  ">
-          <h1
-            className={cn(
-              "font-bold text-3xl text-primary flex  justify-center   gap-5 items-end  stroke-2 stroke-ring"
-            )}
-          >
-            <FaUniversity size={128} className="hidden md:block" />
-            <div className="flex flex-col justify-between gap-1">
-              <div className="relative">
-                <Input
-                  type="text"
-                  className=" bg-secondary text-primary hidden md:block"
-                />
-                <Button
-                  size={"icon"}
-                  className="hidden md:flex absolute left-0 top-0"
-                >
-                  <SearchIcon />
-                </Button>
-              </div>
-              {dictionary["pages"]["univeristy"]["overview"]["title"]}
-              {/* {dictionary?.pages["univeristy"]["overview"]["title"]} 
-            </div>
-          </h1>
-          {dictionary["pages"]["univeristy"]["overview"]["bio"]}
-
-          {/* <h1>{dictionary["pages"]["univeristy"]["overview"]["title"]}</h1> 
-        </div>
-      </div>*/
+const FastLink = ({
+  href = "soon",
+  title,
+  children,
+  className,
+}: FastLinkProps) => {
+  return (
+    <Link href={href} className="w-full">
+      <div
+        className={cn(
+          className,
+          "flex w-full justify-center items-center gap-2",
+          "rounded-md bg-background hover:bg-card transition-all px-4 py-2"
+        )}
+      >
+        <div>{children}</div>
+        <p>{title}</p>
+      </div>
+    </Link>
+  );
+};
