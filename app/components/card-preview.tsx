@@ -1,14 +1,21 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
-import React, { Suspense } from "react";
+import React, { ReactNode, Suspense } from "react";
 interface Props {
   src: string;
   alt?: string;
   title?: string;
   href?: string;
+  children?: ReactNode;
 }
-const CardPreview = ({ src, title, href = "/", alt = "hello" }: Props) => {
+const CardPreview = ({
+  src,
+  title,
+  href = "/",
+  alt = "hello",
+  children,
+}: Props) => {
   return (
     <Link href={href}>
       <div className="rounded-xl hover:bg-secondary transition-all h-[250px] border overflow-hidden">
@@ -25,6 +32,7 @@ const CardPreview = ({ src, title, href = "/", alt = "hello" }: Props) => {
           </Suspense>
 
           <div className="px-2 py-1">{title}</div>
+          {children}
         </div>
       </div>
     </Link>

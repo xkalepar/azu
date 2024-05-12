@@ -189,6 +189,8 @@ model News {
   enContentId         String?            @db.ObjectId
   University          University?        @relation(fields: [universityId], references: [id])
   universityId        String?            @db.ObjectId
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
 }
 
 /// [ArContent] put the data into it in  ar

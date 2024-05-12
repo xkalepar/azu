@@ -13,9 +13,17 @@ export function cn(...inputs: ClassValue[]) {
  * @param length - The maximum length of the string (default: 20).
  * @returns The parsed string.
  */
-export function cutString(content: string, length: number = 20): string {
+export function cutString(
+  content: string,
+  length: number = 20,
+  end?: string
+): string {
   if (content.length <= length) {
     return content;
+  }
+  if (end) {
+    return `${content.slice(0, length)}
+     ${end}`;
   }
   return `${content.slice(0, length)}...`;
 }

@@ -1,17 +1,18 @@
 import { Locale } from "../../i18n-config";
 import NewsBar from "./components/news/newsBar";
 import ImageGridView from "./components/image-grid-view";
-import { getCollages, getUniversity } from "@/prisma/seed";
+import { getCollages, getUniNews, getUniversity } from "@/prisma/seed";
 import Header from "./components/header/header";
 import Image from "next/image";
 import { getDictionary } from "@/get-dictionary";
-import { cn } from "@/lib/utils";
+import { cn, cutString } from "@/lib/utils";
 import { FaUniversity } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { SearchIcon } from "lucide-react";
 import AnimatedCard from "./components/animated-card";
 import Statiscs from "./components/statiscs";
+import CardPreview from "../components/card-preview";
 
 const list = [
   "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -42,6 +43,7 @@ export default async function home({
   const dictionary = await getDictionary(lang);
   const collages = await getCollages();
   const univeristy = await getUniversity();
+  const news = await getUniNews({ ar: lang === "ar", take: 6 });
   return (
     <div>
       <AnimatedCard intialX={60} XorY="x">
@@ -70,7 +72,7 @@ export default async function home({
                     <SearchIcon />
                   </Button>
                 </div>
-                <h1 className="text-3xl">
+                <h1 className="text-3xl my-2">
                   {dictionary["pages"]["univeristy"]["overview"]["title"]}
                 </h1>
               </div>
@@ -99,6 +101,22 @@ export default async function home({
           {dictionary.pages.univeristy["overview"]["statistics"]}
         </h2>
         <Statiscs />
+        <h3 className="text-xl text-center my-2 font-bold">اخر الأخبار</h3>
+        {news.length === 0 && <div>لا يوجد أخبار</div>}
+        {news.map((item, i) => (
+          <CardPreview
+            key={i}
+            title={item.arContent?.title}
+            src={item.image}
+            href={`/news/${item.id}`}
+          >
+            <div className="w-full">
+              {lang === "ar"
+                ? cutString(item.arContent?.title ?? "", 200, "المزيد")
+                : cutString(item.enContent?.title ?? "", 200, "more")}
+            </div>
+          </CardPreview>
+        ))}
       </main>
     </div>
   );

@@ -85,9 +85,6 @@ export const getUniversity = unstable_cache(
           data: {
             logo: "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
           },
-          include: {
-            News: true,
-          },
         });
         if (!newUniversity) {
           return undefined;
@@ -102,6 +99,68 @@ export const getUniversity = unstable_cache(
   },
   ["university", "news"],
   { tags: ["university", "news"] }
+);
+
+export const getUniNews = unstable_cache(
+  async ({
+    take = 3,
+    query,
+    ar = true,
+  }: {
+    ar: boolean;
+    take: number;
+    query?: string;
+  }) => {
+    try {
+      let news = [];
+      if (ar) {
+        news = await prisma.news.findMany({
+          where: {
+            universityId: uniId,
+            AND: {
+              arContent: {
+                body: {
+                  contains: query,
+                },
+              },
+            },
+          },
+
+          take: take,
+          include: {
+            arContent: true,
+            enContent: true,
+          },
+          orderBy: { createdAt: "asc" },
+        });
+      } else {
+        news = await prisma.news.findMany({
+          where: {
+            universityId: uniId,
+            AND: {
+              enContent: {
+                body: {
+                  contains: query,
+                },
+              },
+            },
+          },
+          take: take,
+          include: {
+            arContent: true,
+            enContent: true,
+          },
+        });
+      }
+      if (!news) {
+        return [];
+      }
+      return news;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
 );
 
 export const newCollage = async ({
