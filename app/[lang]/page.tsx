@@ -18,6 +18,8 @@ import { ReactNode } from "react";
 import { GiTeacher } from "react-icons/gi";
 import Lang from "./components/lang";
 import ParseData from "../components/parse-data";
+import HomeFooter from "./components/footers/home-footer";
+import { SocialMedia } from "@prisma/client";
 
 export default async function home({
   params: { lang },
@@ -222,6 +224,10 @@ export default async function home({
           }
         </div>
       </main>
+      <HomeFooter
+        socialMedia={univeristy?.SocialMedia as SocialMedia}
+        lang={lang}
+      ></HomeFooter>
     </div>
   );
 }

@@ -78,7 +78,12 @@ export const getUniversity = unstable_cache(
   async () => {
     try {
       const university = await prisma.university.findFirst({
-        include: { News: true, ArContent: true, EnContent: true },
+        include: {
+          News: true,
+          ArContent: true,
+          EnContent: true,
+          SocialMedia: true,
+        },
       });
       if (!university) {
         const newUniversity = await prisma.university.create({

@@ -112,12 +112,15 @@ const CollageMenu = ({ collages }: Props) => {
     (collage) => collage.category === category
   );
   return (
-    <NavigationMenuItem>
+    <NavigationMenuItem dir={lang === "ar" ? "rtl" : "ltr"}>
       <NavigationMenuTrigger>
         <Lang lang={lang} ar={"الكليات"} en={"collages"} />
       </NavigationMenuTrigger>
-      <NavigationMenuContent>
-        <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+      <NavigationMenuContent dir={lang === "ar" ? "rtl" : "ltr"}>
+        <ul
+          className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] "
+          dir={lang === "ar" ? "rtl" : "ltr"}
+        >
           {!showCollages && lang === "ar"
             ? arCategories.map((component, index) => (
                 <div

@@ -16,7 +16,8 @@ import { useState } from "react";
 import { $Enums, Category } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
-import { NavigationMenuLink } from "@/components/ui/navigation-menu";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import ToggleLangauge from "./toggle-lang";
 const arCategories: { title: string; value: Category }[] = [
   {
     title: "العلوم الاساسية و التطبيقية",
@@ -72,11 +73,7 @@ type Lang = "ar" | "en";
 export default function MobileNavigationBar({ collages }: Props) {
   const [open, setOpen] = useState(false);
   const { lang }: { lang: Lang } = useParams();
-  const [showCollages, setShowCollages] = useState<Boolean>(false);
-  const [category, setCategory] = useState<Category>("one");
-  const filteredCollages = collages.filter(
-    (collage) => collage.category === category
-  );
+
   function filterCollages(selectedCategory: Category) {
     const filteredCollages = collages.filter(
       (collage) => collage.category === selectedCategory
@@ -90,86 +87,93 @@ export default function MobileNavigationBar({ collages }: Props) {
           <FaBars />
         </Button>
       </SheetTrigger>
-      <SheetContent className="min-h-screen max-h-fit">
-        <div className="grid gap-4 py-4"></div>
-        <Accordion type="multiple" className="w-full">
-          <AccordionItem
-            onClick={() => setOpen(!open)}
-            value="item-1"
-            className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
-          >
-            <Link href={`/`}>الرئيسية</Link>
-          </AccordionItem>
-          <AccordionItem
-            value="item-1"
-            className=" border-none bg-secondary w-full px-2 rounded-md"
-          >
-            <AccordionTrigger>
-              <Lang lang={lang} ar={"الكليات"} en={"collages"} />
-            </AccordionTrigger>
-            <AccordionContent className=" w-4/5 mx-auto">
-              {arCategories.map((category, i) => {
-                return (
-                  <AccordionItem key={i} value={category.value}>
-                    <AccordionTrigger>{category.title}</AccordionTrigger>
-                    <AccordionContent>
-                      {filterCollages(category.value).map((collage, index) => (
-                        <div key={index}>
-                          <Link href={`/collages/${collage.id}`} key={index}>
-                            <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent focus:text-accent-foreground">
-                              <Avatar>
-                                <AvatarImage src={collage.logo} />
-                                <AvatarFallback>Z</AvatarFallback>
-                              </Avatar>
-                              <div>{collage.ArCollageData?.title}</div>
+      <SheetContent
+        side={lang === "ar" ? "right" : "left"}
+        className="min-h-screen max-h-screen py-10"
+      >
+        <ScrollArea
+          dir={lang === "ar" ? "rtl" : "ltr"}
+          className="h-full w-full relative rounded-md"
+        >
+          <Accordion type="multiple" className="w-full">
+            <ToggleLangauge />
+            <AccordionItem
+              onClick={() => setOpen(!open)}
+              value="item-1"
+              className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
+            >
+              <Link href={`/${lang}`}>
+                <Lang lang={lang} ar={"الرئيسية"} en={"main"} />
+              </Link>
+            </AccordionItem>
+            <AccordionItem
+              onClick={() => setOpen(!open)}
+              value="item-1"
+              className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
+            >
+              <Link href={`/${lang}/university-info`}>
+                <Lang
+                  lang={lang}
+                  ar={"عن الجامعة"}
+                  en={"About The University"}
+                />
+              </Link>
+            </AccordionItem>
+            <AccordionItem
+              value="item-1"
+              className=" border-none bg-secondary w-full px-2 rounded-md"
+            >
+              <AccordionTrigger>
+                <Lang lang={lang} ar={"الكليات"} en={"collages"} />
+              </AccordionTrigger>
+              <AccordionContent className=" w-4/5 mx-auto my-2">
+                {arCategories.map((category, i) => {
+                  return (
+                    <AccordionItem key={i} value={category.value}>
+                      <AccordionTrigger>
+                        <Lang
+                          lang={lang}
+                          ar={arCategories[i].title}
+                          en={enCategories[i].title}
+                        />
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        {filterCollages(category.value).map(
+                          (collage, index) => (
+                            <div onClick={() => setOpen(!open)} key={index}>
+                              <Link
+                                href={`${lang}/collages/${collage.id}`}
+                                key={index}
+                              >
+                                <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent focus:text-accent-foreground">
+                                  <Avatar>
+                                    <AvatarImage src={collage.logo} />
+                                    <AvatarFallback>Z</AvatarFallback>
+                                  </Avatar>
+                                  <Lang
+                                    lang={lang}
+                                    ar={
+                                      <div>{collage.ArCollageData?.title}</div>
+                                    }
+                                    en={
+                                      <div>{collage.EnCollageData?.title}</div>
+                                    }
+                                  />
+                                </div>
+                                {/* <Separator className="my-0" /> */}
+                              </Link>
                             </div>
-                            {/* <Separator className="my-0" /> */}
-                          </Link>
-                        </div>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                );
-              })}
-              <AccordionItem value="item1">
-                <AccordionTrigger>Is it styled?</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It comes with default styles that matches the other
-                  components&apos; aesthetic.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item2">
-                <AccordionTrigger>Is it styled?</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It comes with default styles that matches the other
-                  components&apos; aesthetic.
-                </AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="item3">
-                <AccordionTrigger>Is it styled?</AccordionTrigger>
-                <AccordionContent>
-                  Yes. It comes with default styles that matches the other
-                  components&apos; aesthetic.
-                </AccordionContent>
-              </AccordionItem>
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-2">
-            <AccordionTrigger>Is it styled?</AccordionTrigger>
-            <AccordionContent>
-              Yes. It comes with default styles that matches the other
-              components&apos; aesthetic.
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value="item-3">
-            <AccordionTrigger>Is it animated?</AccordionTrigger>
-            <AccordionContent>
-              Yes. It's animated by default, but you can disable it if you
-              prefer.
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        {/* <SheetFooter></SheetFooter> */}
+                          )
+                        )}
+                      </AccordionContent>
+                    </AccordionItem>
+                  );
+                })}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+          {/* <SheetFooter></SheetFooter> */}
+        </ScrollArea>
       </SheetContent>
     </Sheet>
   );

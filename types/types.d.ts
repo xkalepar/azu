@@ -20,3 +20,5 @@ type CollageType = {
     category: Category;
   })[];
 };
+
+type Lang = "ar" | "en";

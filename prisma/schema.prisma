@@ -8,14 +8,16 @@ generator client {
 }
 
 model University {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  logo        String
-  gallery     String[]
-  News        News[]
-  ArContent   ArContent? @relation(fields: [arContentId], references: [id])
-  arContentId String?    @db.ObjectId
-  EnContent   EnContent? @relation(fields: [enContentId], references: [id])
-  enContentId String?    @db.ObjectId
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  logo          String
+  gallery       String[]
+  News          News[]
+  ArContent     ArContent?   @relation(fields: [arContentId], references: [id])
+  arContentId   String?      @db.ObjectId
+  EnContent     EnContent?   @relation(fields: [enContentId], references: [id])
+  enContentId   String?      @db.ObjectId
+  SocialMedia   SocialMedia? @relation(fields: [socialMediaId], references: [id])
+  socialMediaId String?      @db.ObjectId
 }
 
 model Collage {
@@ -167,17 +169,20 @@ model Statics {
 }
 
 model SocialMedia {
-  id       String    @id @default(auto()) @map("_id") @db.ObjectId
-  facebook String?
-  whatsapp String?
-  youtube  String?
-  email    String?
-  telegram String?
-  phone1   String?
-  phone2   String?
-  fax      String?
-  X        String?
-  Collage  Collage[]
+  id         String       @id @default(auto()) @map("_id") @db.ObjectId
+  facebook   String?
+  whatsapp   String?
+  youtube    String?
+  email      String?
+  telegram   String?
+  phone1     String?
+  phone2     String?
+  fax        String?
+  X          String?
+  address    String?
+  locainote  String?
+  Collage    Collage[]
+  University University[]
 }
 
 model News {

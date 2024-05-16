@@ -1,240 +1,78 @@
 import { cn } from "@/lib/utils";
-import Statiscs from "../components/statiscs";
 import AnimatedCard from "../components/animated-card";
-import ImageGridView from "../components/image-grid-view";
-import { Skeleton } from "@/components/ui/skeleton";
-import Image from "next/image";
 
 import { Suspense } from "react";
-import Footer from "../components/footer";
-const list = [
-  "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714041691623-35d1b8c5e28b?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-];
-const page = async () => {
+import Header from "../components/header/header";
+import { getDictionary } from "@/get-dictionary";
+import { getCollages, getUniversity } from "@/prisma/seed";
+import HomeFooter, { getDir } from "../components/footers/home-footer";
+import { SocialMedia } from "@prisma/client";
+import ParseData from "@/app/components/parse-data";
+import Lang from "../components/lang";
+
+export const metadata = {
+  title: "حول جامعة الزيتونة",
+  description: "تأسيس و كلمة مدير الجامعة و غيرها",
+};
+
+const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
+  const { lang } = params;
+  const dictionary = await getDictionary(lang);
+  const collages = await getCollages();
+  const univeristy = await getUniversity();
+
   return (
-    <main className=" w-full mx-auto px-4 sm:px-8 md:px-12 xl:px-40" dir="rtl">
-      <section className={cn("mt-4 ")}>
-        <div
-          id="#overview"
-          className="flex flex-col-reverse sm:flex-row gap-4 my-3"
+    <main className="min-h-screen" dir="rtl">
+      <AnimatedCard intialX={60} XorY="x">
+        <Header lang={lang} collages={collages} logo={univeristy?.logo} />
+      </AnimatedCard>
+      <section className={cn("mt-20")}>
+        <Suspense
+          fallback={
+            <div className="h-full w-full justify-center items-center flex">
+              <div role="status">
+                <svg
+                  aria-hidden="true"
+                  className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-primary"
+                  viewBox="0 0 100 101"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill"
+                  />
+                </svg>
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div>
+          }
         >
-          <div className="flex-0 sm:w-3/4 sm:text-justify">
-            <h1 className="group mb-4 font-bold text-xl transition-all hover:text-primary w-fit">
-              <span className=" hidden group-hover:inline-block transition-all">
-                #
-              </span>{" "}
-              تأسيس الجامعة{""}
-            </h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-              asperiores nihil, rem soluta vero autem aspernatur commodi
-              laudantium in. Omnis mollitia neque, iure repellendus eligendi
-              deleniti animi fugiat eius ducimus? Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Neque asperiores nihil, rem soluta
-              vero autem aspernatur commodi laudantium in. Omnis mollitia neque,
-              iure repellendus eligendi deleniti animi fugiat eius ducimus?
-            </p>
-          </div>
-
-          <div className="w-full h-[300px] rounded-sm overflow-hidden my-2">
-            <Suspense fallback={<Skeleton className="w-full h-full" />}>
-              <Image
-                src={list[0]}
-                alt={list[0]}
-                loading="lazy"
-                width={1000}
-                height={1000}
-                className=" object-cover w-full h-full"
+          <Lang
+            ar={
+              <ParseData
+                dir={getDir(lang)}
+                content={univeristy?.ArContent?.body ?? ""}
               />
-            </Suspense>
-          </div>
-        </div>
-        <div id="#goals">
-          <div className="my-4" />
-          <h2 className="group  mb-4 font-bold text-xl  hover:text-primary w-fit">
-            <span className="hidden group-hover:inline-block transition-all">
-              #
-            </span>{" "}
-            رؤية و رسالة و اهداف الجامعة{" "}
-          </h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque
-            asperiores nihil, rem soluta vero autem aspernatur commodi
-            laudantium in. Omnis mollitia neque, iure repellendus eligendi
-            deleniti animi fugiat eius ducimus?
-          </p>
-        </div>
-        <div id="#statiscs">
-          <div className="my-4" />
-          <Statiscs>
-            <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
-              <span className="hidden group-hover:inline-block transition-all">
-                #
-              </span>{" "}
-              احصائيات الجامعة{" "}
-            </h3>
-          </Statiscs>
-        </div>
-        <div id="#rating">
-          <div className="my-4" />
-          <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
-            <span className="hidden group-hover:inline-block transition-all">
-              #
-            </span>{" "}
-            الأعتماد و التصنيف{" "}
-          </h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-            nihil ullam excepturi, odio, dolorum quos amet expedita culpa
-            commodi, provident reiciendis repudiandae dicta eaque pariatur
-            quaerat eius tempora temporibus modi.
-          </p>
-        </div>
-        {/*  */}
-        <div id="#management">
-          <div className="my-4" />
-          <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
-            <span className="hidden group-hover:inline-block transition-all">
-              #
-            </span>{" "}
-            رئاسة الجامعة
-          </h3>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-            nihil ullam excepturi, odio, dolorum quos amet expedita culpa
-            commodi, provident reiciendis repudiandae dicta eaque pariatur
-            quaerat eius tempora temporibus modi.
-          </p>
-        </div>
-        <AnimatedCard>
-          {/*  */}
-          <div id="#desk">
-            <div className="my-4" />
-            <h3
-              id="#desk"
-              className="group  mb-4 font-bold text-xl hover:text-primary w-fit"
-            >
-              <span className="hidden group-hover:inline-block transition-all">
-                #
-              </span>{" "}
-              مكتب الجامعة
-            </h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Architecto nihil ullam excepturi, odio, dolorum quos amet expedita
-              culpa commodi, provident reiciendis repudiandae dicta eaque
-              pariatur quaerat eius tempora temporibus modi.
-            </p>
-          </div>
-        </AnimatedCard>
-
-        <AnimatedCard>
-          {/*  */}
-          <div id="#desksetup">
-            <div className="my-4" />
-            <h3
-              id="#desksetup"
-              className="group  mb-4 font-bold text-xl hover:text-primary w-fit"
-            >
-              <span className="hidden group-hover:inline-block transition-all">
-                #
-              </span>{" "}
-              مكتب شؤون مجلس الجامعة
-            </h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Architecto nihil ullam excepturi, odio, dolorum quos amet expedita
-              culpa commodi, provident reiciendis repudiandae dicta eaque
-              pariatur quaerat eius tempora temporibus modi.
-            </p>
-          </div>
-        </AnimatedCard>
-
-        <AnimatedCard>
-          {/*  */}
-          <div id="#shoon">
-            <div className="my-4" />
-            <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
-              <span className="hidden group-hover:inline-block transition-all">
-                #
-              </span>{" "}
-              وكيل الجامعة للشؤون العلمية
-            </h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Architecto nihil ullam excepturi, odio, dolorum quos amet expedita
-              culpa commodi, provident reiciendis repudiandae dicta eaque
-              pariatur quaerat eius tempora temporibus modi.
-            </p>
-          </div>
-        </AnimatedCard>
-
-        <AnimatedCard>
-          {/*  */}
-          <div id="#structure">
-            <div className="my-4" />
-            <h3 className="group  mb-4 font-bold text-xl hover:text-primary w-fit">
-              <span className="hidden group-hover:inline-block transition-all">
-                #
-              </span>{" "}
-              الهيكل التنظيمي للجامعة
-            </h3>
-            <p>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Architecto nihil ullam excepturi, odio, dolorum quos amet expedita
-              culpa commodi, provident reiciendis repudiandae dicta eaque
-              pariatur quaerat eius tempora temporibus modi.
-            </p>
-            {/* ################ */}
-          </div>
-        </AnimatedCard>
-
-        <AnimatedCard>
-          <div id="#lists">
-            <div className="my-4" />
-            <h3
-              id="#lists"
-              className="group  mb-4 font-bold text-xl hover:text-primary w-fit"
-            >
-              <span className="hidden group-hover:inline-block transition-all">
-                #
-              </span>{" "}
-              سياسات و لوائح
-            </h3>
-            <ol className=" mx-2">
-              <li>
-                <h4 className="my-1 font-medium">1- سياسات و لوائح</h4>
-                <p className=" mx-1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero
-                  perspiciatis tempore voluptatibus officiis totam temporibus
-                  maiores esse quisquam! Sit perferendis minus recusandae!
-                </p>
-              </li>
-              <li>
-                <h4 className="my-1 font-medium">2- اللوائح</h4>
-                <p className=" mx-1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero
-                  perspiciatis tempore voluptatibus officiis totam temporibus
-                  maiores esse quisquam! Sit perferendis minus recusandae!
-                </p>
-              </li>
-              <li>
-                <h4 className="my-1 font-medium">3- اتفاقيات الجامعة</h4>
-                <p className=" mx-1">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero
-                  perspiciatis tempore voluptatibus officiis totam temporibus
-                  maiores esse quisquam! Sit perferendis minus recusandae!
-                </p>
-              </li>
-            </ol>
-          </div>
-        </AnimatedCard>
-        <Footer />
-        {/*  */}
+            }
+            en={
+              <ParseData
+                dir={getDir(lang)}
+                content={univeristy?.EnContent?.body ?? ""}
+              />
+            }
+            lang={lang}
+          />
+        </Suspense>
       </section>
-      <section></section>
+      <HomeFooter
+        lang={lang}
+        socialMedia={univeristy?.SocialMedia as SocialMedia}
+      />
     </main>
   );
 };
