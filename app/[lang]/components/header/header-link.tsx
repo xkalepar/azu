@@ -4,7 +4,6 @@ import * as React from "react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-// import { Icons } from "@/components/icons";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,12 +13,14 @@ import {
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { FaUniversity } from "react-icons/fa";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Category } from "@prisma/client";
+import { useParams, usePathname } from "next/navigation";
+import { useEffect } from "react";
+import Lang from "../lang";
 
 type Props = {
   collages: ({
@@ -43,6 +44,13 @@ type Props = {
 };
 
 export function NavigationMenuHeader({ collages }: Props) {
+  const pathName = usePathname();
+  const { lang } = useParams();
+  useEffect(() => {
+    console.log("pathName " + pathName);
+    console.log("lang " + lang);
+  }, [pathName, lang]);
+
   return (
     <NavigationMenu dir="rtl">
       <NavigationMenuList>
@@ -67,7 +75,7 @@ export function NavigationMenuHeader({ collages }: Props) {
   );
 }
 
-const categories: { title: string; value: Category }[] = [
+const arCategories: { title: string; value: Category }[] = [
   {
     title: "العلوم الاساسية و التطبيقية",
     value: "one",
@@ -81,8 +89,23 @@ const categories: { title: string; value: Category }[] = [
     value: "three",
   },
 ];
-
+const enCategories: { title: string; value: Category }[] = [
+  {
+    title: "Basic and Applied Sciences",
+    value: "one",
+  },
+  {
+    title: "Humanities",
+    value: "two",
+  },
+  {
+    title: "Medical Sciences and Allied Health Sciences",
+    value: "three",
+  },
+];
+type Lang = "ar" | "en";
 const CollageMenu = ({ collages }: Props) => {
+  const { lang }: { lang: Lang } = useParams();
   const [showCollages, setShowCollages] = React.useState<Boolean>(false);
   const [category, setCategory] = React.useState<Category>("one");
   const filteredCollages = collages.filter(
@@ -90,57 +113,106 @@ const CollageMenu = ({ collages }: Props) => {
   );
   return (
     <NavigationMenuItem>
-      <NavigationMenuTrigger>الكليات</NavigationMenuTrigger>
+      <NavigationMenuTrigger>
+        <Lang lang={lang} ar={"الكليات"} en={"collages"} />
+      </NavigationMenuTrigger>
       <NavigationMenuContent>
         <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-          {!showCollages &&
-            categories.map((component, index) => (
-              <div
-                onClick={() => {
-                  setShowCollages(!showCollages);
-                  setCategory(component.value);
-                }}
-                key={index}
-                className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-              >
-                <div> {component.title}</div>
-                <div>
-                  <ArrowLeftIcon className="transition-all group-hover:scale-110" />
-                </div>
-              </div>
-            ))}
-          {showCollages && (
-            <>
-              <div className="w-full flex gap-2 items-center">
-                {" "}
-                <Button
-                  onClick={() => setShowCollages(!showCollages)}
-                  variant={"ghost"}
-                  size={"icon"}
+          {!showCollages && lang === "ar"
+            ? arCategories.map((component, index) => (
+                <div
+                  onClick={() => {
+                    setShowCollages(!showCollages);
+                    setCategory(component.value);
+                  }}
+                  key={index}
+                  className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                 >
-                  <ArrowRightIcon />
-                </Button>
-                <div>
-                  {categories.filter((c) => c.value === category)[0].title}
+                  <div> {component.title}</div>
+                  <div>
+                    <ArrowLeftIcon className="transition-all group-hover:scale-110" />
+                  </div>
                 </div>
-              </div>
-              {/* <Separator /> */}
-              {filteredCollages.map((collage, index) => (
-                <NavigationMenuLink asChild key={index}>
-                  <Link href={`/collages/${collage.id}`} key={index}>
-                    <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                      <Avatar>
-                        <AvatarImage src={collage.logo} />
-                        <AvatarFallback>Z</AvatarFallback>
-                      </Avatar>
-                      <div>{collage.ArCollageData?.title}</div>
-                    </div>
-                    <Separator className="my-0" />
-                  </Link>
-                </NavigationMenuLink>
+              ))
+            : enCategories.map((component, index) => (
+                <div
+                  onClick={() => {
+                    setShowCollages(!showCollages);
+                    setCategory(component.value);
+                  }}
+                  key={index}
+                  className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                >
+                  <div> {component.title}</div>
+                  <div>
+                    <ArrowLeftIcon className="transition-all group-hover:scale-110" />
+                  </div>
+                </div>
               ))}
-            </>
-          )}
+          {showCollages &&
+            (lang === "ar" ? (
+              <>
+                <div className="w-full flex gap-2 items-center">
+                  {" "}
+                  <Button
+                    onClick={() => setShowCollages(!showCollages)}
+                    variant={"ghost"}
+                    size={"icon"}
+                  >
+                    <ArrowRightIcon />
+                  </Button>
+                  <div>
+                    {arCategories.filter((c) => c.value === category)[0].title}
+                  </div>
+                </div>
+                {/* <Separator /> */}
+                {filteredCollages.map((collage, index) => (
+                  <NavigationMenuLink asChild key={index}>
+                    <Link href={`/collages/${collage.id}`} key={index}>
+                      <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Avatar>
+                          <AvatarImage src={collage.logo} />
+                          <AvatarFallback>Z</AvatarFallback>
+                        </Avatar>
+                        <div>{collage.ArCollageData?.title}</div>
+                      </div>
+                      <Separator className="my-0" />
+                    </Link>
+                  </NavigationMenuLink>
+                ))}
+              </>
+            ) : (
+              <>
+                <div className="w-full flex gap-2 items-center">
+                  {" "}
+                  <Button
+                    onClick={() => setShowCollages(!showCollages)}
+                    variant={"ghost"}
+                    size={"icon"}
+                  >
+                    <ArrowRightIcon />
+                  </Button>
+                  <div>
+                    {enCategories.filter((c) => c.value === category)[0].title}
+                  </div>
+                </div>
+                {/* <Separator /> */}
+                {filteredCollages.map((collage, index) => (
+                  <NavigationMenuLink asChild key={index}>
+                    <Link href={`${lang}/collages/${collage.id}`} key={index}>
+                      <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                        <Avatar>
+                          <AvatarImage src={collage.logo} />
+                          <AvatarFallback>Z</AvatarFallback>
+                        </Avatar>
+                        <div>{collage.EnCollageData?.title}</div>
+                      </div>
+                      <Separator className="my-0" />
+                    </Link>
+                  </NavigationMenuLink>
+                ))}
+              </>
+            ))}
         </ul>
       </NavigationMenuContent>
     </NavigationMenuItem>

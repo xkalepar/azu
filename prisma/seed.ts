@@ -78,7 +78,7 @@ export const getUniversity = unstable_cache(
   async () => {
     try {
       const university = await prisma.university.findFirst({
-        include: { News: true },
+        include: { News: true, ArContent: true, EnContent: true },
       });
       if (!university) {
         const newUniversity = await prisma.university.create({
@@ -97,55 +97,137 @@ export const getUniversity = unstable_cache(
       return undefined;
     }
   },
-  ["university", "news"],
-  { tags: ["university", "news"] }
+  ["university"],
+  { tags: ["university"] }
 );
+
+export const editUniversity = async ({
+  body,
+  title,
+  enBody,
+  enTitle,
+}: {
+  body: string;
+  title: string;
+  enTitle: string;
+  enBody: string;
+}): Promise<{ message: string }> => {
+  try {
+    const oldUni = await prisma.university.findUnique({
+      where: { id: uniId },
+      include: { ArContent: true, EnContent: true },
+    });
+    let uni;
+    if (oldUni?.ArContent?.id === undefined || oldUni?.EnContent?.id) {
+      uni = await prisma.university.update({
+        where: {
+          id: uniId,
+        },
+        data: {
+          ArContent: {
+            create: {
+              title: title,
+              body: body,
+            },
+          },
+          EnContent: {
+            create: {
+              body: enBody,
+              title: enTitle,
+            },
+          },
+        },
+      });
+    } else {
+      uni = await prisma.university.update({
+        where: {
+          id: uniId,
+        },
+        data: {
+          ArContent: {
+            update: {
+              where: { id: oldUni?.ArContent?.id },
+              data: {
+                title: title,
+                body: body,
+              },
+            },
+          },
+          EnContent: {
+            update: {
+              where: { id: oldUni?.EnContent?.id },
+              data: {
+                title: enTitle,
+                body: enBody,
+              },
+            },
+          },
+        },
+      });
+    }
+    revalidatePath("/");
+    revalidateTag("university");
+    if (!uni) {
+      return { message: "فشل التعديل" };
+    }
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    return { message: "فشل التعديل" };
+  }
+};
 
 export const getUniNews = unstable_cache(
   async ({
-    take = 3,
+    page = 1,
+    take = 20,
     query,
     ar = true,
   }: {
     ar: boolean;
-    take: number;
+    page?: number;
     query?: string;
+    take?: number;
   }) => {
     try {
+      console.log(`take: ${take}`);
+      console.log(`take: ${page}`);
+      console.log(`take*page: ${page * take}`);
       let news = [];
       if (ar) {
         news = await prisma.news.findMany({
           where: {
             universityId: uniId,
-            AND: {
-              arContent: {
-                body: {
-                  contains: query,
-                },
-              },
-            },
+            // AND: {
+            //   arContent: {
+            //     body: {
+            //       contains: query,
+            //     },
+            //   },
+            // },
           },
-
           take: take,
+          skip: page === 1 ? 0 : page * take,
           include: {
             arContent: true,
             enContent: true,
           },
           orderBy: { createdAt: "asc" },
         });
+        console.log("news " + news.length);
       } else {
         news = await prisma.news.findMany({
           where: {
             universityId: uniId,
-            AND: {
-              enContent: {
-                body: {
-                  contains: query,
-                },
-              },
-            },
+            // AND: {
+            //   enContent: {
+            //     body: {
+            //       contains: query,
+            //     },
+            //   },
+            // },
           },
           take: take,
+          skip: page === 1 ? 0 : page * take,
           include: {
             arContent: true,
             enContent: true,
@@ -153,14 +235,19 @@ export const getUniNews = unstable_cache(
         });
       }
       if (!news) {
+        console.log("error1");
         return [];
       }
+
       return news;
     } catch (error) {
+      console.log("error");
       console.log(error);
       return [];
     }
-  }
+  },
+  ["uniNews", "university"],
+  { tags: ["uniNews", "university"] }
 );
 
 export const newCollage = async ({
@@ -713,6 +800,109 @@ export const aa = async () => {
   // await prisma.enCollageData.deleteMany();
   // await prisma.arCollageData.deleteMany();
   // await prisma.list.deleteMany();
-  revalidateTag("collages");
-  revalidateTag("news");
+  // await prisma.news.deleteMany();
+  // revalidateTag("university");
+  // revalidateTag("uniNews");
+  // revalidateTag("collages");
+  // revalidateTag("news");
+  // console.log("ok");
+};
+
+export const newNewsUni = async ({
+  image,
+  arContent,
+  enContent,
+}: {
+  image: string;
+  arContent: Content;
+  enContent: Content;
+}): Promise<{ message: string }> => {
+  try {
+    const newCollage = await prisma.news.create({
+      data: {
+        image,
+        arContent: {
+          create: arContent,
+        },
+        enContent: {
+          create: enContent,
+        },
+        University: {
+          connect: {
+            id: uniId,
+          },
+        },
+      },
+    });
+    console.log(newCollage);
+    if (!newCollage) {
+      return { message: "فشل انشاء خبر جديد" };
+    }
+    revalidateTag("university");
+    revalidateTag("uniNews");
+    revalidatePath("/");
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    return { message: "فشلت العملية" };
+  }
+};
+export const editNewsUni = async ({
+  image,
+  arContent,
+  enContent,
+  newsId,
+}: {
+  newsId: string;
+  image: string;
+  arContent: Content;
+  enContent: Content;
+}): Promise<{ message: string }> => {
+  try {
+    const newCollage = await prisma.news.update({
+      where: { id: newsId },
+      data: {
+        image,
+        arContent: {
+          create: arContent,
+        },
+        enContent: {
+          create: enContent,
+        },
+        University: {
+          connect: {
+            id: uniId,
+          },
+        },
+      },
+    });
+    if (!newCollage) {
+      return { message: "فشل تحديث خبر جديدة" };
+    }
+    revalidateTag("university");
+    revalidateTag("uniNews");
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    return { message: "فشلت العملية" };
+  }
+};
+export const deleteNewsUni = async ({
+  id,
+}: {
+  id: string;
+}): Promise<{ message: string }> => {
+  try {
+    const news = await prisma.news.delete({
+      where: { id },
+    });
+    if (!news) {
+      return { message: "فشل حذف الخبر " };
+    }
+    revalidateTag("university");
+    revalidateTag("uniNews");
+
+    revalidatePath("/");
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    return { message: "فشلت العملية" };
+  }
 };

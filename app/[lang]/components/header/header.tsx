@@ -6,7 +6,6 @@ import Link from "next/link";
 import { buttonVariants } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import MobileNavigationBar from "./mobile-menu-bar";
-import { CollageType } from "@/types/types";
 import {
   ParseToScreenMoreThanWidth,
   ParseToScreenLessThanWidth,
@@ -61,7 +60,7 @@ const Header = ({
           </Fragment>
         </ParseToScreenMoreThanWidth>
         <ParseToScreenLessThanWidth>
-          <MobileNavigationBar />
+          <MobileNavigationBar collages={collages} />
         </ParseToScreenLessThanWidth>
       </header>
       <Separator />

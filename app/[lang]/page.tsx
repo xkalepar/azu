@@ -3,7 +3,6 @@ import NewsBar from "./components/news/newsBar";
 import ImageGridView from "./components/image-grid-view";
 import { getCollages, getUniNews, getUniversity } from "@/prisma/seed";
 import Header from "./components/header/header";
-import Image from "next/image";
 import { getDictionary } from "@/get-dictionary";
 import { cn, cutString } from "@/lib/utils";
 import { FaUniversity } from "react-icons/fa";
@@ -17,27 +16,8 @@ import Link from "next/link";
 import { buttonVariants } from "@/lib/constant";
 import { ReactNode } from "react";
 import { GiTeacher } from "react-icons/gi";
-
-const list = [
-  "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714041691623-35d1b8c5e28b?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1705899853374-d91c048b81d2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714287687895-e90e18587188?q=80&w=1370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714151676676-7471bc1a0794?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714138068544-b43633c10649?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714138107718-baa87d3ea624?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714224806668-9d8dc105f71e?q=80&w=1370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714041691623-35d1b8c5e28b?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://plus.unsplash.com/premium_photo-1675629118284-c9eb039df8cd?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1705899853374-d91c048b81d2?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714287687895-e90e18587188?q=80&w=1370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714151676676-7471bc1a0794?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714138068544-b43633c10649?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714138107718-baa87d3ea624?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://images.unsplash.com/photo-1714224806668-9d8dc105f71e?q=80&w=1370&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-];
+import Lang from "./components/lang";
+import ParseData from "../components/parse-data";
 
 export default async function home({
   params: { lang },
@@ -47,7 +27,7 @@ export default async function home({
   const dictionary = await getDictionary(lang);
   const collages = await getCollages();
   const univeristy = await getUniversity();
-  const news = await getUniNews({ ar: lang === "ar", take: 6 });
+  const news = await getUniNews({ ar: lang === "ar", page: 1, take: 9 });
   return (
     <div>
       <AnimatedCard intialX={60} XorY="x">
@@ -76,7 +56,7 @@ export default async function home({
                     <SearchIcon />
                   </Button>
                 </div>
-                <h1 className="text-3xl my-2">
+                <h1 className="text-3xl my-4">
                   {dictionary["pages"]["univeristy"]["overview"]["title"]}
                 </h1>
               </div>
@@ -94,33 +74,72 @@ export default async function home({
             content={dictionary.pages["univeristy"]["overview"]["info"]}
           />
         </AnimatedCard>
+        <h3 className="text-xl text-center my-4 font-bold">
+          {<Lang lang={lang} ar={"معرض الصور"} en={"Gallery"} />}
+        </h3>
         {univeristy !== undefined &&
         univeristy !== null &&
         univeristy.gallery.length > 0 ? (
           <ImageGridView list={univeristy.gallery} />
         ) : (
-          <div>لا يوجد صور بعد</div>
+          <div>
+            {
+              <Lang
+                lang={lang}
+                ar={"لا يوجد صور بعد"}
+                en={"no pics have been uploaded yet"}
+              />
+            }
+          </div>
         )}
-        <h2 className="text-xl text-center my-2 font-bold">
+        <h2 className="text-xl text-center my-4 font-bold">
           {dictionary.pages.univeristy["overview"]["statistics"]}
         </h2>
         <Statiscs />
-        <h3 className="text-xl text-center my-2 font-bold">اخر الأخبار</h3>
-        {news.length === 0 && <div>لا يوجد أخبار</div>}
-        <div className="grid md:grid-cols-2 my-2 sm:grid-cols-3 lg:grid-cols-4">
+
+        <h3 className="text-xl text-center my-4 font-bold">
+          {<Lang lang={lang} ar={"اخر الأخبار"} en={"Latest News"} />}
+        </h3>
+        {news.length === 0 && (
+          <div>
+            <Lang
+              ar={"لا يوجد أخبار"}
+              en={"no news have been uploaded yet"}
+              lang={lang}
+            />
+          </div>
+        )}
+        <div className="grid md:grid-cols-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
           {news.map((item, i) => (
-            <CardPreview
-              key={i}
-              title={item?.arContent?.title}
-              src={item.image}
-              href={`/news/${item.id}`}
-            >
-              <div className="w-full">
-                {lang === "ar"
-                  ? cutString(item.arContent?.title ?? "", 200, "المزيد")
-                  : cutString(item.enContent?.title ?? "", 200, "more")}
-              </div>
-            </CardPreview>
+            <AnimatedCard key={i} XorY="x" intialX={20}>
+              <CardPreview
+                className=" min-h-[300px]"
+                title={item?.enContent?.title}
+                src={item.image}
+                lang={lang}
+                href={`/news/${item.id}`}
+              >
+                <div className="w-full my-2">
+                  {lang === "ar" ? (
+                    <ParseData
+                      content={cutString(
+                        item.arContent?.body ?? "",
+                        200,
+                        "المزيد"
+                      )}
+                    />
+                  ) : (
+                    <ParseData
+                      content={cutString(
+                        item.enContent?.body ?? "",
+                        200,
+                        "more"
+                      )}
+                    />
+                  )}
+                </div>
+              </CardPreview>
+            </AnimatedCard>
           ))}
         </div>
         <Link
@@ -134,8 +153,11 @@ export default async function home({
         >
           {dictionary.pages.univeristy.overview.allnews}
         </Link>
-        <h3 className="text-xl text-center my-2 font-bold">روابط سريعة</h3>
-        <div className="grid md:grid-cols-2 my-2 sm:grid-cols-3 lg:grid-cols-4">
+
+        <h3 className="text-xl text-center my-4 font-bold">
+          {<Lang lang={lang} ar={"روابط سريعة"} en={"Quick Access"} />}
+        </h3>
+        <div className="grid md:grid-cols-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
           <FastLink
             title={dictionary.pages.univeristy.overview.links.education}
           >
@@ -153,7 +175,7 @@ export default async function home({
             <GiTeacher />
           </FastLink>
         </div>
-        <h4 className=" font-semibold text-xs my-2">
+        <h4 className=" font-semibold text-xs my-4">
           {dictionary.pages.univeristy.overview.sign.title}
         </h4>
         <p>{dictionary.pages.univeristy.overview.sign.content}</p>
@@ -163,21 +185,41 @@ export default async function home({
             buttonVariants.default,
             buttonVariants.variants.size.default,
             buttonVariants.variants.variant.default,
-            "my-2"
+            "my-4"
           )}
         >
-          من هنا
+          <Lang ar={"من هنا"} en={"here"} lang={lang} />
         </Link>
-        <h3 className="text-xl text-center my-2 font-bold">الكليات</h3>
-        <div className="grid gap-1 md:grid-cols-2 my-2 sm:grid-cols-3 xl:gap-5 sm:gap-3 lg:grid-cols-4">
-          {collages?.map((collage, i) => (
-            <CardPreview
-              key={i}
-              href={`/collages/${collage.id}`}
-              src={collage.logo}
-              title={collage.ArCollageData?.title}
+        <h3 className="text-xl text-center my-4 font-bold">
+          {<Lang lang={lang} ar={"الكليات"} en={"Collages"} />}
+        </h3>
+        <div className="grid gap-1 md:grid-cols-2 my-4 sm:grid-cols-3 xl:gap-5 sm:gap-3 lg:grid-cols-4">
+          {
+            <Lang
+              lang={lang}
+              ar={collages?.map((collage, i) => (
+                <AnimatedCard key={i} XorY="x" intialX={i % 2 ? -20 : 20}>
+                  <CardPreview
+                    lang={lang}
+                    href={`/collages/${collage.id}`}
+                    src={collage.logo}
+                    title={collage.ArCollageData?.title}
+                  />
+                </AnimatedCard>
+              ))}
+              en={collages?.map((collage, i) => (
+                <AnimatedCard key={i} XorY="x" intialX={i % 2 ? -20 : 20}>
+                  <CardPreview
+                    lang={lang}
+                    key={i}
+                    href={`/collages/${collage.id}`}
+                    src={collage.logo}
+                    title={collage.EnCollageData?.title}
+                  />
+                </AnimatedCard>
+              ))}
             />
-          ))}
+          }
         </div>
       </main>
     </div>

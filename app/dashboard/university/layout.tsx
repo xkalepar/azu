@@ -25,10 +25,7 @@ export default function RootLayout({
               href={`/dashboard/collages/${collage.id}/teachers`}
               content="المعلمين"
             />
-            <TabLink
-              href={`/dashboard/collages/${collage.id}/news`}
-              content="الأخبار"
-            />
+            <TabLink href={`/dashboard/university/news`} content="الأخبار" />
 
             <TabLink
               href={`/dashboard/collages/${collage.id}/welcome`}

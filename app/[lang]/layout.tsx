@@ -17,6 +17,7 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
   display: "swap",
 });
 import "../globals.css";
+import { Providers } from "./theme-provider";
 // import { getCollages } from "@/prisma/seed";
 export default async function Root({
   children,
@@ -33,11 +34,9 @@ export default async function Root({
       lang={params.lang}
       dir={params.lang == "ar" ? "rtl" : "ltr"}
     >
-      {/* <Providers> */}
       <body className={cairo.className}>
         <main> {children}</main>
       </body>
-      {/* </Providers> */}
     </html>
   );
 }

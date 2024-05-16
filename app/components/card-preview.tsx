@@ -1,4 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactNode, Suspense } from "react";
@@ -8,6 +9,8 @@ interface Props {
   title?: string;
   href?: string;
   children?: ReactNode;
+  lang?: "ar" | "en";
+  className?: string;
 }
 const CardPreview = ({
   src,
@@ -15,11 +18,19 @@ const CardPreview = ({
   href = "/",
   alt = "hello",
   children,
+  lang,
+  className,
 }: Props) => {
   return (
-    <Link href={href}>
-      <div className="rounded-xl hover:bg-secondary transition-all h-[250px] border overflow-hidden">
-        <div className="w-full h-[200px] rounded-sm ">
+    <Link dir={lang === "ar" ? "rtl" : "ltr"} href={href}>
+      <div
+        dir={lang === "ar" ? "rtl" : "ltr"}
+        className={cn(
+          "rounded-xl hover:bg-secondary transition-all min-h-[250px] border overflow-hidden",
+          className
+        )}
+      >
+        <div className="w-full h-[200px] max-h-[200px] rounded-sm ">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
             <Image
               src={src}
@@ -31,8 +42,11 @@ const CardPreview = ({
             />
           </Suspense>
 
-          <div className="px-2 py-1">{title}</div>
-          {children}
+          <div className="px-2 py-1 flex-1">
+            {" "}
+            <div dir={lang === "ar" ? "rtl" : "ltr"}>{title}</div>
+            {children}
+          </div>
         </div>
       </div>
     </Link>

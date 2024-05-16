@@ -8,10 +8,14 @@ generator client {
 }
 
 model University {
-  id      String   @id @default(auto()) @map("_id") @db.ObjectId
-  logo    String
-  gallery String[]
-  News    News[]
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  logo        String
+  gallery     String[]
+  News        News[]
+  ArContent   ArContent? @relation(fields: [arContentId], references: [id])
+  arContentId String?    @db.ObjectId
+  EnContent   EnContent? @relation(fields: [enContentId], references: [id])
+  enContentId String?    @db.ObjectId
 }
 
 model Collage {
@@ -201,6 +205,7 @@ model ArContent {
   News              News[]
   ScientificSection ScientificSection[]
   SectionPage       SectionPage[]
+  University        University[]
 }
 
 /// [EnContent] put the data into it in  ar
@@ -211,6 +216,7 @@ model EnContent {
   News              News[]
   ScientificSection ScientificSection[]
   SectionPage       SectionPage[]
+  University        University[]
 }
 
 model Link {
