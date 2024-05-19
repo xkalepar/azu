@@ -22,7 +22,7 @@ model University {
 
 model Collage {
   id                                       String                                  @id @default(auto()) @map("_id") @db.ObjectId
-  logo                                     String
+  logo                                     String                                  @default("https://utfs.io/f/bb000768-6c27-41cb-9900-3718263431c2-13qw.jpg")
   ArCollageData                            ArCollageData?                          @relation(fields: [arabicId], references: [id])
   arabicId                                 String?                                 @db.ObjectId
   EnCollageData                            EnCollageData?                          @relation(fields: [englishId], references: [id])
@@ -187,7 +187,7 @@ model SocialMedia {
 
 model News {
   id                  String             @id @default(auto()) @map("_id") @db.ObjectId
-  image               String
+  image               String             @default("https://utfs.io/f/bb000768-6c27-41cb-9900-3718263431c2-13qw.jpg")
   ScientificSection   ScientificSection? @relation(fields: [scientificSectionId], references: [id])
   scientificSectionId String?            @db.ObjectId
   Collage             Collage?           @relation(fields: [collageId], references: [id])
@@ -211,6 +211,8 @@ model ArContent {
   ScientificSection ScientificSection[]
   SectionPage       SectionPage[]
   University        University[]
+  Mangzine          Mangzine[]
+  Conferences       Conferences[]
 }
 
 /// [EnContent] put the data into it in  ar
@@ -222,6 +224,8 @@ model EnContent {
   ScientificSection ScientificSection[]
   SectionPage       SectionPage[]
   University        University[]
+  Mangzine          Mangzine[]
+  Conferences       Conferences[]
 }
 
 model Link {
@@ -288,4 +292,35 @@ enum Category {
   one
   two
   three
+}
+
+model Mangzine {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  arContent   ArContent? @relation(fields: [arContentId], references: [id])
+  enContent   EnContent? @relation(fields: [enContentId], references: [id])
+  pdfUri      String?
+  arContentId String?    @db.ObjectId
+  enContentId String?    @db.ObjectId
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  logo        String     @default("https://utfs.io/f/bb000768-6c27-41cb-9900-3718263431c2-13qw.jpg")
+}
+
+model Conferences {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  pdfUri      String?
+  logo        String     @default("https://utfs.io/f/bb000768-6c27-41cb-9900-3718263431c2-13qw.jpg")
+  arContent   ArContent? @relation(fields: [arContentId], references: [id])
+  enContent   EnContent? @relation(fields: [enContentId], references: [id])
+  arContentId String?    @db.ObjectId
+  enContentId String?    @db.ObjectId
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model PdfReference {
+  id  String  @id @default(auto()) @map("_id") @db.ObjectId
+  ar  String?
+  en  String?
+  uri String?
 }

@@ -29,12 +29,3 @@ const ToggleLangauge = () => {
 };
 
 export default ToggleLangauge;
-// const originalString = "Hello, world!";
-// const substringToCut = "world";
-// const substringToReplace = "everyone";
-
-// const modifiedString = originalString.replace(
-//   substringToCut,
-//   substringToReplace
-// );
-// console.log(modifiedString); // Output:

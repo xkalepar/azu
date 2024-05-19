@@ -1,9 +1,7 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
 import { revalidateTag } from "next/cache";
-import { redirect } from "next/navigation";
-const prisma = new PrismaClient();
 
 interface newProps {
   body: string;

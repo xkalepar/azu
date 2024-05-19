@@ -21,44 +21,23 @@ export default function RootLayout({
               href={`/dashboard/university/gallery`}
               content="معرض الصور"
             />
+            <TabLink href={`/dashboard/university/news`} content="الأخبار" />
             <TabLink
-              href={`/dashboard/collages/${collage.id}/teachers`}
+              href={`/dashboard/university/news/teachers`}
               content="المعلمين"
             />
-            <TabLink href={`/dashboard/university/news`} content="الأخبار" />
 
             <TabLink
-              href={`/dashboard/collages/${collage.id}/welcome`}
-              content="ترحيب"
-            />
-
-            <TabLink
-              href={`/dashboard/collages/${collage.id}/offices-and-administrative-departments`}
-              content="المكاتب والأقسام الإدارية"
-            />
-            <TabLink
-              href={`/dashboard/collages/${collage.id}/links`}
+              href={`/dashboard/university/links`}
               content="روابط خارجية"
             />
             <TabLink
-              href={`/dashboard/sections/${collage.id}`}
-              content="الأقسام العلمية"
+              href={`/dashboard/university/magazines`}
+              content="المجلات"
             />
             <TabLink
-              href={`/dashboard/collages/${collage.id}/graduate-studies`}
-              content="الدراسات العليا"
-            />
-            <TabLink
-              href={`/dashboard/collages/${collage.id}/forms-and-applications`}
-              content="نماذج واستمارات"
-            />
-            <TabLink
-              href={`/dashboard/collages/${collage.id}/social-media`}
-              content="social media"
-            />
-            <TabLink
-              href={`/dashboard/collages/${collage.id}/statics`}
-              content="إحصائيات"
+              href={`/dashboard/university/conferences`}
+              content="المؤتمرات"
             />
           </NavigationTabs>
         </div>{" "}
@@ -67,3 +46,33 @@ export default function RootLayout({
     </main>
   );
 }
+
+const Breadcrumbs = () => {
+  return (
+    <Breadcrumb>
+      <BreadcrumbList>
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href="/">الرئيسية</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href="/dashboard">لوحة التحكم</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href="/dashboard/university">الجامعة</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>معرض الصور</BreadcrumbPage>
+        </BreadcrumbItem>
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
+};

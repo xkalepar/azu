@@ -16,6 +16,9 @@ import { Button } from "@/components/ui/button";
 import { DeleteIcon, Edit2 } from "lucide-react";
 import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
 import DeleteNewsForm from "../../components/forms";
+import { getMagazine, getMagazines } from "../seed";
+import DeleteMagazineForm from "../components/forms";
+import { FaFilePdf } from "react-icons/fa6";
 
 /* export async function generateMetadata({
   params,
@@ -35,21 +38,24 @@ import DeleteNewsForm from "../../components/forms";
   };
 } */
 
-const newsPage = async ({ params }: { params: { newsId: string } }) => {
-  const { newsId } = params;
-  const news = await getNewsbyId(newsId);
-  if (news === undefined) {
+const newsPage = async ({ params }: { params: { id: string } }) => {
+  const { id } = params;
+  const magazine = await getMagazine({ id });
+  if (magazine === undefined) {
     return notFound();
   }
 
   return (
     <section className=" relative ">
-      <Breadcrumbs title={news?.arContent?.title} />
+      <Breadcrumbs title={magazine?.arContent?.title} />
 
       <div className="relative">
-        <div className=" absolute gap-2 left-2 top-2 flex-between" dir="rtl">
+        <div
+          className="absolute z-50 gap-2 left-2 top-2 flex-between"
+          dir="rtl"
+        >
           <Link
-            href={`${newsId}/edit`}
+            href={`${id}/edit`}
             className={cn(
               buttonVariants.variants.variant.ghost,
               buttonVariants.variants.size.icon,
@@ -66,15 +72,29 @@ const newsPage = async ({ params }: { params: { newsId: string } }) => {
               </Button>
             }
             dialogTitle=""
-            dialogDescription={`هل أنت متأكد من حذف ${news.arContent?.title}`}
+            dialogDescription={`هل أنت متأكد من حذف ${magazine.arContent?.title}`}
           >
-            <DeleteNewsForm
-              enContent={news.enContent?.body}
-              content={news.arContent?.body}
+            <DeleteMagazineForm
+              arId={magazine.arContent?.id ?? ""}
+              enId={magazine.enContent?.id ?? ""}
+              id={magazine.id}
             />
           </ResponiseDialog>
+
+          {magazine.pdfUri !== null && magazine.pdfUri !== undefined && (
+            <a
+              href={magazine.pdfUri}
+              className={cn(
+                buttonVariants.variants.variant.ghost,
+                buttonVariants.variants.size.icon,
+                buttonVariants.default
+              )}
+            >
+              <FaFilePdf size={16} />
+            </a>
+          )}
         </div>
-        <ParseData content={news.arContent?.body ?? ""} />
+        <ParseData content={magazine.arContent?.body ?? ""} />
       </div>
       {/* <ParseData  /> */}
     </section>
@@ -106,7 +126,7 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/dashboard/university/news`}>الأخبار</Link>
+            <Link href={`/dashboard/university/magazines`}>المجلة</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
@@ -119,6 +139,6 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
 };
 
 export async function generateStaticParams() {
-  const news = await getAllnews(true);
-  return news.map((collage) => ({ newsId: collage.id }));
+  const magazines = await getMagazines();
+  return magazines.map((magazine) => ({ id: magazine.id }));
 }

@@ -123,14 +123,14 @@ export default function MobileNavigationBar({ collages }: Props) {
               value="item-1"
               className=" border-none bg-secondary w-full px-2 rounded-md"
             >
-              <AccordionTrigger>
+              <AccordionTrigger className=" text-sm ">
                 <Lang lang={lang} ar={"الكليات"} en={"collages"} />
               </AccordionTrigger>
               <AccordionContent className=" w-4/5 mx-auto my-2">
                 {arCategories.map((category, i) => {
                   return (
                     <AccordionItem key={i} value={category.value}>
-                      <AccordionTrigger>
+                      <AccordionTrigger className=" text-sm ">
                         <Lang
                           lang={lang}
                           ar={arCategories[i].title}
@@ -145,11 +145,11 @@ export default function MobileNavigationBar({ collages }: Props) {
                                 href={`${lang}/collages/${collage.id}`}
                                 key={index}
                               >
-                                <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent focus:text-accent-foreground">
-                                  <Avatar>
+                                <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                                  {/* <Avatar>
                                     <AvatarImage src={collage.logo} />
                                     <AvatarFallback>Z</AvatarFallback>
-                                  </Avatar>
+                                  </Avatar> */}
                                   <Lang
                                     lang={lang}
                                     ar={
@@ -172,7 +172,6 @@ export default function MobileNavigationBar({ collages }: Props) {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          {/* <SheetFooter></SheetFooter> */}
         </ScrollArea>
       </SheetContent>
     </Sheet>

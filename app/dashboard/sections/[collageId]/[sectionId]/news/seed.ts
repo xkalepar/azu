@@ -1,9 +1,8 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/prisma/db";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-const prisma = new PrismaClient();
 interface newNewsProps {
   image: string;
   arContent: Content;

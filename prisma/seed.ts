@@ -1,14 +1,9 @@
 "use server";
 
-import {
-  ArCollageData,
-  Category,
-  EnCollageData,
-  PrismaClient,
-} from "@prisma/client";
+import { ArCollageData, Category, EnCollageData } from "@prisma/client";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { env } from "process";
-const prisma = new PrismaClient();
+import prisma from "./db";
 interface NewCollageProps {
   arProps: ArCollageData;
   enProps: EnCollageData;
@@ -180,7 +175,38 @@ export const editUniversity = async ({
     return { message: "فشل التعديل" };
   }
 };
-
+export const getNewsbyId = async (id: string) => {
+  try {
+    const news = await prisma.news.findUnique({
+      where: { id },
+      include: {
+        arContent: true,
+        enContent: true,
+      },
+    });
+    if (!news) {
+      return undefined;
+    }
+    return news;
+  } catch (error) {
+    return undefined;
+  }
+};
+export const getAllnews = async (university: boolean = false) => {
+  try {
+    const news = await prisma.news.findMany({
+      where: {
+        universityId: university ? uniId : null,
+      },
+    });
+    if (!news) {
+      return [];
+    }
+    return news;
+  } catch (error) {
+    return [];
+  }
+};
 export const getUniNews = unstable_cache(
   async ({
     page = 1,
