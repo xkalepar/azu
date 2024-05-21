@@ -1,7 +1,13 @@
 import { Locale } from "../../i18n-config";
 import NewsBar from "./components/news/newsBar";
 import ImageGridView from "./components/image-grid-view";
-import { getCollages, getUniNews, getUniversity } from "@/prisma/seed";
+import {
+  getCollages,
+  getConferences,
+  getMagazines,
+  getUniNews,
+  getUniversity,
+} from "@/prisma/seed";
 import Header from "./components/header/header";
 import { getDictionary } from "@/get-dictionary";
 import { cn, cutString } from "@/lib/utils";
@@ -30,11 +36,13 @@ export default async function home({
   const collages = await getCollages();
   const univeristy = await getUniversity();
   const news = await getUniNews({ ar: lang === "ar", page: 1, take: 9 });
+  const conferences = await getConferences({ page: 1, qty: 9 });
+  const magazines = await getMagazines({ page: 1, qty: 9 });
+  console.log("#".repeat(30));
+  console.log(univeristy?.Centers);
+  console.log("#".repeat(30));
   return (
     <div>
-      <AnimatedCard intialX={60} XorY="x">
-        <Header lang={lang} collages={collages} logo={univeristy?.logo} />
-      </AnimatedCard>
       <div className="bg-[url('https://www.azu.edu.ly/assets/img/hero-bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
         <div className="z-10 min-w-full min-h-full bg-black  absolute top-0 left-0 opacity-40"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
@@ -47,7 +55,7 @@ export default async function home({
               <FaUniversity size={128} className="hidden md:block" />
               <div className="flex flex-col justify-between gap-1">
                 <div className=" relative z-[100]">
-                  <Input
+                  {/* <Input
                     type="text"
                     className=" bg-secondary z-50 text-primary hidden md:block"
                   />
@@ -56,7 +64,7 @@ export default async function home({
                     className="hidden md:flex absolute left-0 top-0"
                   >
                     <SearchIcon />
-                  </Button>
+                  </Button> */}
                 </div>
                 <h1 className="text-3xl my-4">
                   {dictionary["pages"]["univeristy"]["overview"]["title"]}
@@ -111,7 +119,7 @@ export default async function home({
             />
           </div>
         )}
-        <div className="grid md:grid-cols-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
           {news.map((item, i) => (
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
@@ -156,10 +164,127 @@ export default async function home({
           {dictionary.pages.univeristy.overview.allnews}
         </Link>
 
+        {/* conferences */}
+        <h3 className="text-xl text-center my-4 font-bold">
+          {<Lang lang={lang} ar={"اخر المؤتمرات"} en={"Latest Conferences"} />}
+        </h3>
+        {conferences.length === 0 && (
+          <div>
+            <Lang
+              ar={"لا يوجد مؤتمرات"}
+              en={"no conferences have been uploaded yet"}
+              lang={lang}
+            />
+          </div>
+        )}
+        <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+          {conferences.map((item, i) => (
+            <AnimatedCard key={i} XorY="x" intialX={20}>
+              <CardPreview
+                className=" min-h-[300px]"
+                title={item?.enContent?.title}
+                src={item.logo}
+                lang={lang}
+                href={`/conferences/${item.id}`}
+              >
+                <div className="w-full my-2">
+                  {lang === "ar" ? (
+                    <ParseData
+                      content={cutString(
+                        item.arContent?.body ?? "",
+                        200,
+                        "المزيد"
+                      )}
+                    />
+                  ) : (
+                    <ParseData
+                      content={cutString(
+                        item.enContent?.body ?? "",
+                        200,
+                        "more"
+                      )}
+                    />
+                  )}
+                </div>
+              </CardPreview>
+            </AnimatedCard>
+          ))}
+        </div>
+        <Link
+          className={cn(
+            buttonVariants.variants.variant.link,
+            buttonVariants.variants.size.default,
+            buttonVariants.default,
+            "mx-auto w-fit mb-2"
+          )}
+          href={`${lang}/conferences`}
+        >
+          <Lang ar={"كل المؤتمرات"} en={"conferences"} lang={lang} />
+        </Link>
+        {/*  */}
+        {/* magazines */}
+        <h3 className="text-xl text-center my-4 font-bold">
+          {<Lang lang={lang} ar={"اخر مجلات"} en={"Latest magazines"} />}
+        </h3>
+        {magazines.length === 0 && (
+          <div>
+            <Lang
+              ar={"لا يوجد مؤتمرات"}
+              en={"no magazines have been uploaded yet"}
+              lang={lang}
+            />
+          </div>
+        )}
+        <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+          {magazines.map((item, i) => (
+            <AnimatedCard key={i} XorY="x" intialX={20}>
+              <CardPreview
+                className=" min-h-[300px]"
+                title={item?.enContent?.title}
+                src={item.logo}
+                lang={lang}
+                href={`/magazines/${item.id}`}
+              >
+                <div className="w-full my-2">
+                  {lang === "ar" ? (
+                    <ParseData
+                      content={cutString(
+                        item.arContent?.body ?? "",
+                        200,
+                        "المزيد"
+                      )}
+                    />
+                  ) : (
+                    <ParseData
+                      content={cutString(
+                        item.enContent?.body ?? "",
+                        200,
+                        "more"
+                      )}
+                    />
+                  )}
+                </div>
+              </CardPreview>
+            </AnimatedCard>
+          ))}
+        </div>
+        <Link
+          className={cn(
+            buttonVariants.variants.variant.link,
+            buttonVariants.variants.size.default,
+            buttonVariants.default,
+            "mx-auto w-fit mb-2"
+          )}
+          href={`${lang}/conferences`}
+        >
+          <Lang ar={"كل مجلات"} en={"conferences"} lang={lang} />
+        </Link>
+        {/*  */}
+
         <h3 className="text-xl text-center my-4 font-bold">
           {<Lang lang={lang} ar={"روابط سريعة"} en={"Quick Access"} />}
         </h3>
-        <div className="grid md:grid-cols-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
           <FastLink
             title={dictionary.pages.univeristy.overview.links.education}
           >

@@ -33,7 +33,7 @@ export const ourFileRouter = {
   pdfUploader: f({ pdf: { maxFileSize: "1GB" } }).onUploadComplete(
     async ({ file }) => {
       console.log("file url", file.url);
-      return { message: "Pdf Upload Complete" };
+      return { message: "تم الرفع بنجاح" };
     }
   ),
 } satisfies FileRouter;

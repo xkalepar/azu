@@ -19,24 +19,23 @@ import DeleteNewsForm from "../../components/forms";
 import { getMagazine, getMagazines } from "../seed";
 import DeleteMagazineForm from "../components/forms";
 import { FaFilePdf } from "react-icons/fa6";
+import { Metadata } from "next";
 
-/* export async function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
-  params: { collage: string };
+  params: { id: string };
 }): Promise<Metadata> {
-  const collage = await getCollageById(params.collage);
-  if (!collage) {
+  const magazine = await getMagazine({ id: params.id });
+  if (!magazine) {
     return {
       title: "404 غير موجود",
     };
   }
   return {
-    title: collage.ArCollageData!.title,
-    description: collage.ArCollageData!.content,
-    // keywords: [collage.name, ...collage.categories.map((c) => c.name)],
+    title: magazine.arContent?.title ?? `info about ${params.id}`,
   };
-} */
+}
 
 const newsPage = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
@@ -47,13 +46,9 @@ const newsPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <section className=" relative ">
-      <Breadcrumbs title={magazine?.arContent?.title} />
-
-      <div className="relative">
-        <div
-          className="absolute z-50 gap-2 left-2 top-2 flex-between"
-          dir="rtl"
-        >
+      <div className="flex-between flex-col md:flex-row w-full">
+        <Breadcrumbs title={magazine?.arContent?.title} />
+        <div className="gap-2 flex-between" dir="rtl">
           <Link
             href={`${id}/edit`}
             className={cn(
@@ -64,7 +59,6 @@ const newsPage = async ({ params }: { params: { id: string } }) => {
           >
             <Edit2 size={16} />
           </Link>
-
           <ResponiseDialog
             trigger={
               <Button variant={"ghost"} size={"icon"}>
@@ -80,9 +74,10 @@ const newsPage = async ({ params }: { params: { id: string } }) => {
               id={magazine.id}
             />
           </ResponiseDialog>
-
           {magazine.pdfUri !== null && magazine.pdfUri !== undefined && (
-            <a
+            <Link
+              target={"_blank"}
+              download={true}
               href={magazine.pdfUri}
               className={cn(
                 buttonVariants.variants.variant.ghost,
@@ -91,9 +86,11 @@ const newsPage = async ({ params }: { params: { id: string } }) => {
               )}
             >
               <FaFilePdf size={16} />
-            </a>
+            </Link>
           )}
         </div>
+      </div>
+      <div className="relative flex ">
         <ParseData content={magazine.arContent?.body ?? ""} />
       </div>
       {/* <ParseData  /> */}

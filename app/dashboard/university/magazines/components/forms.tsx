@@ -64,16 +64,19 @@ export const CreateMagazineForm = () => {
             </Suspense>
           </div>
         ) : (
-          <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              setImage(res[0].url ?? "");
-              toast({ title: "uploaded successfully" });
-            }}
-            onUploadError={(error: Error) => {
-              alert(`ERROR! ${error.message}`);
-            }}
-          />
+          <div className=" flex flex-col ">
+            <h3>تحميل صورة الغلاف</h3>
+            <UploadDropzone
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                setImage(res[0].url ?? "");
+                toast({ title: "uploaded successfully" });
+              }}
+              onUploadError={(error: Error) => {
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
         )}
         {pdf ? (
           <div className="w-[200px] h-[200px] rounded-lg overflow-hidden relative">
@@ -83,7 +86,7 @@ export const CreateMagazineForm = () => {
                   type={"button"}
                   onClick={(e) => {
                     e.preventDefault();
-                    setImage("");
+                    setPdf("");
                   }}
                   variant={"outline"}
                   size={"icon"}
@@ -102,19 +105,24 @@ export const CreateMagazineForm = () => {
             </Suspense>
           </div>
         ) : (
-          <UploadDropzone
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              setPdf(res[0].url ?? "");
-              toast({ title: "uploaded successfully" });
-            }}
-            onUploadError={(error: Error) => {
-              alert(`ERROR! ${error.message}`);
-            }}
-          />
+          <div className=" flex flex-col ">
+            <h3>تحميل الملف (pdf)</h3>
+            <UploadDropzone
+              endpoint="pdfUploader"
+              onClientUploadComplete={(res) => {
+                console.log(res);
+                setPdf(res[0].url ?? "");
+                toast({ title: "uploaded successfully" });
+              }}
+              onUploadError={(error: Error) => {
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
         )}
       </div>
       <LangTabs
+        className="mt-2"
         ar={
           <>
             <Input value={body} type={"hidden"} name="body" />
@@ -222,16 +230,19 @@ export const UpdateMagazineForm = ({
             </Suspense>
           </div>
         ) : (
-          <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              setImage(res[0].url ?? "");
-              toast({ title: "uploaded successfully" });
-            }}
-            onUploadError={(error: Error) => {
-              alert(`ERROR! ${error.message}`);
-            }}
-          />
+          <div className=" flex flex-col ">
+            <h3>تحميل صورة الغلاف</h3>
+            <UploadDropzone
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                setImage(res[0].url ?? "");
+                toast({ title: "uploaded successfully" });
+              }}
+              onUploadError={(error: Error) => {
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
         )}
         {pdf ? (
           <div className="w-[200px] h-[200px] rounded-lg overflow-hidden relative">
@@ -260,16 +271,20 @@ export const UpdateMagazineForm = ({
             </Suspense>
           </div>
         ) : (
-          <UploadDropzone
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              setPdf(res[0].url ?? "");
-              toast({ title: "uploaded successfully" });
-            }}
-            onUploadError={(error: Error) => {
-              alert(`ERROR! ${error.message}`);
-            }}
-          />
+          <div className=" flex flex-col ">
+            <h3>تحميل الملف (pdf)</h3>
+            <UploadDropzone
+              endpoint="pdfUploader"
+              onClientUploadComplete={(res) => {
+                console.log(res);
+                setPdf(res[0].url ?? "");
+                toast({ title: "uploaded successfully" });
+              }}
+              onUploadError={(error: Error) => {
+                alert(`ERROR! ${error.message}`);
+              }}
+            />
+          </div>
         )}
       </div>
       <LangTabs

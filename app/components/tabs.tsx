@@ -7,11 +7,12 @@ import { ReactNode, useState } from "react";
 interface Props {
   ar: ReactNode;
   en: ReactNode;
+  className?: string;
 }
-const LangTabs = ({ ar, en }: Props) => {
+const LangTabs = ({ ar, en, className }: Props) => {
   const [lang, setLang] = useState<"ar" | "en">("ar");
   return (
-    <div className="flex flex-col gap-3">
+    <div className={cn("flex flex-col  gap-3", className)}>
       <div className=" w-fit mx-auto bg-secondary px-2 py-1 rounded-lg flex justify-start items-center gap-2">
         <button
           type={"button"}

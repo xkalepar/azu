@@ -8,16 +8,93 @@ generator client {
 }
 
 model University {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  logo          String
-  gallery       String[]
-  News          News[]
-  ArContent     ArContent?   @relation(fields: [arContentId], references: [id])
-  arContentId   String?      @db.ObjectId
-  EnContent     EnContent?   @relation(fields: [enContentId], references: [id])
-  enContentId   String?      @db.ObjectId
-  SocialMedia   SocialMedia? @relation(fields: [socialMediaId], references: [id])
-  socialMediaId String?      @db.ObjectId
+  id                              String                            @id @default(auto()) @map("_id") @db.ObjectId
+  logo                            String
+  gallery                         String[]
+  News                            News[]
+  ArContent                       ArContent?                        @relation(fields: [arContentId], references: [id])
+  arContentId                     String?                           @db.ObjectId
+  EnContent                       EnContent?                        @relation(fields: [enContentId], references: [id])
+  enContentId                     String?                           @db.ObjectId
+  SocialMedia                     SocialMedia?                      @relation(fields: [socialMediaId], references: [id])
+  socialMediaId                   String?                           @db.ObjectId
+  Centers                         Centers[]
+  AcademicProgram                 AcademicProgram[]
+  FacilitiesAndServices           FacilitiesAndServices[]
+  GraduatesForUniversity          GraduatesForUniversity[]
+  ScientificResearchForUniversity ScientificResearchForUniversity[]
+  UniversityActivities            UniversityActivities[]
+  Projects                        Projects[]
+}
+
+model Centers {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  arContent    ArContent?  @relation(fields: [arContentId], references: [id])
+  enContent    EnContent?  @relation(fields: [enContentId], references: [id])
+  arContentId  String?     @db.ObjectId
+  enContentId  String?     @db.ObjectId
+  University   University? @relation(fields: [universityId], references: [id])
+  universityId String?     @db.ObjectId
+}
+
+model Projects {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  arContent    ArContent?  @relation(fields: [arContentId], references: [id])
+  enContent    EnContent?  @relation(fields: [enContentId], references: [id])
+  arContentId  String?     @db.ObjectId
+  enContentId  String?     @db.ObjectId
+  University   University? @relation(fields: [universityId], references: [id])
+  universityId String?     @db.ObjectId
+}
+
+model AcademicProgram {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  arContent    ArContent?  @relation(fields: [arContentId], references: [id])
+  enContent    EnContent?  @relation(fields: [enContentId], references: [id])
+  arContentId  String?     @db.ObjectId
+  enContentId  String?     @db.ObjectId
+  University   University? @relation(fields: [universityId], references: [id])
+  universityId String?     @db.ObjectId
+}
+
+model FacilitiesAndServices {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  arContent    ArContent?  @relation(fields: [arContentId], references: [id])
+  enContent    EnContent?  @relation(fields: [enContentId], references: [id])
+  arContentId  String?     @db.ObjectId
+  enContentId  String?     @db.ObjectId
+  University   University? @relation(fields: [universityId], references: [id])
+  universityId String?     @db.ObjectId
+}
+
+model UniversityActivities {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  arContent    ArContent?  @relation(fields: [arContentId], references: [id])
+  enContent    EnContent?  @relation(fields: [enContentId], references: [id])
+  arContentId  String?     @db.ObjectId
+  enContentId  String?     @db.ObjectId
+  University   University? @relation(fields: [universityId], references: [id])
+  universityId String?     @db.ObjectId
+}
+
+model GraduatesForUniversity {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  arContent    ArContent?  @relation(fields: [arContentId], references: [id])
+  enContent    EnContent?  @relation(fields: [enContentId], references: [id])
+  arContentId  String?     @db.ObjectId
+  enContentId  String?     @db.ObjectId
+  University   University? @relation(fields: [universityId], references: [id])
+  universityId String?     @db.ObjectId
+}
+
+model ScientificResearchForUniversity {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  arContent    ArContent?  @relation(fields: [arContentId], references: [id])
+  enContent    EnContent?  @relation(fields: [enContentId], references: [id])
+  arContentId  String?     @db.ObjectId
+  enContentId  String?     @db.ObjectId
+  University   University? @relation(fields: [universityId], references: [id])
+  universityId String?     @db.ObjectId
 }
 
 model Collage {
@@ -204,28 +281,42 @@ model News {
 
 /// [ArContent] put the data into it in  ar
 model ArContent {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  title             String
-  body              String
-  News              News[]
-  ScientificSection ScientificSection[]
-  SectionPage       SectionPage[]
-  University        University[]
-  Mangzine          Mangzine[]
-  Conferences       Conferences[]
+  id                              String                            @id @default(auto()) @map("_id") @db.ObjectId
+  title                           String
+  body                            String
+  News                            News[]
+  ScientificSection               ScientificSection[]
+  SectionPage                     SectionPage[]
+  University                      University[]
+  Mangzine                        Mangzine[]
+  Conferences                     Conferences[]
+  Centers                         Centers[]
+  AcademicProgram                 AcademicProgram[]
+  FacilitiesAndServices           FacilitiesAndServices[]
+  GraduatesForUniversity          GraduatesForUniversity[]
+  ScientificResearchForUniversity ScientificResearchForUniversity[]
+  UniversityActivities            UniversityActivities[]
+  Projects                        Projects[]
 }
 
 /// [EnContent] put the data into it in  ar
 model EnContent {
-  id                String              @id @default(auto()) @map("_id") @db.ObjectId
-  title             String
-  body              String
-  News              News[]
-  ScientificSection ScientificSection[]
-  SectionPage       SectionPage[]
-  University        University[]
-  Mangzine          Mangzine[]
-  Conferences       Conferences[]
+  id                              String                            @id @default(auto()) @map("_id") @db.ObjectId
+  title                           String
+  body                            String
+  News                            News[]
+  ScientificSection               ScientificSection[]
+  SectionPage                     SectionPage[]
+  University                      University[]
+  Mangzine                        Mangzine[]
+  Conferences                     Conferences[]
+  Centers                         Centers[]
+  AcademicProgram                 AcademicProgram[]
+  FacilitiesAndServices           FacilitiesAndServices[]
+  GraduatesForUniversity          GraduatesForUniversity[]
+  ScientificResearchForUniversity ScientificResearchForUniversity[]
+  UniversityActivities            UniversityActivities[]
+  Projects                        Projects[]
 }
 
 model Link {

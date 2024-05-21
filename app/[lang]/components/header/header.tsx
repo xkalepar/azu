@@ -10,7 +10,7 @@ import {
   ParseToScreenMoreThanWidth,
   ParseToScreenLessThanWidth,
 } from "@/app/components/client-parser";
-import { $Enums } from "@prisma/client";
+import { $Enums, Centers } from "@prisma/client";
 
 type Props = {
   collages: ({
@@ -33,10 +33,118 @@ type Props = {
   })[];
   lang?: "ar" | "en";
   logo?: string;
+  centers?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  academicPrograms?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  scientificResearchs?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  projects?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  graduates?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  actvities?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
 };
 
 const Header = ({
   collages,
+  centers,
+  academicPrograms,
+  scientificResearchs,
+  actvities,
+  graduates,
+  projects,
   lang = "en",
   logo = "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
 }: Props) => {
@@ -60,7 +168,15 @@ const Header = ({
           </Fragment>
         </ParseToScreenMoreThanWidth>
         <ParseToScreenLessThanWidth>
-          <MobileNavigationBar collages={collages} />
+          <MobileNavigationBar
+            collages={collages}
+            centers={centers}
+            academicPrograms={academicPrograms}
+            scientificResearchs={scientificResearchs}
+            actvities={actvities}
+            graduates={graduates}
+            projects={projects}
+          />
         </ParseToScreenLessThanWidth>
       </header>
       <Separator />

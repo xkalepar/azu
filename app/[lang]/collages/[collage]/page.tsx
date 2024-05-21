@@ -1,19 +1,16 @@
 // import Statiscs from "@/app/[lang]/components/statiscs";
 import ParseData from "@/app/components/parse-data";
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
 import { getCollageById, getCollages } from "@/prisma/seed";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 import { Suspense } from "react";
-import Statiscs from "../../components/statiscs";
-import AnimatedCard from "../../components/animated-card";
 import Footer from "../../components/footer";
+import Lang from "../../components/lang";
 export async function generateMetadata({
   params,
 }: {
-  params: { collage: string };
+  params: { collage: string; lang: "ar" | "en" };
 }): Promise<Metadata> {
   const collage = await getCollageById(params.collage);
   if (!collage) {
@@ -24,7 +21,6 @@ export async function generateMetadata({
   return {
     title: collage.ArCollageData!.title,
     description: collage.ArCollageData!.content,
-    // keywords: [collage.name, ...collage.categories.map((c) => c.name)],
   };
 }
 
@@ -33,11 +29,16 @@ export async function generateStaticParams() {
   return collages.map((collage) => ({ id: collage.id }));
 }
 
-const collagePage = async ({ params }: { params: { collage: string } }) => {
+const collagePage = async ({
+  params,
+}: {
+  params: { collage: string; lang: "ar" | "en" };
+}) => {
   const collage = await getCollageById(params.collage);
   if (!collage) return notFound();
+  const { lang } = params;
   return (
-    <div className="container xl:mx-4 xl:px-4">
+    <main className="container xl:mx-4 xl:px-4">
       <Suspense
         fallback={
           <>
@@ -107,9 +108,14 @@ const collagePage = async ({ params }: { params: { collage: string } }) => {
             <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
           </>
         }
-      ></Suspense>
-      <ParseData content={collage.ArCollageData!.content} />
-    </div>
+      >
+        <Lang
+          lang={lang}
+          ar={<ParseData dir="rtl" content={collage.ArCollageData!.content} />}
+          en={<ParseData dir="ltr" content={collage.EnCollageData!.content} />}
+        />
+      </Suspense>
+    </main>
   );
 };
 

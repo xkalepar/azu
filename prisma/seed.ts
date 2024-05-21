@@ -2,8 +2,10 @@
 
 import { ArCollageData, Category, EnCollageData } from "@prisma/client";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
-import { env } from "process";
 import prisma from "./db";
+import { env } from "process";
+const uniId: string = env.UniveristyId as string;
+
 interface NewCollageProps {
   arProps: ArCollageData;
   enProps: EnCollageData;
@@ -11,7 +13,6 @@ interface NewCollageProps {
   logo: string;
   welcome: string;
 }
-const uniId: string = env.UniveristyId as string;
 
 export const imagesGalleryUni = async ({ list }: { list: string[] }) => {
   try {
@@ -69,6 +70,7 @@ export const addImageGalleryUniversity = async ({
     return [];
   }
 };
+
 export const getUniversity = unstable_cache(
   async () => {
     try {
@@ -78,6 +80,48 @@ export const getUniversity = unstable_cache(
           ArContent: true,
           EnContent: true,
           SocialMedia: true,
+          Centers: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
+          AcademicProgram: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
+          FacilitiesAndServices: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
+          GraduatesForUniversity: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
+          Projects: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
+          ScientificResearchForUniversity: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
+          UniversityActivities: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
         },
       });
       if (!university) {
@@ -280,6 +324,61 @@ export const getUniNews = unstable_cache(
   ["uniNews", "university"],
   { tags: ["uniNews", "university"] }
 );
+
+export const getMagazines = async ({
+  qty,
+  page = 1,
+  query,
+}: {
+  query?: string;
+  qty: number;
+  page?: number;
+}) => {
+  try {
+    const magazines = await prisma.mangzine.findMany({
+      take: qty,
+      skip: page === 1 ? 0 : page * qty,
+      include: {
+        arContent: true,
+        enContent: true,
+      },
+      orderBy: { createdAt: "asc" },
+    });
+    if (!magazines) {
+      return [];
+    }
+    return magazines;
+  } catch (error) {
+    return [];
+  }
+};
+export const getConferences = async ({
+  qty,
+  page = 1,
+  query,
+}: {
+  query?: string;
+  qty: number;
+  page?: number;
+}) => {
+  try {
+    const conferences = await prisma.conferences.findMany({
+      take: qty,
+      skip: page === 1 ? 0 : page * qty,
+      include: {
+        arContent: true,
+        enContent: true,
+      },
+      orderBy: { createdAt: "asc" },
+    });
+    if (!conferences) {
+      return [];
+    }
+    return conferences;
+  } catch (error) {
+    return [];
+  }
+};
 
 export const newCollage = async ({
   arProps,

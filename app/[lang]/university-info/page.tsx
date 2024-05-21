@@ -17,16 +17,12 @@ export const metadata = {
 
 const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
   const { lang } = params;
-  const dictionary = await getDictionary(lang);
   const collages = await getCollages();
   const univeristy = await getUniversity();
 
   return (
     <main className="min-h-screen" dir="rtl">
-      <AnimatedCard intialX={60} XorY="x">
-        <Header lang={lang} collages={collages} logo={univeristy?.logo} />
-      </AnimatedCard>
-      <section className={cn("mt-20")}>
+      <section>
         <Suspense
           fallback={
             <div className="h-full w-full justify-center items-center flex">

@@ -17,7 +17,9 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
   display: "swap",
 });
 import "../globals.css";
-import { Providers } from "./theme-provider";
+import AnimatedCard from "./components/animated-card";
+import { getCollages, getUniversity } from "@/prisma/seed";
+import { cn } from "@/lib/utils";
 // import { getCollages } from "@/prisma/seed";
 export default async function Root({
   children,
@@ -26,16 +28,31 @@ export default async function Root({
   children: React.ReactNode;
   params: { lang: Locale };
 }) {
-  // const collages = await getCollages();
+  const { lang } = params;
+  const collages = await getCollages();
+  const univeristy = await getUniversity();
   return (
     <html
       style={{ scrollBehavior: "smooth" }}
       suppressHydrationWarning
-      lang={params.lang}
-      dir={params.lang == "ar" ? "rtl" : "ltr"}
+      lang={lang}
+      dir={lang == "ar" ? "rtl" : "ltr"}
     >
       <body className={cairo.className}>
-        <main> {children}</main>
+        <AnimatedCard intialX={60} XorY="x">
+          <Header
+            lang={lang}
+            collages={collages}
+            centers={univeristy?.Centers}
+            logo={univeristy?.logo}
+            academicPrograms={univeristy?.AcademicProgram}
+            scientificResearchs={univeristy?.ScientificResearchForUniversity}
+            actvities={univeristy?.UniversityActivities}
+            graduates={univeristy?.GraduatesForUniversity}
+            projects={univeristy?.Projects}
+          />
+        </AnimatedCard>
+        <main className={cn("mt-20")}> {children}</main>
       </body>
     </html>
   );

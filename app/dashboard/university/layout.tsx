@@ -23,7 +23,7 @@ export default function RootLayout({
             />
             <TabLink href={`/dashboard/university/news`} content="الأخبار" />
             <TabLink
-              href={`/dashboard/university/news/teachers`}
+              href={`/dashboard/university/teachers`}
               content="المعلمين"
             />
 
@@ -38,6 +38,34 @@ export default function RootLayout({
             <TabLink
               href={`/dashboard/university/conferences`}
               content="المؤتمرات"
+            />
+            <TabLink
+              href={`/dashboard/university/centers`}
+              content="الإدارات و المراكز"
+            />
+            <TabLink
+              href={`/dashboard/university/academic-programs`}
+              content="البرامج الأكاديمية"
+            />
+            <TabLink
+              href={`/dashboard/university/scientific-research`}
+              content="البحث العلمي"
+            />
+            <TabLink
+              href={`/dashboard/university/graduates`}
+              content="الخريجون"
+            />
+            <TabLink
+              href={`/dashboard/university/university-activities`}
+              content="أنشطة الجامعة"
+            />
+            <TabLink
+              href={`/dashboard/university/facilities-and-services`}
+              content="المرافق و الخدمات"
+            />
+            <TabLink
+              href={`/dashboard/university/projects`}
+              content="مشاريع التخرج والأطروحات"
             />
           </NavigationTabs>
         </div>{" "}

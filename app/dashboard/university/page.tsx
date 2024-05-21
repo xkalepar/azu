@@ -1,7 +1,6 @@
 import ParseData from "@/app/components/parse-data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUniversity } from "@/prisma/seed";
-import { env } from "process";
 import React from "react";
 import {
   Breadcrumb,
