@@ -20,6 +20,8 @@ import "../globals.css";
 import AnimatedCard from "./components/animated-card";
 import { getCollages, getUniversity } from "@/prisma/seed";
 import { cn } from "@/lib/utils";
+import HomeFooter from "./components/footers/home-footer";
+import { SocialMedia } from "@prisma/client";
 // import { getCollages } from "@/prisma/seed";
 export default async function Root({
   children,
@@ -38,21 +40,29 @@ export default async function Root({
       lang={lang}
       dir={lang == "ar" ? "rtl" : "ltr"}
     >
-      <body className={cairo.className}>
-        <AnimatedCard intialX={60} XorY="x">
-          <Header
+      <body className={cn(cairo.className, "min-h-screen relative")}>
+        <main
+          className={cn("mt-20 flex flex-col justify-between  min-h-screen")}
+        >
+          <AnimatedCard intialX={60} XorY="x">
+            <Header
+              lang={lang}
+              collages={collages}
+              centers={univeristy?.Centers}
+              logo={univeristy?.logo}
+              academicPrograms={univeristy?.AcademicProgram}
+              scientificResearchs={univeristy?.ScientificResearchForUniversity}
+              actvities={univeristy?.UniversityActivities}
+              graduates={univeristy?.GraduatesForUniversity}
+              projects={univeristy?.Projects}
+            />
+          </AnimatedCard>
+          {children}
+          <HomeFooter
+            socialMedia={univeristy?.SocialMedia as SocialMedia}
             lang={lang}
-            collages={collages}
-            centers={univeristy?.Centers}
-            logo={univeristy?.logo}
-            academicPrograms={univeristy?.AcademicProgram}
-            scientificResearchs={univeristy?.ScientificResearchForUniversity}
-            actvities={univeristy?.UniversityActivities}
-            graduates={univeristy?.GraduatesForUniversity}
-            projects={univeristy?.Projects}
-          />
-        </AnimatedCard>
-        <main className={cn("mt-20")}> {children}</main>
+          ></HomeFooter>
+        </main>
       </body>
     </html>
   );

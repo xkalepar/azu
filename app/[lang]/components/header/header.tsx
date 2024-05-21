@@ -145,13 +145,13 @@ const Header = ({
   actvities,
   graduates,
   projects,
-  lang = "en",
+  lang = "ar",
   logo = "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
 }: Props) => {
   return (
     <Fragment>
       <header className="flex-between w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
-        <Logo href="/" src={logo} />
+        <Logo href={`/${lang}`} src={logo} />
         <ParseToScreenMoreThanWidth>
           <Fragment>
             <NavigationMenuHeader collages={collages} />

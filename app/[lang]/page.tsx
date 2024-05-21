@@ -8,13 +8,9 @@ import {
   getUniNews,
   getUniversity,
 } from "@/prisma/seed";
-import Header from "./components/header/header";
 import { getDictionary } from "@/get-dictionary";
 import { cn, cutString } from "@/lib/utils";
 import { FaUniversity } from "react-icons/fa";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { SearchIcon } from "lucide-react";
 import AnimatedCard from "./components/animated-card";
 import Statiscs from "./components/statiscs";
 import CardPreview from "../components/card-preview";
@@ -24,8 +20,6 @@ import { ReactNode } from "react";
 import { GiTeacher } from "react-icons/gi";
 import Lang from "./components/lang";
 import ParseData from "../components/parse-data";
-import HomeFooter from "./components/footers/home-footer";
-import { SocialMedia } from "@prisma/client";
 
 export default async function home({
   params: { lang },
@@ -349,10 +343,6 @@ export default async function home({
           }
         </div>
       </main>
-      <HomeFooter
-        socialMedia={univeristy?.SocialMedia as SocialMedia}
-        lang={lang}
-      ></HomeFooter>
     </div>
   );
 }
