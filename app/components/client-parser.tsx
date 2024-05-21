@@ -10,7 +10,7 @@ const ClientParser = ({ children }: { children: React.ReactNode }) => {
 export default ClientParser;
 
 const ParseToScreenMoreThanWidth = ({
-  width = "1200",
+  width = "1200px",
   children,
 }: {
   width?: string;
@@ -21,7 +21,7 @@ const ParseToScreenMoreThanWidth = ({
   return <Fragment>{IstheScreenTrue && children}</Fragment>;
 };
 const ParseToScreenLessThanWidth = ({
-  width = "1200",
+  width = "1200px",
   children,
 }: {
   width?: string;

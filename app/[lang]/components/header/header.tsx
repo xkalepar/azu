@@ -163,6 +163,16 @@ const Header = ({
               graduates={graduates}
               projects={projects}
             />
+            <Link
+              className={cn(
+                buttonVariants.default,
+                buttonVariants.variants.variant.ghost,
+                "px-2 py-1"
+              )}
+              href={`${lang === "en" ? "/ar" : "/en"}`}
+            >
+              {lang === "en" ? "العربية" : "english"}
+            </Link>
           </Fragment>
         </ParseToScreenMoreThanWidth>
         <ParseToScreenLessThanWidth>
