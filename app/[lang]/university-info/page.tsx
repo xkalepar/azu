@@ -1,9 +1,13 @@
-import { cn } from "@/lib/utils";
-import AnimatedCard from "../components/animated-card";
-
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
 import { Suspense } from "react";
-import Header from "../components/header/header";
-import { getDictionary } from "@/get-dictionary";
 import { getCollages, getUniversity } from "@/prisma/seed";
 import HomeFooter, { getDir } from "../components/footers/home-footer";
 import { SocialMedia } from "@prisma/client";
@@ -22,6 +26,26 @@ const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
 
   return (
     <main className="min-h-screen" dir="rtl">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/${lang}`}>الرئيسية</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/${lang}/news`}>الأخبار</Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage></BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <section>
         <Suspense
           fallback={

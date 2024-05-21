@@ -57,7 +57,7 @@ export default async function Root({
               projects={univeristy?.Projects}
             />
           </AnimatedCard>
-          {children}
+          <div className=" flex-1">{children}</div>
           <HomeFooter
             socialMedia={univeristy?.SocialMedia as SocialMedia}
             lang={lang}

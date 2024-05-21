@@ -97,7 +97,7 @@ p {
 }
 
 .ProseMirror > img {
-  @apply mx-auto max-w-full min-w-full rounded-md;
+  @apply mx-auto max-w-full min-w-full object-cover rounded-md;
 }
 .ProseMirror > * + * {
   margin-top: 0.75em;
