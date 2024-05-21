@@ -198,7 +198,7 @@ export default function MobileNavigationBar({
       </SheetTrigger>
       <SheetContent
         side={lang === "ar" ? "right" : "left"}
-        className="min-h-screen max-h-screen py-10"
+        className="min-h-screen w-[90%] max-h-screen py-10"
       >
         <ScrollArea
           dir={lang === "ar" ? "rtl" : "ltr"}
