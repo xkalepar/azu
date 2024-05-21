@@ -44,19 +44,18 @@ export default async function Root({
         <main
           className={cn("mt-20 flex flex-col justify-between  min-h-screen")}
         >
-          <AnimatedCard intialX={60} XorY="x">
-            <Header
-              lang={lang}
-              collages={collages}
-              centers={univeristy?.Centers}
-              logo={univeristy?.logo}
-              academicPrograms={univeristy?.AcademicProgram}
-              scientificResearchs={univeristy?.ScientificResearchForUniversity}
-              actvities={univeristy?.UniversityActivities}
-              graduates={univeristy?.GraduatesForUniversity}
-              projects={univeristy?.Projects}
-            />
-          </AnimatedCard>
+          <Header
+            lang={lang}
+            collages={collages}
+            centers={univeristy?.Centers}
+            logo={univeristy?.logo}
+            academicPrograms={univeristy?.AcademicProgram}
+            scientificResearchs={univeristy?.ScientificResearchForUniversity}
+            actvities={univeristy?.UniversityActivities}
+            graduates={univeristy?.GraduatesForUniversity}
+            projects={univeristy?.Projects}
+          ></Header>
+
           <div className=" flex-1">{children}</div>
           <HomeFooter
             socialMedia={univeristy?.SocialMedia as SocialMedia}

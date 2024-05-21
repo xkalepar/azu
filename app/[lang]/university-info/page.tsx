@@ -21,7 +21,6 @@ export const metadata = {
 
 const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
   const { lang } = params;
-  const collages = await getCollages();
   const univeristy = await getUniversity();
 
   return (
@@ -30,19 +29,22 @@ const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/${lang}`}>الرئيسية</Link>
+              <Link href={`/${lang}`}>
+                {" "}
+                <Lang lang={lang} ar={"الرئيسية"} en={"home"} />
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild>
-              <Link href={`/${lang}/news`}>الأخبار</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
 
-          <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage></BreadcrumbPage>
+            <BreadcrumbPage>
+              <Lang
+                lang={lang}
+                ar={"حول الجامعة"}
+                en={"About The University"}
+              />
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

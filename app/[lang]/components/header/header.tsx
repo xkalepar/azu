@@ -150,21 +150,19 @@ const Header = ({
 }: Props) => {
   return (
     <Fragment>
-      <header className="flex-between w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
+      <header className="flex items-center justify-start gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
         <Logo href={`/${lang}`} src={logo} />
         <ParseToScreenMoreThanWidth>
           <Fragment>
-            <NavigationMenuHeader collages={collages} />
-            <Link
-              className={cn(
-                buttonVariants.default,
-                buttonVariants.variants.variant.ghost,
-                "px-2 py-1"
-              )}
-              href={`${lang === "en" ? "/ar" : "/en"}`}
-            >
-              {lang === "en" ? "العربية" : "english"}
-            </Link>
+            <NavigationMenuHeader
+              collages={collages}
+              centers={centers}
+              academicPrograms={academicPrograms}
+              scientificResearchs={scientificResearchs}
+              actvities={actvities}
+              graduates={graduates}
+              projects={projects}
+            />
           </Fragment>
         </ParseToScreenMoreThanWidth>
         <ParseToScreenLessThanWidth>

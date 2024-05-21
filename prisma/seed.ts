@@ -256,9 +256,7 @@ export const getUniNews = unstable_cache(
     page = 1,
     take = 20,
     query,
-    ar = true,
   }: {
-    ar: boolean;
     page?: number;
     query?: string;
     take?: number;
@@ -267,48 +265,25 @@ export const getUniNews = unstable_cache(
       console.log(`take: ${take}`);
       console.log(`take: ${page}`);
       console.log(`take*page: ${page * take}`);
-      let news = [];
-      if (ar) {
-        news = await prisma.news.findMany({
-          where: {
-            universityId: uniId,
-            // AND: {
-            //   arContent: {
-            //     body: {
-            //       contains: query,
-            //     },
-            //   },
-            // },
-          },
-          take: take,
-          skip: page === 1 ? 0 : page * take,
-          include: {
-            arContent: true,
-            enContent: true,
-          },
-          orderBy: { createdAt: "asc" },
-        });
-        console.log("news " + news.length);
-      } else {
-        news = await prisma.news.findMany({
-          where: {
-            universityId: uniId,
-            // AND: {
-            //   enContent: {
-            //     body: {
-            //       contains: query,
-            //     },
-            //   },
-            // },
-          },
-          take: take,
-          skip: page === 1 ? 0 : page * take,
-          include: {
-            arContent: true,
-            enContent: true,
-          },
-        });
-      }
+      const news = await prisma.news.findMany({
+        where: {
+          universityId: uniId,
+          // AND: {
+          //   enContent: {
+          //     body: {
+          //       contains: query,
+          //     },
+          //   },
+          // },
+        },
+        take: take,
+        skip: page === 1 ? 0 : page * take,
+        include: {
+          arContent: true,
+          enContent: true,
+        },
+      });
+
       if (!news) {
         console.log("error1");
         return [];

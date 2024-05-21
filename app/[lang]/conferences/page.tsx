@@ -1,5 +1,5 @@
 import CardPreview from "@/app/components/card-preview";
-import { getUniNews } from "@/prisma/seed";
+import { getConferences, getUniNews } from "@/prisma/seed";
 import React from "react";
 import {
   Breadcrumb,
@@ -15,15 +15,15 @@ import { cutString } from "@/lib/utils";
 import ParseData from "@/app/components/parse-data";
 import { Metadata } from "next";
 import { getDir } from "../components/footers/home-footer";
+type Lang = "en" | "ar";
 export const metadata: Metadata = {
-  title: "أخبار الجامعة",
+  title: "المؤتمرات العلمية",
 };
-
-const page = async ({ params }: { params: { lang: "ar" | "en" } }) => {
+const page = async ({ params }: { params: { lang: Lang } }) => {
   const { lang } = params;
-  const news = await getUniNews({
+  const confernces = await getConferences({
     page: 1,
-    query: "",
+    qty: 20,
   });
   return (
     <main className=" container ">
@@ -36,29 +36,28 @@ const page = async ({ params }: { params: { lang: "ar" | "en" } }) => {
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage>
-              <Lang lang={lang} ar={"الأخبار"} en={"news"} />
+              <Lang lang={lang} ar={"المؤتمرات العلمية"} en={"conferences"} />
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <div className="grid md:grid-cols-2 my-2 sm:grid-cols-3 gap-2 lg:grid-cols-4">
-        {news.map((item, index) => {
+        {confernces.map((item, index) => {
           return (
             <CardPreview
-              src={item.image}
-              key={index}
-              className="h-[400px]"
-              href={`/${lang}/news/${item.id}`}
+              lang={lang}
+              className=" h-[400px]"
+              src={item.logo}
               alt={
                 lang === "ar" ? item.arContent?.title : item.enContent?.title
               }
               title={
                 lang === "ar" ? item.arContent?.title : item.enContent?.title
               }
+              href={`/${lang}/conferences/${item.id}`}
             >
               <div className="my-1 py-1" dir={getDir(lang)}>
                 <Lang

@@ -20,16 +20,21 @@ export async function generateMetadata({
 }: {
   params: { id: string; lang: "ar" | "en" };
 }): Promise<Metadata> {
-  const { id } = params;
+  const { id, lang } = params;
   const center = await getNewsbyId(id);
   if (!center) {
     return {
       title: "404 غير موجود",
     };
   }
+
   return {
-    title: center.arContent?.title,
-    description: center.arContent?.body,
+    title:
+      lang === "ar"
+        ? ` الأخبار | ${center.arContent?.title}`
+        : ` News | ${center.enContent?.title}`,
+    description:
+      lang === "ar" ? center.arContent?.body : center.enContent?.body,
   };
 }
 
@@ -56,13 +61,18 @@ const centerPage = async ({
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/${lang}`}>الرئيسية</Link>
+              <Link href={`/${lang}`}>
+                {" "}
+                <Lang lang={lang} ar={"الرئيسية"} en={"home"} />
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/${lang}/news`}>الأخبار</Link>
+              <Link href={`/${lang}/news`}>
+                <Lang lang={lang} ar={"الأخبار"} en={"News"} />
+              </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
 

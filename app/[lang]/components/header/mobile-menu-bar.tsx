@@ -282,14 +282,14 @@ export default function MobileNavigationBar({
             </AccordionItem>
             {/* centers */}
             <AccordionItem
-              value="item-4"
+              value="item-The-Administrations-and-Centers"
               className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
             >
               <AccordionTrigger className=" text-sm ">
                 <Lang
                   lang={lang}
                   ar={"الإدارات والمراكز"}
-                  en={"Departments and Centers"}
+                  en={"The Administrations and Centers"}
                 />
               </AccordionTrigger>
               <AccordionContent className=" w-4/5 mx-auto my-2">

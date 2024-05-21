@@ -40,7 +40,7 @@ export default async function home({
       <div className="bg-[url('https://www.azu.edu.ly/assets/img/hero-bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
         <div className="z-10 min-w-full min-h-full bg-black  absolute top-0 left-0 opacity-40"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
-          <AnimatedCard className="" XorY="x">
+          <AnimatedCard XorY="x">
             <div
               className={cn(
                 "font-bold   text-white flex justify-center  gap-5 items-center"

@@ -26,7 +26,7 @@ const CardPreview = ({
       <div
         dir={lang === "ar" ? "rtl" : "ltr"}
         className={cn(
-          "rounded-xl hover:bg-secondary transition-all min-h-[250px] border overflow-hidden",
+          "rounded-xl hover:bg-secondary transition-all min-h-[250px] border relative overflow-hidden",
           className
         )}
       >
@@ -44,10 +44,18 @@ const CardPreview = ({
 
           <div className="px-2 py-1 flex-1">
             {" "}
-            <div dir={lang === "ar" ? "rtl" : "ltr"}>{title}</div>
+            <div
+              className=" font-semibold text-xl"
+              dir={lang === "ar" ? "rtl" : "ltr"}
+            >
+              {title}
+            </div>
             {children}
           </div>
         </div>
+        {/* <Button className=" absolute bottom-2 right-2 z-10">
+          {lang === "ar" ? "عرض المزيد" : "view more"}
+        </Button> */}
       </div>
     </Link>
   );

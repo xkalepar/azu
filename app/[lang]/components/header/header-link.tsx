@@ -19,8 +19,8 @@ import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Category } from "@prisma/client";
 import { useParams, usePathname } from "next/navigation";
-import { useEffect } from "react";
 import Lang from "../lang";
+import { buttonVariants } from "@/lib/constant";
 
 type Props = {
   collages: ({
@@ -41,34 +41,222 @@ type Props = {
     englishId: string | null;
     category: Category;
   })[];
+  centers?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  academicPrograms?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  scientificResearchs?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  projects?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  graduates?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
+  actvities?: ({
+    arContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+    enContent?: {
+      id: string;
+      title: string;
+      body: string;
+    } | null;
+  } & {
+    id: string;
+    arContentId: string | null;
+    enContentId: string | null;
+    universityId: string | null;
+  })[];
 };
 
-export function NavigationMenuHeader({ collages }: Props) {
-  const pathName = usePathname();
-  const { lang } = useParams();
-  useEffect(() => {
-    console.log("pathName " + pathName);
-    console.log("lang " + lang);
-  }, [pathName, lang]);
+export function NavigationMenuHeader({
+  collages,
+  academicPrograms,
+  actvities,
+  centers,
+  graduates,
+  projects,
+  scientificResearchs,
+}: Props) {
+  // const pathName = usePathname();
+  const { lang }: { lang: "ar" | "en" } = useParams();
 
   return (
-    <NavigationMenu dir="rtl">
+    <NavigationMenu
+      className=" text-lg flex-1"
+      dir={lang === "ar" ? "rtl" : "ltr"}
+    >
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href={"/"}>
+          <Link href={`/${lang}`}>
+            <NavigationMenuLink
+              className={cn(navigationMenuTriggerStyle(), " text-sm")}
+            >
+              <Lang lang={lang} ar={"الرئيسية"} en={"Home"} />
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href={`/${lang}/university-info`}>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              عن الجامعة
+              <Lang lang={lang} ar={"حول الجامعة"} en={"About"} />
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
 
         <CollageMenu collages={collages} />
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Documentation
-            </NavigationMenuLink>
-          </Link>
+        {/* centers */}
+        <NavigationMenuItem className=" w-1/4">
+          <NavigationMenuTrigger>
+            <Lang
+              lang={lang}
+              ar={"الإدارات والمراكز"}
+              en={"The Administrations and Centers"}
+            />
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className=" w-1/4">
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              {centers?.map((center, i) => (
+                <li className="row-span-3" key={i}>
+                  {" "}
+                  <NavigationMenuLink asChild>
+                    <Link
+                      className={cn(
+                        "text-sm w-full ",
+                        buttonVariants.default,
+                        buttonVariants.variants.variant.secondary,
+                        buttonVariants.variants.size.default,
+                        "justify-start bg-transparent"
+                      )}
+                      href={`/${lang}/centers/${center.id}`}
+                    >
+                      {" "}
+                      <Lang
+                        ar={center.arContent?.title}
+                        en={center.enContent?.title}
+                        lang={lang}
+                      />
+                    </Link>
+                  </NavigationMenuLink>
+                </li>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        {/* projects */}
+        <NavigationMenuItem className=" w-1/4">
+          <NavigationMenuTrigger>
+            <Lang
+              lang={lang}
+              ar={"البرامج الأكاديمية"}
+              en={"Academic Programs"}
+            />
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className=" w-1/4">
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              {academicPrograms?.map((academicProgram, i) => (
+                <li className="row-span-3" key={i}>
+                  {" "}
+                  <NavigationMenuLink asChild>
+                    <Link
+                      className={cn(
+                        "text-sm w-full ",
+                        buttonVariants.default,
+                        buttonVariants.variants.variant.secondary,
+                        buttonVariants.variants.size.default,
+                        "justify-start bg-transparent"
+                      )}
+                      href={`/${lang}/academic-programs/${academicProgram.id}`}
+                    >
+                      {" "}
+                      <Lang
+                        ar={academicProgram.arContent?.title}
+                        en={academicProgram.enContent?.title}
+                        lang={lang}
+                      />
+                    </Link>
+                  </NavigationMenuLink>
+                </li>
+              ))}
+            </ul>
+          </NavigationMenuContent>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
@@ -114,30 +302,16 @@ const CollageMenu = ({ collages }: Props) => {
   return (
     <NavigationMenuItem dir={lang === "ar" ? "rtl" : "ltr"}>
       <NavigationMenuTrigger>
-        <Lang lang={lang} ar={"الكليات"} en={"collages"} />
+        <Lang lang={lang} ar={"الكليات"} en={"Collages"} />
       </NavigationMenuTrigger>
       <NavigationMenuContent dir={lang === "ar" ? "rtl" : "ltr"}>
         <ul
           className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] "
           dir={lang === "ar" ? "rtl" : "ltr"}
         >
-          {!showCollages && lang === "ar"
-            ? arCategories.map((component, index) => (
-                <div
-                  onClick={() => {
-                    setShowCollages(!showCollages);
-                    setCategory(component.value);
-                  }}
-                  key={index}
-                  className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div> {component.title}</div>
-                  <div>
-                    <ArrowLeftIcon className="transition-all group-hover:scale-110" />
-                  </div>
-                </div>
-              ))
-            : enCategories.map((component, index) => (
+          {!showCollages && (
+            <Lang
+              ar={arCategories.map((component, index) => (
                 <div
                   onClick={() => {
                     setShowCollages(!showCollages);
@@ -152,6 +326,24 @@ const CollageMenu = ({ collages }: Props) => {
                   </div>
                 </div>
               ))}
+              en={enCategories.map((component, index) => (
+                <div
+                  onClick={() => {
+                    setShowCollages(!showCollages);
+                    setCategory(component.value);
+                  }}
+                  key={index}
+                  className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                >
+                  <div> {component.title}</div>
+                  <div>
+                    <ArrowRightIcon className="transition-all group-hover:scale-110" />
+                  </div>
+                </div>
+              ))}
+              lang={lang}
+            />
+          )}
           {showCollages &&
             (lang === "ar" ? (
               <>

@@ -9,12 +9,21 @@ import {
   getCenter,
   getCenters,
 } from "@/app/dashboard/university/academic-programs/seed";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
 export async function generateMetadata({
   params,
 }: {
   params: { id: string; lang: "ar" | "en" };
 }): Promise<Metadata> {
-  const { id } = params;
+  const { id, lang } = params;
   const center = await getCenter({ id });
   if (!center) {
     return {
@@ -22,8 +31,12 @@ export async function generateMetadata({
     };
   }
   return {
-    title: center.arContent!.title,
-    description: center.arContent!.body,
+    title:
+      lang === "ar"
+        ? ` البرامج الأكاديمية | ${center.arContent?.title}`
+        : ` Academic Programs | ${center.enContent?.title}`,
+    description:
+      lang === "ar" ? center.arContent?.body : center.enContent?.body,
   };
 }
 
@@ -45,6 +58,28 @@ const centerPage = async ({
   const { lang } = params;
   return (
     <main className="container xl:mx-4 xl:px-4">
+      <Breadcrumb dir="rtl">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/${lang}`}>
+                <Lang lang={lang} ar={"الرئيسية"} en={"home"} />
+              </Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>
+              <Lang
+                lang={lang}
+                ar={"البرامج الأكاديمية"}
+                en={"Academic Programs"}
+              />
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
       <Suspense
         fallback={
           <>
