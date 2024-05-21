@@ -315,10 +315,10 @@ export function NavigationMenuHeader({
                       {projects !== undefined &&
                         projects.length > 0 &&
                         projects?.map((project, index) => (
-                          <div>
+                          <div key={index}>
                             <Link
                               href={`/${lang}/projects/${project.id}`}
-                              key={index}
+                              key={project.id}
                             >
                               <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
                                 <Lang
@@ -561,7 +561,7 @@ const CollageMenu = ({ collages }: Props) => {
                 {/* <Separator /> */}
                 {filteredCollages.map((collage, index) => (
                   <NavigationMenuLink asChild key={index}>
-                    <Link href={`/collages/${collage.id}`} key={index}>
+                    <Link href={`/collages/${collage.id}`}>
                       <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                         <Avatar>
                           <AvatarImage src={collage.logo} />

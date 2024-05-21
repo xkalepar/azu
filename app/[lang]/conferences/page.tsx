@@ -48,6 +48,7 @@ const page = async ({ params }: { params: { lang: Lang } }) => {
         {confernces.map((item, index) => {
           return (
             <CardPreview
+              key={index}
               lang={lang}
               className=" h-[400px]"
               src={item.logo}

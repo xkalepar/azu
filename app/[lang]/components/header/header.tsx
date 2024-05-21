@@ -150,7 +150,7 @@ const Header = ({
 }: Props) => {
   return (
     <Fragment>
-      <header className="flex items-center justify-start gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
+      <header className="flex items-center justify-between gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
         <Logo href={`/${lang}`} src={logo} />
         <ParseToScreenMoreThanWidth>
           <Fragment>
