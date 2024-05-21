@@ -29,7 +29,7 @@ export default async function home({
   const dictionary = await getDictionary(lang);
   const collages = await getCollages();
   const univeristy = await getUniversity();
-  const news = await getUniNews({ ar: lang === "ar", page: 1, take: 9 });
+  const news = await getUniNews({ page: 1, take: 9 });
   const conferences = await getConferences({ page: 1, qty: 9 });
   const magazines = await getMagazines({ page: 1, qty: 9 });
   console.log("#".repeat(30));
