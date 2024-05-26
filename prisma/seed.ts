@@ -420,6 +420,56 @@ export const newCollage = async ({
     return { message: "فشلت العملية" };
   }
 };
+export const updateCollage = async ({
+  arProps,
+  enProps,
+  logo,
+  category,
+  welcome,
+  collageId,
+
+  arId,
+  enId,
+}: NewCollageProps & {
+  collageId: string;
+  arId: string;
+  enId: string;
+}): Promise<{ message: string }> => {
+  try {
+    const newCollage = await prisma.collage.update({
+      where: { id: collageId },
+      data: {
+        logo,
+        welcome,
+        category,
+        ArCollageData: {
+          update: {
+            where: { id: arId },
+            data: {
+              title: arProps.title,
+              content: arProps.content,
+            },
+          },
+        },
+        EnCollageData: {
+          update: {
+            where: {
+              id: enId,
+            },
+            data: { title: enProps.title, content: enProps.content },
+          },
+        },
+      },
+    });
+    if (!newCollage) {
+      return { message: "فشل انشاء كلية جديدة" };
+    }
+    revalidateTag("collages");
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    return { message: "فشلت العملية" };
+  }
+};
 
 export const getCollages = unstable_cache(
   async (ScientificSection: boolean = false) => {

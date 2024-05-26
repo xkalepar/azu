@@ -5,6 +5,7 @@ import { Lang } from "@/types/types";
 import { SocialMedia } from "@prisma/client";
 import Link from "next/link";
 import React from "react";
+import AddressMap from "../maps";
 
 export const getDir = (lang: Lang): "rtl" | "ltr" =>
   lang === "ar" ? "rtl" : "ltr";
@@ -106,6 +107,9 @@ const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
               </Link>
             </li>
           </ul>
+        </div>
+        <div>
+          <AddressMap />
         </div>
       </div>
     </section>

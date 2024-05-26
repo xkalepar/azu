@@ -130,6 +130,7 @@ model Collage {
   eServicesId                              String?                                 @db.ObjectId
   formsAndApplicationsId                   String?                                 @db.ObjectId
   News                                     News[]
+  location                                 String?
 }
 
 /// االأقسام العلمية

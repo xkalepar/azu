@@ -13,6 +13,7 @@ import HomeFooter, { getDir } from "../components/footers/home-footer";
 import { SocialMedia } from "@prisma/client";
 import ParseData from "@/app/components/parse-data";
 import Lang from "../components/lang";
+import BreadCrumbsSepratorLang from "../components/bread-crumbs-seprator";
 
 export const metadata = {
   title: "حول جامعة الزيتونة",
@@ -24,7 +25,10 @@ const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
   const univeristy = await getUniversity();
 
   return (
-    <main className="min-h-screen" dir="rtl">
+    <main
+      className="min-h-screen container"
+      dir={lang === "ar" ? "rtl" : "ltr"}
+    >
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -35,7 +39,7 @@ const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator />
+          <BreadCrumbsSepratorLang />
 
           <BreadcrumbItem>
             <BreadcrumbPage>

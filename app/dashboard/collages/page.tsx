@@ -26,7 +26,7 @@ const collagesPage = async () => {
           <Link
             href={"/dashboard/collages/new"}
             className={cn(
-              "absolute left-2 top-2",
+              "absolute left-2 top-2 z-50",
               buttonVariants.default,
               buttonVariants.variants.variant.default,
               buttonVariants.variants.size.default
