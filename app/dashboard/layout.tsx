@@ -18,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className={notoNaskhArabic.className}>
         <main className="flex flex-start gap-1 min-h-screen">
           <section className="">

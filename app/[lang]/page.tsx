@@ -32,11 +32,11 @@ export default async function home({
   const news = await getUniNews({ page: 1, take: 9 });
   const conferences = await getConferences({ page: 1, qty: 9 });
   const magazines = await getMagazines({ page: 1, qty: 9 });
-  console.log("#".repeat(30));
-  console.log(univeristy?.Centers);
-  console.log("#".repeat(30));
+  // console.log("#".repeat(30));
+  // console.log(univeristy?.Centers);
+  // console.log("#".repeat(30));
   return (
-    <div>
+    <main>
       <div className="bg-[url('https://www.azu.edu.ly/assets/img/hero-bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
         <div className="z-10 min-w-full min-h-full bg-black  absolute top-0 left-0 opacity-40"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
@@ -343,7 +343,7 @@ export default async function home({
           }
         </div>
       </main>
-    </div>
+    </main>
   );
 }
 

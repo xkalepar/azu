@@ -22,6 +22,7 @@ import HomeFooter from "./components/footers/home-footer";
 import { SocialMedia } from "@prisma/client";
 import { RenderMainHeader } from "./components/header/dynamic-header";
 import Header from "./components/header/header";
+import { Metadata } from "next";
 // import { getCollages } from "@/prisma/seed";
 export default async function Root({
   children,
@@ -68,7 +69,7 @@ export default async function Root({
   );
 }
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "جامعة الزيتونة",
   description: "الموقع الرسمي لجامعة الزيتونة",
 };

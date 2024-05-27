@@ -109,7 +109,8 @@ model Collage {
   views                                    Int                                     @default(0)
   Statics                                  Statics[]
   Links                                    Link[]
-  welcome                                  String
+  welcome                                  String?
+  enWelcome                                String?
   SocialMedia                              SocialMedia?                            @relation(fields: [socialMediaId], references: [id])
   TheOfficesAndAdministrativeDepartments   TheOfficesAndAdministrativeDepartments? @relation(fields: [theOfficesAndAdministrativeDepartmentsId], references: [id])
   GraduateStudies                          GraduateStudies?                        @relation(fields: [graduateStudiesId], references: [id])
