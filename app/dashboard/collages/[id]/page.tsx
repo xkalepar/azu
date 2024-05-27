@@ -12,6 +12,17 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Trash2Icon } from "lucide-react";
+import { buttonVariants } from "@/lib/constant";
+import { cn } from "@/lib/utils";
+import { Edit } from "lucide-react";
+import { DeleteCollageForm } from "../new/forms";
 export async function generateMetadata({
   params,
 }: {
@@ -41,8 +52,45 @@ const collagePage = async ({ params }: { params: { id: string } }) => {
 
   if (!collage) return notFound();
   return (
-    <section className="px-4 py-2">
-      <Breadcrumbs title={collage.ArCollageData?.title} />
+    <main className="px-4 py-2">
+      <div className="flex-col  md:flex-row flex justify-start items-start md:justify-between md:items-center">
+        <Breadcrumbs title={collage.ArCollageData?.title} />
+        <div className=" flex items-center gap-1">
+          <Link
+            href={`/dashboard/collages/${collage.id}/edit`}
+            className={cn(
+              " z-50 flex justify-center items-center",
+              buttonVariants.default,
+              buttonVariants.variants.variant.ghost,
+              buttonVariants.variants.size.icon
+            )}
+          >
+            <Edit size={16} />
+          </Link>
+          <Dialog>
+            <DialogTrigger
+              className={cn(
+                " z-50 flex justify-center items-center",
+                buttonVariants.default,
+                buttonVariants.variants.variant.ghost,
+                buttonVariants.variants.size.icon
+              )}
+            >
+              <Trash2Icon size={16}></Trash2Icon>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                هل انت متاكد من حذف {collage.ArCollageData?.title}
+              </DialogHeader>
+              <DeleteCollageForm
+                arId={collage?.arabicId ?? ""}
+                enId={collage?.englishId ?? ""}
+                collageId={collage.id}
+              />
+            </DialogContent>
+          </Dialog>
+        </div>
+      </div>
       <Tabs defaultValue="ar" dir="rtl">
         <TabsList>
           <TabsTrigger value="ar">العربية</TabsTrigger>
@@ -55,7 +103,7 @@ const collagePage = async ({ params }: { params: { id: string } }) => {
           <ParseData dir="ltr" content={collage.EnCollageData!.content} />
         </TabsContent>
       </Tabs>
-    </section>
+    </main>
   );
 };
 

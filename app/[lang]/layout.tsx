@@ -1,5 +1,4 @@
 import { i18n, type Locale } from "../../i18n-config";
-import Header from "./components/header/header";
 // import { Providers } from "./theme-provider";
 
 export async function generateStaticParams() {
@@ -17,11 +16,12 @@ const notoNaskhArabic = Noto_Naskh_Arabic({
   display: "swap",
 });
 import "../globals.css";
-import AnimatedCard from "./components/animated-card";
 import { getCollages, getUniversity } from "@/prisma/seed";
 import { cn } from "@/lib/utils";
 import HomeFooter from "./components/footers/home-footer";
 import { SocialMedia } from "@prisma/client";
+import { RenderMainHeader } from "./components/header/dynamic-header";
+import Header from "./components/header/header";
 // import { getCollages } from "@/prisma/seed";
 export default async function Root({
   children,
@@ -44,17 +44,18 @@ export default async function Root({
         <main
           className={cn("mt-20 flex flex-col justify-between  min-h-screen")}
         >
-          <Header
-            lang={lang}
-            collages={collages}
-            centers={univeristy?.Centers}
-            logo={univeristy?.logo}
-            academicPrograms={univeristy?.AcademicProgram}
-            scientificResearchs={univeristy?.ScientificResearchForUniversity}
-            actvities={univeristy?.UniversityActivities}
-            graduates={univeristy?.GraduatesForUniversity}
-            projects={univeristy?.Projects}
-          ></Header>
+          <RenderMainHeader>
+            <Header
+              collages={collages}
+              centers={univeristy?.Centers}
+              logo={univeristy?.logo}
+              academicPrograms={univeristy?.AcademicProgram}
+              scientificResearchs={univeristy?.ScientificResearchForUniversity}
+              actvities={univeristy?.UniversityActivities}
+              graduates={univeristy?.GraduatesForUniversity}
+              projects={univeristy?.Projects}
+            />
+          </RenderMainHeader>
 
           <div className=" flex-1">{children}</div>
           <HomeFooter

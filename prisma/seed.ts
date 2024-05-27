@@ -471,6 +471,35 @@ export const updateCollage = async ({
   }
 };
 
+export const deleteCollage = async ({
+  collageId,
+  arId,
+  enId,
+}: {
+  collageId: string;
+  arId: string;
+  enId: string;
+}): Promise<{ message: string }> => {
+  try {
+    const deletedCollage = await prisma.collage.delete({
+      where: { id: collageId },
+    });
+    const deletedAr = await prisma.arCollageData.delete({
+      where: { id: arId },
+    });
+    const deletedEn = await prisma.enCollageData.delete({
+      where: { id: enId },
+    });
+    if (!deletedCollage || !deletedEn || !deletedAr) {
+      return { message: "فشل حذف كلية" };
+    }
+    revalidateTag("collages");
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    return { message: "فشلت العملية" };
+  }
+};
+
 export const getCollages = unstable_cache(
   async (ScientificSection: boolean = false) => {
     try {

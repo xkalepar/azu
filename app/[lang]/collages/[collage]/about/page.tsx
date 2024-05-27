@@ -1,11 +1,11 @@
 // import Statiscs from "@/app/[lang]/components/statiscs";
+import Lang from "@/app/[lang]/components/lang";
 import ParseData from "@/app/components/parse-data";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getCollageById, getCollages } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 import { Suspense } from "react";
-import Lang from "../../components/lang";
 export async function generateMetadata({
   params,
 }: {

@@ -151,7 +151,7 @@ type Props = {
   })[];
 };
 
-export function NavigationMenuHeader({
+export function DesktopMenuHeader({
   collages,
   academicPrograms,
   actvities,
@@ -490,6 +490,7 @@ const enCategories: { title: string; value: Category }[] = [
   },
 ];
 type Lang = "ar" | "en";
+
 const CollageMenu = ({ collages }: Props) => {
   const { lang }: { lang: Lang } = useParams();
   const [showCollages, setShowCollages] = React.useState<Boolean>(false);
@@ -647,124 +648,3 @@ const ListItem = ({
   );
 };
 ListItem.displayName = "ListItem";
-
-/* 
-
-  <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-2">
-                <NavigationMenuLink asChild>
-                  <Link
-                    scroll={false}
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/university-info#overview"
-                  >
-                    <div className="m-auto w-fit">
-                      <FaUniversity size={48} className=" text-primary" />
-                    </div>
-                    <div className="mb-2 mt-4 text-lg font-medium">
-                      تأسيس الجامعة
-                    </div>
-                    <p className="text-sm leading-tight text-muted-foreground">
-                      Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                      Nostrum, nam!
-                    </p>
-                  </Link>
-                </NavigationMenuLink>
-              </li>
-
-              <ListItem
-                href="/university-info#goals"
-                title="رؤية و رسالة و اهداف الجامعة"
-              >
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-              <ListItem
-                href="/university-info#statiscs"
-                title="احصائيات الجامعة"
-              >
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-              <ListItem
-                href="/university-info#rating"
-                title="الأعتماد و التصنيف"
-              >
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-              <ListItem
-                href="/university-info#management"
-                title="رئاسة الجامعة"
-              >
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-              <ListItem href="/university-info#desk" title="مكتب الجامعة">
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-              <ListItem
-                href="/university-info#desksetup"
-                title="مكتب شؤون مجلس الجامعة"
-              >
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-             
-              <ListItem
-                href="/university-info#shoon"
-                title={"وكيل الجامعة للشؤون العلمية"}
-              >
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-             
-              <ListItem
-                href="/university-info#structure"
-                title="الهيكل التنظيمي للجامعة"
-              >
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-
-             
-              <ListItem href="/university-info#lists" title="سياسات و لوائح">
-                Lorem ipsum dolor sit amet...
-              </ListItem>
-             
-            </ul>
-          </NavigationMenuContent>
-
-
-
-
-/* 
-
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
-
-*/

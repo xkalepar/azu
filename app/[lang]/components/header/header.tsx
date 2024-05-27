@@ -1,4 +1,3 @@
-import { NavigationMenuHeader } from "./header-link";
 import Logo from "./logo";
 import { Fragment } from "react";
 import { Separator } from "@/components/ui/separator";
@@ -11,6 +10,7 @@ import {
   ParseToScreenLessThanWidth,
 } from "@/app/components/client-parser";
 import { $Enums, Centers } from "@prisma/client";
+import { DesktopMenuHeader } from "./desktop-menu-bar";
 
 type Props = {
   collages: ({
@@ -154,7 +154,7 @@ const Header = ({
         <Logo href={`/${lang}`} src={logo} />
         <ParseToScreenMoreThanWidth>
           <Fragment>
-            <NavigationMenuHeader
+            <DesktopMenuHeader
               collages={collages}
               centers={centers}
               academicPrograms={academicPrograms}

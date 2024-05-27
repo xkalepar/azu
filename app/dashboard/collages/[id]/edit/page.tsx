@@ -42,7 +42,10 @@ const collagePage = async ({ params }: { params: { id: string } }) => {
   if (!collage) return notFound();
   return (
     <section className="px-4 py-2">
-      <Breadcrumbs title={collage.ArCollageData?.title} />
+      <Breadcrumbs
+        id={collage.id}
+        title={collage?.ArCollageData?.title ?? ""}
+      />
       <EditCollageForm
         arId={collage?.arabicId ?? ""}
         enId={collage?.englishId ?? ""}
@@ -51,7 +54,6 @@ const collagePage = async ({ params }: { params: { id: string } }) => {
         title={collage.ArCollageData?.title}
         enTitle={collage.ArCollageData?.title}
         logo={collage.logo}
-        // lang={lang}
         collageId={collage.id}
         selected={collage.category}
       />
@@ -61,7 +63,7 @@ const collagePage = async ({ params }: { params: { id: string } }) => {
 
 export default collagePage;
 
-const Breadcrumbs = ({ title }: { title?: string }) => {
+const Breadcrumbs = ({ title, id }: { title?: string; id?: string }) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -84,7 +86,13 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>{title ?? "..."}</BreadcrumbPage>
+          <BreadcrumbLink asChild>
+            <Link href={`/dashboard/collages/${id}`}>{title ?? "..."}</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>تعديل</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

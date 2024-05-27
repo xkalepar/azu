@@ -65,6 +65,9 @@ body {
 .flex-between {
   @apply flex justify-between items-center;
 }
+.flex-center {
+  @apply flex justify-center items-center;
+}
 
 @keyframes spin {
   0% {

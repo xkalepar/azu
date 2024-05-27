@@ -1,5 +1,5 @@
 // import { verifyOrder } from "@/lib/vanex";
-import { newCollage, updateCollage } from "@/prisma/seed";
+import { deleteCollage, newCollage, updateCollage } from "@/prisma/seed";
 import { Category } from "@prisma/client";
 import { z } from "zod";
 
@@ -117,6 +117,47 @@ export async function editCollageAction(
       logo,
       category: data.data.category as Category,
       welcome: "",
+      arId,
+      collageId,
+      enId,
+    });
+    return { message: res.message };
+  } catch (e) {
+    console.log(e);
+    return { message: "فشلت العملية" };
+  }
+}
+
+export async function deleteCollageAction(
+  prevState: {
+    message: string;
+  },
+  formData: FormData
+) {
+  try {
+    // get data form the form
+    const schema = z.object({
+      collageId: z.string().min(2),
+      arId: z.string().min(2),
+      enId: z.string().min(2),
+    });
+    console.log(`schema: ${schema}`);
+
+    const data = schema.safeParse({
+      collageId: formData.get("collageId"),
+      arId: formData.get("arId"),
+      enId: formData.get("enId"),
+    });
+    console.log(`data: ${data}`);
+
+    console.log(data.success);
+    // console.log(data);
+    if (!data.success) {
+      return { message: "يجب أن يتم ملء جميع الحقول " };
+    }
+    console.log(data);
+    const { arId, collageId, enId } = data.data;
+    const res = await deleteCollage({
       arId,
       collageId,
       enId,
