@@ -4,13 +4,11 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import { Suspense } from "react";
-import { getCollages, getUniversity } from "@/prisma/seed";
-import HomeFooter, { getDir } from "../components/footers/home-footer";
-import { SocialMedia } from "@prisma/client";
+import { getUniversity } from "@/prisma/seed";
+import { getDir } from "../components/footers/home-footer";
 import ParseData from "@/app/components/parse-data";
 import Lang from "../components/lang";
 import BreadCrumbsSepratorLang from "../components/bread-crumbs-seprator";
