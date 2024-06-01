@@ -95,10 +95,6 @@ const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
           />
         </Suspense>
       </section>
-      <HomeFooter
-        lang={lang}
-        socialMedia={univeristy?.SocialMedia as SocialMedia}
-      />
     </main>
   );
 };

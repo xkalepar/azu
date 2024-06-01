@@ -1,5 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
+// import Loading from "./components/loading";
+// import { Suspense } from "react";
 
 const Template = ({ children }: { children: React.ReactNode }) => {
   // const { scrollYProgress } = useScroll();
@@ -13,6 +15,9 @@ const Template = ({ children }: { children: React.ReactNode }) => {
     >
       {children}
     </motion.div>
+    // <Suspense fallback={<div className=" flex-center h-full w-full"></div>}>
+    //   {children}
+    // </Suspense>
   );
 };
 

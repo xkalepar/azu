@@ -12,6 +12,7 @@ import AnimatedCard from "../../components/animated-card";
 import CardPreview from "@/app/components/card-preview";
 import { FaUniversity } from "react-icons/fa";
 import Statiscs from "../../components/statiscs";
+import { getDictionary } from "@/get-dictionary";
 export async function generateMetadata({
   params,
 }: {
@@ -42,9 +43,11 @@ const collagePage = async ({
   const collage = await getCollageById(params.collage);
   if (!collage) return notFound();
   const { lang } = params;
+  const dictionary = await getDictionary(lang);
+
   return (
     <main>
-      <div className="bg-[url('https://www.azu.edu.ly/assets/img/hero-bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
+      <div className="bg-[url('/bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
         <div className="z-10 min-w-full min-h-full bg-black  absolute top-0 left-0 opacity-40"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
           <AnimatedCard XorY="x">
@@ -53,20 +56,8 @@ const collagePage = async ({
                 "font-bold   text-white flex justify-center  gap-5 items-center"
               )}
             >
-              {/* <FaUniversity size={128} className="hidden md:block" /> */}
               <div className="flex flex-col justify-between gap-1">
-                <div className=" relative z-[100]">
-                  {/* <Input
-                    type="text"
-                    className=" bg-secondary z-50 text-primary hidden md:block"
-                  />
-                  <Button
-                    size={"icon"}
-                    className="hidden md:flex absolute left-0 top-0"
-                  >
-                    <SearchIcon />
-                  </Button> */}
-                </div>
+                <div className=" relative z-[100]"></div>
                 <h1 className="text-3xl my-4">
                   <Lang
                     lang={lang}
@@ -83,6 +74,9 @@ const collagePage = async ({
         </div>
       </div>
       <main className=" container ">
+        <h2 className="text-xl text-center my-4 font-bold">
+          {dictionary.pages.univeristy["overview"]["statistics"]}
+        </h2>
         <Statiscs />
       </main>
     </main>

@@ -179,3 +179,5 @@ p {
 .flex-center {
   @apply justify-center flex items-center;
 }
+
+/* loading */

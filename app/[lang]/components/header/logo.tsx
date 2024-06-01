@@ -10,7 +10,7 @@ const Logo = ({ href, src }: LogoProps) => {
     <Link href={href ?? "/"}>
       <Avatar>
         <AvatarFallback>Logo</AvatarFallback>
-        <AvatarImage src={src}></AvatarImage>
+        <AvatarImage alt={src} src={src}></AvatarImage>
       </Avatar>
     </Link>
   );

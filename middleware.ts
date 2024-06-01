@@ -64,7 +64,8 @@ export const config = {
   // matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
   // matcher: ["/((?!dashboard|api|_next/static|_next/image|favicon.ico).*)"],
   matcher: [
-    "/((?!dashboard|api|_next/static|_next/image|favicon.ico|pdf.png).*)",
+    "/((?!dashboard|api|_next/static|_next/image|favicon.ico|bg.jpeg|pdf.png}).*)",
+    // "/((?!dashboard|api|_next/static|_next/image|favicon.ico|pdf.png}).*)",
   ],
   // matcher: [
   //   "/((?!dashboard|api|_next/static/|_next/image/|_next/logos/|favicon.ico).*)",

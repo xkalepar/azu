@@ -168,7 +168,7 @@ export function DesktopMenuHeader({
       className=" text-lg flex-1"
       dir={lang === "ar" ? "rtl" : "ltr"}
     >
-      <NavigationMenuList className="w-full gap-2">
+      <NavigationMenuList className="gap-2">
         <NavigationMenuItem>
           <Link href={`/${lang}`}>
             <NavigationMenuLink
