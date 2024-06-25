@@ -680,12 +680,16 @@ export const getNews = unstable_cache(
     collageId,
     id,
     includeScientificSection = false,
+    qty = 9,
+    page = 0,
   }: {
     collageId?: string;
     query?: string;
     id?: string;
     includeCollage?: boolean;
     includeScientificSection?: boolean;
+    qty?: number;
+    page?: number;
   }) => {
     try {
       const news = await prisma.news.findMany({
@@ -699,10 +703,13 @@ export const getNews = unstable_cache(
           Collage: {
             include: {
               ArCollageData: true,
+              EnCollageData: true,
             },
           },
           ScientificSection: includeScientificSection,
         },
+        take: qty,
+        skip: page !== undefined ? page * qty : 0,
       });
       if (!news) {
         return [];

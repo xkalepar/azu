@@ -39,8 +39,8 @@ export const getConferences = unstable_cache(
       return [];
     }
   },
-  ["conferences"],
-  { tags: ["conferences"] }
+  ["conferences", "university"],
+  { tags: ["conferences", "university"] }
 );
 export const createConferences = async (
   data: Omit<Mangzine, "id" | "createdAt" | "updatedAt">
@@ -67,6 +67,8 @@ export const createConferences = async (
     if (!newConferences) return { message: "فشل في الإنشاء" };
     // revalidatePath("/");
     revalidateTag("conferences");
+    revalidateTag("university");
+
     return { message: "تم إنشاء المؤتمر بنجاح" };
   } catch (error) {
     console.error(error);
@@ -114,6 +116,8 @@ export const deleteConference = async ({
       return { message: "تعذر الحذف" };
     }
     revalidateTag("conferences");
+    revalidateTag("university");
+
     return { message: "تم حذف المؤتمر بنجاح" };
   } catch (error) {
     console.error(error);
@@ -158,6 +162,8 @@ export const updateConference = async ({
     }
     // revalidatePath("/");
     revalidateTag("conferences");
+    revalidateTag("university");
+
     return { message: "تم تحديث المؤتمر بنجاح" };
   } catch (error) {
     console.error(error);

@@ -8,9 +8,7 @@ interface Content {
   title: string;
   body: string;
 }
-
 const uniId: string = env.UniveristyId as string;
-
 export const createCenter = async ({
   arContent,
   enContent,
@@ -39,6 +37,8 @@ export const createCenter = async ({
       return { message: "فشل انشاء مركز جديد" };
     }
     revalidateTag("graduatesForUniversity");
+    revalidateTag("university");
+
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
     return { message: "فشلت العملية" };
@@ -90,6 +90,8 @@ export const editCenter = async ({
       return { message: "فشل تحديث مركز جديدة" };
     }
     revalidateTag("graduatesForUniversity");
+    revalidateTag("university");
+
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
     return { message: "فشلت العملية" };
@@ -118,6 +120,7 @@ export const deleteCenter = async ({
       return { message: "فشل حذف الخبر " };
     }
     revalidateTag("graduatesForUniversity");
+    revalidateTag("university");
 
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
@@ -139,10 +142,9 @@ export const getCenters = unstable_cache(
       return [];
     }
   },
-  ["graduatesForUniversity"],
-  { tags: ["graduatesForUniversity"] }
+  ["graduatesForUniversity", "university"],
+  { tags: ["graduatesForUniversity", "university"] }
 );
-
 export const getCenter = async ({ id }: { id: string }) => {
   try {
     const center = await prisma.graduatesForUniversity.findUnique({

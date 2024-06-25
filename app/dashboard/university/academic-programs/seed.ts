@@ -38,6 +38,7 @@ export const createCenter = async ({
     if (!newCollage) {
       return { message: "فشل انشاء مركز جديد" };
     }
+    revalidateTag("university");
     revalidateTag("academicProgram");
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
@@ -90,6 +91,8 @@ export const editCenter = async ({
       return { message: "فشل تحديث مركز جديدة" };
     }
     revalidateTag("academicProgram");
+    revalidateTag("university");
+
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
     return { message: "فشلت العملية" };
@@ -117,6 +120,7 @@ export const deleteCenter = async ({
     if (!news || !deletedArContent || !deletedEnContent) {
       return { message: "فشل حذف الخبر " };
     }
+    revalidateTag("university");
     revalidateTag("academicProgram");
 
     return { message: "تمت العملية بنجاح" };
@@ -138,8 +142,8 @@ export const getCenters = unstable_cache(
       return [];
     }
   },
-  ["academicProgram"],
-  { tags: ["academicProgram"] }
+  ["academicProgram", "university"],
+  { tags: ["academicProgram", "university"] }
 );
 
 export const getCenter = async ({ id }: { id: string }) => {

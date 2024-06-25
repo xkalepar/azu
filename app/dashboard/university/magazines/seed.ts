@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/prisma/db";
-import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
+import { revalidateTag, unstable_cache } from "next/cache";
 
 type Mangzine = {
   arContent?: ArContent;
@@ -39,8 +39,8 @@ export const getMagazines = unstable_cache(
       return [];
     }
   },
-  ["magazine"],
-  { tags: ["magazine"] }
+  ["magazine", "university"],
+  { tags: ["magazine", "university"] }
 );
 export const createMagazine = async (
   data: Omit<Mangzine, "id" | "createdAt" | "updatedAt">
@@ -67,6 +67,8 @@ export const createMagazine = async (
     if (!newMagazine) return { message: "فشل في الإنشاء" };
     // revalidatePath("/");
     revalidateTag("magazine");
+    revalidateTag("university");
+
     return { message: "تم إنشاء المجلة بنجاح" };
   } catch (error) {
     console.error(error);
@@ -114,6 +116,8 @@ export const deleteMagazine = async ({
       return { message: "تعذر الحذف" };
     }
     revalidateTag("magazine");
+    revalidateTag("university");
+
     return { message: "تم حذف المجلة بنجاح" };
   } catch (error) {
     console.error(error);
@@ -158,6 +162,8 @@ export const updateMagazine = async ({
     }
     // revalidatePath("/");
     revalidateTag("magazine");
+    revalidateTag("university");
+
     return { message: "تم تحديث المجلة بنجاح" };
   } catch (error) {
     console.error(error);

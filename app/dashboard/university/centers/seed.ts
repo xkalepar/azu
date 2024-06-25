@@ -39,6 +39,8 @@ export const createCenter = async ({
       return { message: "فشل انشاء مركز جديد" };
     }
     revalidateTag("centers");
+    revalidateTag("university");
+
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
     return { message: "فشلت العملية" };
@@ -90,6 +92,8 @@ export const editCenter = async ({
       return { message: "فشل تحديث مركز جديدة" };
     }
     revalidateTag("centers");
+    revalidateTag("university");
+
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
     return { message: "فشلت العملية" };
@@ -118,6 +122,7 @@ export const deleteCenter = async ({
       return { message: "فشل حذف الخبر " };
     }
     revalidateTag("centers");
+    revalidateTag("university");
 
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
@@ -138,8 +143,8 @@ export const getCenters = unstable_cache(
       return [];
     }
   },
-  ["centers"],
-  { tags: ["centers"] }
+  ["centers", "university"],
+  { tags: ["centers", "university"] }
 );
 
 export const getCenter = async ({ id }: { id: string }) => {
