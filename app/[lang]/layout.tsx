@@ -3,7 +3,7 @@ import { i18n, type Locale } from "../../i18n-config";
 export async function generateStaticParams() {
   return i18n.locales.map((locale) => ({ lang: locale }));
 }
-import { Cairo, Noto_Naskh_Arabic } from "next/font/google";
+import { Cairo } from "next/font/google";
 const cairo = Cairo({
   weight: "500",
   subsets: ["arabic"],

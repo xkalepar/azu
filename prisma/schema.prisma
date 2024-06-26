@@ -132,6 +132,7 @@ model Collage {
   formsAndApplicationsId                   String?                                 @db.ObjectId
   News                                     News[]
   location                                 String?
+  User                                     User?
 }
 
 /// االأقسام العلمية
@@ -416,4 +417,19 @@ model PdfReference {
   ar  String?
   en  String?
   uri String?
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  username  String   @unique
+  password  String
+  role      Role     @default(teacher)
+  collage   Collage? @relation(fields: [collageId], references: [id])
+  collageId String?  @unique @db.ObjectId
+}
+
+enum Role {
+  admin
+  teacher
+  student
 }
