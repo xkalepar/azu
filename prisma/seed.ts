@@ -128,6 +128,7 @@ export const getUniversity = unstable_cache(
         const newUniversity = await prisma.university.create({
           data: {
             logo: "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
+            id: "66404d695592af5a180663fc"
           },
         });
         if (!newUniversity) {
