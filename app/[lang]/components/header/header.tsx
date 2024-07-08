@@ -153,7 +153,7 @@ const Header = ({
       <header className="flex items-center justify-between gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
         <Logo href={`/${lang}`} src={logo} />
         <ParseToScreenMoreThanWidth>
-          <Fragment>
+          <div className=" flex-between gap-2">
             <DesktopMenuHeader
               collages={collages}
               centers={centers}
@@ -173,7 +173,7 @@ const Header = ({
             >
               {lang === "en" ? "العربية" : "english"}
             </Link>
-          </Fragment>
+          </div>
         </ParseToScreenMoreThanWidth>
         <ParseToScreenLessThanWidth>
           <MobileNavigationBar

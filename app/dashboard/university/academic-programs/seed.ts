@@ -19,6 +19,9 @@ export const createCenter = async ({
   enContent: Content;
 }): Promise<{ message: string }> => {
   try {
+    console.log("first");
+    console.log(uniId);
+
     const newCollage = await prisma.academicProgram.create({
       data: {
         arContent: {
@@ -34,12 +37,15 @@ export const createCenter = async ({
         },
       },
     });
+
+    console.log("second");
+
     console.log(newCollage);
     if (!newCollage) {
       return { message: "فشل انشاء مركز جديد" };
     }
-    revalidateTag("university");
     revalidateTag("academicProgram");
+    revalidateTag("university");
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
     return { message: "فشلت العملية" };

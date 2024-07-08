@@ -27,6 +27,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { BarChart } from "lucide-react";
+import DropdownMenuButton from "./drop-down-menu-item";
 
 type Props = {
   collages: ({
@@ -162,8 +165,16 @@ export function DesktopMenuHeader({
 }: Props) {
   // const pathName = usePathname();
   const { lang }: { lang: "ar" | "en" } = useParams();
-
+  // console.log(academicPrograms)
   return (
+    // <Sheet >
+    //   <SheetTrigger>
+    //     <BarChart />
+    //   </SheetTrigger>
+    //   <SheetContent side={"top"}>
+
+    //   </SheetContent>
+    // </Sheet>
     <NavigationMenu
       className=" text-lg flex-1"
       dir={lang === "ar" ? "rtl" : "ltr"}
@@ -188,11 +199,11 @@ export function DesktopMenuHeader({
 
         <CollageMenu collages={collages} />
         {/* centers */}
-        <NavigationMenuItem className=" w-1/4">
+        <NavigationMenuItem className="w-1/4">
           <NavigationMenuTrigger>
             <Lang lang={lang} ar={"الإدارات والمراكز"} en={"Administrations"} />
           </NavigationMenuTrigger>
-          <NavigationMenuContent className=" w-1/4">
+          <NavigationMenuContent className="w-1/4">
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               {centers?.map((center, i) => (
                 <li className="row-span-3" key={i}>
@@ -223,7 +234,40 @@ export function DesktopMenuHeader({
         </NavigationMenuItem>
 
         {/* projects */}
-        <NavigationMenuItem className=" w-1/4">
+
+        <DropdownMenuButton title={
+          <Lang lang={lang} ar={"البرامج الأكاديمية"} en={"Programs"} />
+
+        } >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            {academicPrograms?.map((academicProgram, i) => (
+              <li className="row-span-3" key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/academic-programs/${academicProgram.id}`}
+                  >
+                    {" "}
+                    <Lang
+                      ar={academicProgram.arContent?.title}
+                      en={academicProgram.enContent?.title}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+            ))}
+          </ul>
+        </DropdownMenuButton>
+
+        {/* <NavigationMenuItem className=" w-1/4">
           <NavigationMenuTrigger>
             <Lang lang={lang} ar={"البرامج الأكاديمية"} en={"Programs"} />
           </NavigationMenuTrigger>
@@ -255,41 +299,8 @@ export function DesktopMenuHeader({
               ))}
             </ul>
           </NavigationMenuContent>
-        </NavigationMenuItem>
-        {/* projects */}
-        <NavigationMenuItem className=" w-1/4">
-          <NavigationMenuTrigger>
-            <Lang lang={lang} ar={"البرامج الأكاديمية"} en={"Programs"} />
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className=" w-1/4">
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              {academicPrograms?.map((academicProgram, i) => (
-                <li className="row-span-3" key={i}>
-                  {" "}
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className={cn(
-                        "text-sm w-full ",
-                        buttonVariants.default,
-                        buttonVariants.variants.variant.secondary,
-                        buttonVariants.variants.size.default,
-                        "justify-start bg-transparent"
-                      )}
-                      href={`/${lang}/academic-programs/${academicProgram.id}`}
-                    >
-                      {" "}
-                      <Lang
-                        ar={academicProgram.arContent?.title}
-                        en={academicProgram.enContent?.title}
-                        lang={lang}
-                      />
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+        </NavigationMenuItem> */}
+
         {/* research */}
         <NavigationMenuItem className=" w-1/4">
           <NavigationMenuTrigger>
@@ -443,7 +454,6 @@ export function DesktopMenuHeader({
                       )}
                       href={`/${lang}/university-activities/${academicProgram.id}`}
                     >
-                      {" "}
                       <Lang
                         ar={academicProgram.arContent?.title}
                         en={academicProgram.enContent?.title}
@@ -636,7 +646,7 @@ const ListItem = ({
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
-          // {...props}
+        // {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
