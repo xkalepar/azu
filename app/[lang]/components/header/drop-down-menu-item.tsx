@@ -26,7 +26,7 @@ export default function DropdownMenuButton({ title, children }: Props) {
                     <Button variant={"ghost"} className="flex justify-between items-center gap-1">
                         {title}
                         <IoIosArrowDown
-                            className={cn('transition-all duration-[500ms] text-xs', !open ? '' : ' rotate-180 ')}
+                            className={cn('transition-all duration-300 text-xs', !open ? '' : ' rotate-180 ')}
                         />
                     </Button>
                 </DropdownMenuTrigger>
@@ -41,7 +41,7 @@ export default function DropdownMenuButton({ title, children }: Props) {
                         <Button variant={"ghost"} className="flex justify-between items-center gap-1">
                             {title}
                             <IoIosArrowDown
-                                className={cn('transition-all duration-[500ms] text-xs', !open ? '' : ' rotate-180 ')}
+                                className={cn('transition-all duration-300 text-xs', !open ? '' : ' rotate-180 ')}
                             />
                         </Button>
                     </DropdownMenuTrigger>
