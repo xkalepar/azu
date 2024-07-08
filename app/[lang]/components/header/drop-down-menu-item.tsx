@@ -14,8 +14,9 @@ import { cn } from "@/lib/utils";
 interface Props {
     title: ReactNode
     children?: ReactNode
+    fullWidth?: boolean;
 }
-export default function DropdownMenuButton({ title, children }: Props) {
+export default function DropdownMenuButton({ title, children, fullWidth = true }: Props) {
     const [open, setOpen] = useState<boolean>(false);
     const { lang }: { lang: 'en' | 'ar' } = useParams()
 
@@ -30,7 +31,7 @@ export default function DropdownMenuButton({ title, children }: Props) {
                         />
                     </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 z-[200]">
+                <DropdownMenuContent className={cn(" z-[200]", fullWidth ? "w-full" : "w-56")}>
                     {/* <DropdownMenuLabel> {title} </DropdownMenuLabel> */}
                     {children}
                 </DropdownMenuContent>
@@ -45,7 +46,7 @@ export default function DropdownMenuButton({ title, children }: Props) {
                             />
                         </Button>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-56 z-[200]">
+                    <DropdownMenuContent className={cn(" z-[200]", fullWidth ? "w-full" : "w-56")}>
                         {/* <DropdownMenuLabel> {title} </DropdownMenuLabel> */}
                         {children}
                     </DropdownMenuContent>

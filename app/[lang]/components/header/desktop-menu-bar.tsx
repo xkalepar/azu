@@ -199,39 +199,41 @@ export function DesktopMenuHeader({
 
         <CollageMenu collages={collages} />
         {/* centers */}
-        <NavigationMenuItem className="w-1/4">
-          <NavigationMenuTrigger>
+        <DropdownMenuButton
+          title={
+
             <Lang lang={lang} ar={"الإدارات والمراكز"} en={"Administrations"} />
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="w-1/4">
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              {centers?.map((center, i) => (
-                <li className="row-span-3" key={i}>
-                  {" "}
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className={cn(
-                        "text-sm w-full ",
-                        buttonVariants.default,
-                        buttonVariants.variants.variant.secondary,
-                        buttonVariants.variants.size.default,
-                        "justify-start bg-transparent"
-                      )}
-                      href={`/${lang}/centers/${center.id}`}
-                    >
-                      {" "}
-                      <Lang
-                        ar={center.arContent?.title}
-                        en={center.enContent?.title}
-                        lang={lang}
-                      />
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+
+          }
+        >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            {centers?.map((center, i) => (
+              <li className="row-span-3" key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/centers/${center.id}`}
+                  >
+                    {" "}
+                    <Lang
+                      ar={center.arContent?.title}
+                      en={center.enContent?.title}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+            ))}
+          </ul>
+        </DropdownMenuButton>
+
 
         {/* projects */}
 
@@ -302,170 +304,168 @@ export function DesktopMenuHeader({
         </NavigationMenuItem> */}
 
         {/* research */}
-        <NavigationMenuItem className=" w-1/4">
-          <NavigationMenuTrigger>
+        <DropdownMenuButton
+          title={
             <Lang lang={lang} ar={"البحث العلمي"} en={"Research"} />
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className=" w-1/4">
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
-              <li>
-                <Accordion type={"single"}>
-                  {/*Scientific Research*/}
-                  <AccordionItem
-                    value="item-x"
-                    className="border-none bg-transparent hover:bg-secondary  w-full px-2 rounded-md"
-                  >
-                    <AccordionTrigger className=" text-sm ">
-                      <Lang
-                        lang={lang}
-                        ar={"مشاريع التخرج والأطروحات"}
-                        en={"Graduation Projects and Theses"}
-                      />
-                    </AccordionTrigger>
-                    <AccordionContent className=" w-4/5 mx-auto my-2">
-                      {projects !== undefined &&
-                        projects.length > 0 &&
-                        projects?.map((project, index) => (
-                          <div key={index}>
-                            <Link
-                              href={`/${lang}/projects/${project.id}`}
-                              key={project.id}
-                            >
-                              <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-                                <Lang
-                                  lang={lang}
-                                  ar={<div>{project?.arContent?.title}</div>}
-                                  en={<div>{project?.enContent?.title}</div>}
-                                />
-                              </div>
-                            </Link>
-                          </div>
-                        ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
-              </li>
-              {scientificResearchs?.map((academicProgram, i) => (
-                <li key={i}>
-                  {" "}
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className={cn(
-                        "text-sm w-full ",
-                        buttonVariants.default,
-                        buttonVariants.variants.variant.secondary,
-                        buttonVariants.variants.size.default,
-                        "justify-start bg-transparent"
-                      )}
-                      href={`/${lang}/scientific-researchs/${academicProgram.id}`}
-                    >
-                      {" "}
-                      <Lang
-                        ar={academicProgram.arContent?.title}
-                        en={academicProgram.enContent?.title}
-                        lang={lang}
-                      />
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              ))}
-              <li>
-                <Link href={`/${lang}`}>
-                  <NavigationMenuLink
-                    className={cn(navigationMenuTriggerStyle(), " text-sm")}
-                  >
+          }
+        >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
+            <li>
+              <Accordion type={"single"}>
+                {/*Scientific Research*/}
+                <AccordionItem
+                  value="item-x"
+                  className="border-none bg-transparent hover:bg-secondary  w-full px-2 rounded-md"
+                >
+                  <AccordionTrigger className=" text-sm ">
                     <Lang
                       lang={lang}
-                      ar={"المؤتمرات العلمية"}
-                      en={"conferences"}
+                      ar={"مشاريع التخرج والأطروحات"}
+                      en={"Graduation Projects and Theses"}
                     />
-                  </NavigationMenuLink>
-                </Link>
+                  </AccordionTrigger>
+                  <AccordionContent className=" w-4/5 mx-auto my-2">
+                    {projects !== undefined &&
+                      projects.length > 0 &&
+                      projects?.map((project, index) => (
+                        <div key={index}>
+                          <Link
+                            href={`/${lang}/projects/${project.id}`}
+                            key={project.id}
+                          >
+                            <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                              <Lang
+                                lang={lang}
+                                ar={<div>{project?.arContent?.title}</div>}
+                                en={<div>{project?.enContent?.title}</div>}
+                              />
+                            </div>
+                          </Link>
+                        </div>
+                      ))}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </li>
+            {scientificResearchs?.map((academicProgram, i) => (
+              <li key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/scientific-researchs/${academicProgram.id}`}
+                  >
+                    {" "}
+                    <Lang
+                      ar={academicProgram.arContent?.title}
+                      en={academicProgram.enContent?.title}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
               </li>
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+            ))}
+            <li>
+              <Link href={`/${lang}`}>
+                <NavigationMenuLink
+                  className={cn(navigationMenuTriggerStyle(), " text-sm")}
+                >
+                  <Lang
+                    lang={lang}
+                    ar={"المؤتمرات العلمية"}
+                    en={"conferences"}
+                  />
+                </NavigationMenuLink>
+              </Link>
+            </li>
+          </ul>
+        </DropdownMenuButton>
+
 
         {/* gradutates */}
-        <NavigationMenuItem className=" w-1/4">
-          <NavigationMenuTrigger>
-            <Lang lang={lang} ar={"الخريجون"} en={"Graduates"} />
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className=" w-1/4">
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              {graduates?.map((academicProgram, i) => (
-                <li className="row-span-3" key={i}>
-                  {" "}
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className={cn(
-                        "text-sm w-full ",
-                        buttonVariants.default,
-                        buttonVariants.variants.variant.secondary,
-                        buttonVariants.variants.size.default,
-                        "justify-start bg-transparent"
-                      )}
-                      href={`/${lang}/graduates/${academicProgram.id}`}
-                    >
-                      {" "}
-                      <Lang
-                        ar={academicProgram.arContent?.title}
-                        en={academicProgram.enContent?.title}
-                        lang={lang}
-                      />
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+        <DropdownMenuButton
+          title={<Lang lang={lang} ar={"الخريجون"} en={"Graduates"} />}
+        >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            {graduates?.map((academicProgram, i) => (
+              <li className="row-span-3" key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/graduates/${academicProgram.id}`}
+                  >
+                    {" "}
+                    <Lang
+                      ar={academicProgram.arContent?.title}
+                      en={academicProgram.enContent?.title}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+            ))}
+          </ul>
+        </DropdownMenuButton>
+
         {/* activities */}
-        <NavigationMenuItem className=" w-1/4">
-          <NavigationMenuTrigger>
+        <DropdownMenuButton
+          title={
             <Lang
               lang={lang}
               ar={"أنشطة الجامعة"}
               en={"university activities"}
-            />{" "}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className=" w-1/4">
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li>
-                <Link href={`/${lang}/news`}>
-                  <NavigationMenuLink
-                    className={cn(navigationMenuTriggerStyle(), " text-sm")}
+            />
+          }
+        >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            <li>
+              <Link href={`/${lang}/news`}>
+                <NavigationMenuLink
+                  className={cn(navigationMenuTriggerStyle(), " text-sm")}
+                >
+                  <Lang lang={lang} ar={"أخبار الجامعة"} en={"News"} />
+                </NavigationMenuLink>
+              </Link>
+            </li>
+            {actvities?.map((academicProgram, i) => (
+              <li className="row-span-3" key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/university-activities/${academicProgram.id}`}
                   >
-                    <Lang lang={lang} ar={"أخبار الجامعة"} en={"News"} />
-                  </NavigationMenuLink>
-                </Link>
+                    <Lang
+                      ar={academicProgram.arContent?.title}
+                      en={academicProgram.enContent?.title}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
               </li>
-              {actvities?.map((academicProgram, i) => (
-                <li className="row-span-3" key={i}>
-                  {" "}
-                  <NavigationMenuLink asChild>
-                    <Link
-                      className={cn(
-                        "text-sm w-full ",
-                        buttonVariants.default,
-                        buttonVariants.variants.variant.secondary,
-                        buttonVariants.variants.size.default,
-                        "justify-start bg-transparent"
-                      )}
-                      href={`/${lang}/university-activities/${academicProgram.id}`}
-                    >
-                      <Lang
-                        ar={academicProgram.arContent?.title}
-                        en={academicProgram.enContent?.title}
-                        lang={lang}
-                      />
-                    </Link>
-                  </NavigationMenuLink>
-                </li>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
+            ))}
+          </ul>
+        </DropdownMenuButton>
+
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -509,117 +509,116 @@ const CollageMenu = ({ collages }: Props) => {
     (collage) => collage.category === category
   );
   return (
-    <NavigationMenuItem dir={lang === "ar" ? "rtl" : "ltr"}>
-      <NavigationMenuTrigger>
+
+    <DropdownMenuButton
+      title={
         <Lang lang={lang} ar={"الكليات"} en={"Collages"} />
-      </NavigationMenuTrigger>
-      <NavigationMenuContent dir={lang === "ar" ? "rtl" : "ltr"}>
-        <ul
-          className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] "
-          dir={lang === "ar" ? "rtl" : "ltr"}
-        >
-          {!showCollages && (
-            <Lang
-              ar={arCategories.map((component, index) => (
-                <div
-                  onClick={() => {
-                    setShowCollages(!showCollages);
-                    setCategory(component.value);
-                  }}
-                  key={index}
-                  className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div> {component.title}</div>
-                  <div>
-                    <ArrowLeftIcon className="transition-all group-hover:scale-110" />
-                  </div>
+      } >
+      <ul
+        className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] "
+        dir={lang === "ar" ? "rtl" : "ltr"}
+      >
+        {!showCollages && (
+          <Lang
+            ar={arCategories.map((component, index) => (
+              <div
+                onClick={() => {
+                  setShowCollages(!showCollages);
+                  setCategory(component.value);
+                }}
+                key={index}
+                className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+              >
+                <div> {component.title}</div>
+                <div>
+                  <ArrowLeftIcon className="transition-all group-hover:scale-110" />
                 </div>
-              ))}
-              en={enCategories.map((component, index) => (
-                <div
-                  onClick={() => {
-                    setShowCollages(!showCollages);
-                    setCategory(component.value);
-                  }}
-                  key={index}
-                  className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                >
-                  <div> {component.title}</div>
-                  <div>
-                    <ArrowRightIcon className="transition-all group-hover:scale-110" />
-                  </div>
-                </div>
-              ))}
-              lang={lang}
-            />
-          )}
-          {showCollages &&
-            (lang === "ar" ? (
-              <>
-                <div className="w-full flex gap-2 items-center">
-                  {" "}
-                  <Button
-                    onClick={() => setShowCollages(!showCollages)}
-                    variant={"ghost"}
-                    size={"icon"}
-                  >
-                    <ArrowRightIcon />
-                  </Button>
-                  <div>
-                    {arCategories.filter((c) => c.value === category)[0].title}
-                  </div>
-                </div>
-                {/* <Separator /> */}
-                {filteredCollages.map((collage, index) => (
-                  <NavigationMenuLink asChild key={index}>
-                    <Link href={`/collages/${collage.id}`}>
-                      <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                        <Avatar>
-                          <AvatarImage src={collage.logo} />
-                          <AvatarFallback>Z</AvatarFallback>
-                        </Avatar>
-                        <div>{collage.ArCollageData?.title}</div>
-                      </div>
-                      <Separator className="my-0" />
-                    </Link>
-                  </NavigationMenuLink>
-                ))}
-              </>
-            ) : (
-              <>
-                <div className="w-full flex gap-2 items-center">
-                  {" "}
-                  <Button
-                    onClick={() => setShowCollages(!showCollages)}
-                    variant={"ghost"}
-                    size={"icon"}
-                  >
-                    <ArrowRightIcon />
-                  </Button>
-                  <div>
-                    {enCategories.filter((c) => c.value === category)[0].title}
-                  </div>
-                </div>
-                {/* <Separator /> */}
-                {filteredCollages.map((collage, index) => (
-                  <NavigationMenuLink asChild key={index}>
-                    <Link href={`${lang}/collages/${collage.id}`} key={index}>
-                      <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
-                        <Avatar>
-                          <AvatarImage src={collage.logo} />
-                          <AvatarFallback>Z</AvatarFallback>
-                        </Avatar>
-                        <div>{collage.EnCollageData?.title}</div>
-                      </div>
-                      <Separator className="my-0" />
-                    </Link>
-                  </NavigationMenuLink>
-                ))}
-              </>
+              </div>
             ))}
-        </ul>
-      </NavigationMenuContent>
-    </NavigationMenuItem>
+            en={enCategories.map((component, index) => (
+              <div
+                onClick={() => {
+                  setShowCollages(!showCollages);
+                  setCategory(component.value);
+                }}
+                key={index}
+                className="block group border border-accent flex-between select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+              >
+                <div> {component.title}</div>
+                <div>
+                  <ArrowRightIcon className="transition-all group-hover:scale-110" />
+                </div>
+              </div>
+            ))}
+            lang={lang}
+          />
+        )}
+        {showCollages &&
+          (lang === "ar" ? (
+            <>
+              <div className="w-full flex gap-2 items-center">
+                {" "}
+                <Button
+                  onClick={() => setShowCollages(!showCollages)}
+                  variant={"ghost"}
+                  size={"icon"}
+                >
+                  <ArrowRightIcon />
+                </Button>
+                <div>
+                  {arCategories.filter((c) => c.value === category)[0].title}
+                </div>
+              </div>
+              {/* <Separator /> */}
+              {filteredCollages.map((collage, index) => (
+                <NavigationMenuLink asChild key={index}>
+                  <Link href={`/collages/${collage.id}`}>
+                    <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Avatar>
+                        <AvatarImage src={collage.logo} />
+                        <AvatarFallback>Z</AvatarFallback>
+                      </Avatar>
+                      <div>{collage.ArCollageData?.title}</div>
+                    </div>
+                    <Separator className="my-0" />
+                  </Link>
+                </NavigationMenuLink>
+              ))}
+            </>
+          ) : (
+            <>
+              <div className="w-full flex gap-2 items-center">
+                {" "}
+                <Button
+                  onClick={() => setShowCollages(!showCollages)}
+                  variant={"ghost"}
+                  size={"icon"}
+                >
+                  <ArrowRightIcon />
+                </Button>
+                <div>
+                  {enCategories.filter((c) => c.value === category)[0].title}
+                </div>
+              </div>
+              {/* <Separator /> */}
+              {filteredCollages.map((collage, index) => (
+                <NavigationMenuLink asChild key={index}>
+                  <Link href={`${lang}/collages/${collage.id}`} key={index}>
+                    <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                      <Avatar>
+                        <AvatarImage src={collage.logo} />
+                        <AvatarFallback>Z</AvatarFallback>
+                      </Avatar>
+                      <div>{collage.EnCollageData?.title}</div>
+                    </div>
+                    <Separator className="my-0" />
+                  </Link>
+                </NavigationMenuLink>
+              ))}
+            </>
+          ))}
+      </ul>
+    </DropdownMenuButton>
   );
 };
 
