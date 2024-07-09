@@ -1,5 +1,3 @@
-import { getNews } from "@/prisma/seed";
-import { notFound } from "next/navigation";
 import React from "react";
 import {
   Breadcrumb,
@@ -84,7 +82,7 @@ const Breadcrumbs = ({
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/dashboard/collages/${collageId}/offices-and-administrative-departments`}>المكاتب والأقسام الإدارية</Link>
+            <Link href={`/dashboard/collages/${collageId}/graduate-studies`}>الدراسات العليا</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

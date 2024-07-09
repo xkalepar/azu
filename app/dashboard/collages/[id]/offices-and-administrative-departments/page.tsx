@@ -1,4 +1,3 @@
-import CardPreview from "@/app/components/card-preview";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,7 +8,6 @@ import {
 } from "@/components/ui/breadcrumb";
 import { buttonVariants } from "@/lib/constant";
 import { cn } from "@/lib/utils";
-import { getNews } from "@/prisma/seed";
 import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
 import { getData } from "./seed";
