@@ -71,12 +71,12 @@ const layout = async ({
             />
             <TabLink
               href={`/dashboard/collages/${collage.id}/social-media`}
-              content="social media"
+              content="سوشل ميديا"
             />
-            <TabLink
+            {/* <TabLink
               href={`/dashboard/collages/${collage.id}/statics`}
               content="إحصائيات"
-            />
+            /> */}
           </NavigationTabs>
         </div>
       </Title>

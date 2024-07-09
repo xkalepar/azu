@@ -16,8 +16,6 @@ model University {
   arContentId                     String?                           @db.ObjectId
   EnContent                       EnContent?                        @relation(fields: [enContentId], references: [id])
   enContentId                     String?                           @db.ObjectId
-  SocialMedia                     SocialMedia?                      @relation(fields: [socialMediaId], references: [id])
-  socialMediaId                   String?                           @db.ObjectId
   Centers                         Centers[]
   AcademicProgram                 AcademicProgram[]
   FacilitiesAndServices           FacilitiesAndServices[]
@@ -25,6 +23,7 @@ model University {
   ScientificResearchForUniversity ScientificResearchForUniversity[]
   UniversityActivities            UniversityActivities[]
   Projects                        Projects[]
+  SocialMedia                     SocialMedia?
 }
 
 model Centers {
@@ -111,7 +110,6 @@ model Collage {
   Links                                    Link[]
   welcome                                  String?
   enWelcome                                String?
-  SocialMedia                              SocialMedia?                            @relation(fields: [socialMediaId], references: [id])
   TheOfficesAndAdministrativeDepartments   TheOfficesAndAdministrativeDepartments? @relation(fields: [theOfficesAndAdministrativeDepartmentsId], references: [id])
   GraduateStudies                          GraduateStudies?                        @relation(fields: [graduateStudiesId], references: [id])
   ScientificResearch                       ScientificResearch?                     @relation(fields: [scientificResearchId], references: [id])
@@ -121,7 +119,6 @@ model Collage {
   EServices                                EServices?                              @relation(fields: [eServicesId], references: [id])
   FormsAndApplications                     FormsAndApplications?                   @relation(fields: [formsAndApplicationsId], references: [id])
   ScientificSection                        ScientificSection[]
-  socialMediaId                            String?                                 @db.ObjectId
   graduateStudiesId                        String?                                 @db.ObjectId
   theOfficesAndAdministrativeDepartmentsId String?                                 @db.ObjectId
   scientificResearchId                     String?                                 @db.ObjectId
@@ -133,6 +130,7 @@ model Collage {
   News                                     News[]
   location                                 String?
   User                                     User?
+  SocialMedia                              SocialMedia?
 }
 
 /// االأقسام العلمية
@@ -249,20 +247,22 @@ model Statics {
 }
 
 model SocialMedia {
-  id         String       @id @default(auto()) @map("_id") @db.ObjectId
-  facebook   String?
-  whatsapp   String?
-  youtube    String?
-  email      String?
-  telegram   String?
-  phone1     String?
-  phone2     String?
-  fax        String?
-  X          String?
-  address    String?
-  locainote  String?
-  Collage    Collage[]
-  University University[]
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  facebook     String?
+  whatsapp     String?
+  youtube      String?
+  email        String?
+  telegram     String?
+  phone1       String?
+  phone2       String?
+  fax          String?
+  x            String?
+  address      String?
+  location     String?
+  Collage      Collage?    @relation(fields: [collageId], references: [id])
+  University   University? @relation(fields: [universityId], references: [id])
+  collageId    String?     @unique @db.ObjectId
+  universityId String?     @unique @db.ObjectId
 }
 
 model News {
