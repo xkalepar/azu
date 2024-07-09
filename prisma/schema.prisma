@@ -353,9 +353,12 @@ model EnCollageData {
 ////  `body String`
 ////`
 model Page {
-  id                                       String                                  @id @default(auto()) @map("_id") @db.ObjectId
-  title                                    String
-  body                                     String
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  body    String
+  enTitle String
+  enBody  String
+
   TheOfficesAndAdministrativeDepartments   TheOfficesAndAdministrativeDepartments? @relation(fields: [theOfficesAndAdministrativeDepartmentsId], references: [id])
   theOfficesAndAdministrativeDepartmentsId String?                                 @db.ObjectId
   GraduateStudies                          GraduateStudies?                        @relation(fields: [graduateStudiesId], references: [id])

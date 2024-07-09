@@ -71,9 +71,7 @@ export const NewsForm = ({ collageId }: NewsFormProps) => {
           />
         )}
 
-        <SubmitButton className="w-full md:w-1/4" type={"submit"}>
-          حفظ
-        </SubmitButton>
+
       </div>
       <LangTabs
         ar={
@@ -114,6 +112,9 @@ export const NewsForm = ({ collageId }: NewsFormProps) => {
       {/* image  */}
       <Input value={image} type={"hidden"} name="image" />
       <Separator />
+      <SubmitButton className="w-full md:w-1/4" type={"submit"}>
+        حفظ
+      </SubmitButton>
     </Form>
   );
 };

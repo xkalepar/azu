@@ -39,12 +39,6 @@ export async function generateMetadata({
     title: ` إدارة أقسام:${collage.ArCollageData!.title} `,
   };
 }
-
-// export async function generateStaticParams() {
-//   const collages = await getCollages();
-//   return collages.map((collage) => ({ id: collage.id }));
-// }
-
 const collagePage = async ({ params }: { params: { collageId: string } }) => {
   const { collageId } = params;
   const collage = await getCollageByIdForSection(collageId);
