@@ -27,11 +27,10 @@ const HomeNavItem = ({
 }) => {
   return (
     <Link
-      className={`flex justify-center transition-all rounded-[0px] items-center w-full gap-1 sm:gap-2 ${
-        pathname === href
+      className={`flex justify-center transition-all rounded-[0px] items-center w-full gap-1 sm:gap-2 ${pathname === href
           ? buttonVariants.variants.variant.secondary
           : `${buttonVariants.variants.variant.outline} border-0`
-      }   ${buttonVariants.variants.size.default}`}
+        }   ${buttonVariants.variants.size.default}`}
       href={href}
     >
       <div>{!collapsed && <span>{name}</span>}</div>
@@ -54,11 +53,10 @@ const NavItem = ({
 }) => {
   return (
     <Link
-      className={`flex justify-center transition-all rounded-[0px] items-center w-full gap-1 sm:gap-2 ${
-        pathname === href || pathname.startsWith(`${href}/`)
+      className={`flex justify-center transition-all rounded-[0px] items-center w-full gap-1 sm:gap-2 ${pathname === href || pathname.startsWith(`${href}/`)
           ? buttonVariants.variants.variant.secondary
           : `${buttonVariants.variants.variant.outline} border-0`
-      }   ${buttonVariants.variants.size.default}`}
+        }   ${buttonVariants.variants.size.default}`}
       href={href}
     >
       <div>{!collapsed && <span>{name}</span>}</div>
@@ -69,7 +67,7 @@ const NavItem = ({
 
 const NavigationRail = () => {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = React.useState<boolean>(false);
+  const [collapsed, setCollapsed] = React.useState<boolean>(true);
   return (
     <Sidebar
       rootStyles={{
