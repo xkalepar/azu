@@ -73,24 +73,21 @@ export const NewDataForm = ({ collageId }: NewsFormProps) => {
     );
 };
 
-export const EditNewsForm = ({
+export const UpdateDataForm = ({
     collageId,
-    image: oldImage = "",
     body: oldBody = "",
     enBody: oldEnBody = "",
     enTitle = "",
     title = "",
-    newsId,
+    pageId,
 }: {
-    image: string;
     collageId: string;
     body?: string;
     enBody?: string;
     title?: string;
-    newsId: string;
+    pageId: string;
     enTitle?: string;
 }) => {
-    const [image, setImage] = useState<string>(oldImage);
     const [body, setBody] = useState<string>(oldBody);
     const [enBody, setEnBody] = useState<string>(oldEnBody);
 
@@ -100,52 +97,9 @@ export const EditNewsForm = ({
             action={updateDataAction}
             replaceLink={`/dashboard/collages/${collageId}/offices-and-administrative-departments`}
         >
-            <Input type={"hidden"} name="newsId" value={newsId} />
+            <Input type={"hidden"} name="pageId" value={pageId} />
             <Input type={"hidden"} name="collageId" value={collageId} />
-            <div className="flex gap-2 items-start  justify-between px-4 flex-col sm:flex-row w-full">
-                {image ? (
-                    <div className="w-[200px] h-[200px] rounded-lg overflow-hidden relative">
-                        <Suspense fallback={<Skeleton className="w-full h-full" />}>
-                            <>
-                                <Button
-                                    type={"button"}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setImage("");
-                                    }}
-                                    variant={"outline"}
-                                    size={"icon"}
-                                    className="hover:text-red-500 absolute top-0 right-0"
-                                >
-                                    <MdOutlineCancel />
-                                </Button>
-                                <Image
-                                    src={image}
-                                    alt="some name"
-                                    width={500}
-                                    height={500}
-                                    className="object-cover w-full h-full"
-                                />
-                            </>
-                        </Suspense>
-                    </div>
-                ) : (
-                    <UploadButton
-                        endpoint="imageUploader"
-                        onClientUploadComplete={(res) => {
-                            setImage(res[0].url ?? "");
-                            toast({ title: "uploaded successfully" });
-                        }}
-                        onUploadError={(error: Error) => {
-                            alert(`ERROR! ${error.message}`);
-                        }}
-                    />
-                )}
 
-                <SubmitButton className="w-full md:w-1/4" type={"submit"}>
-                    تعديل
-                </SubmitButton>
-            </div>
             <LangTabs
                 ar={
                     <>
@@ -185,8 +139,10 @@ export const EditNewsForm = ({
             />
 
             {/* image  */}
-            <Input value={image} type={"hidden"} name="image" />
-            <Separator />
+
+            <SubmitButton className="w-full md:w-1/4" type={"submit"}>
+                تعديل
+            </SubmitButton>            <Separator />
         </Form>
     );
 };

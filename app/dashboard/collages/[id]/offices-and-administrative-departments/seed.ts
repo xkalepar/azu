@@ -127,10 +127,9 @@ export const deleteData = async ({
       await prisma.theOfficesAndAdministrativeDepartments.delete({
         where: { id },
       });
-    const deletedPage =
-      await prisma.theOfficesAndAdministrativeDepartments.delete({
-        where: { id: pageId },
-      });
+    const deletedPage = await prisma.page.delete({
+      where: { id: pageId },
+    });
 
     if (!deletedData || !deletedPage) {
       return { message: "فشل حذف البيانات " };
@@ -140,7 +139,7 @@ export const deleteData = async ({
 
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
-    return { message: "فشلت العملية" };
+    return { message: ".فشلت العملية" };
   }
 };
 

@@ -10,12 +10,9 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/lib/constant";
 import ParseData from "@/app/components/parse-data";
-import { notFound } from "next/navigation";
-import { getNews } from "@/prisma/seed";
 import { Button } from "@/components/ui/button";
 import { DeleteIcon, Edit2 } from "lucide-react";
 import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
-import DeleteNewsForm from "../../components/forms";
 import { getSpecificData } from "../seed";
 import { DeleteDataForm } from "../components/forms";
 
@@ -30,14 +27,14 @@ const newsPage = async ({
     <section className=" relative ">
       <Breadcrumbs
         collageId={id}
-        newsTitle={data?.Pages[0]?.title}
+        dataTitle={data?.Pages[0]?.title}
         collageTitle={data?.Collage[0].ArCollageData?.title}
       />
 
       <div className="relative">
-        <div className=" absolute gap-2 left-2 top-2 flex-between" dir="rtl">
+        <div className=" absolute z-[10000] gap-2 left-2 top-2 flex-between" dir="rtl">
           <Link
-            href={`/dashboard/collages/${id}/offices-and-administrative-departments/edit/${dataId}`}
+            href={`/dashboard/collages/${id}/offices-and-administrative-departments/${dataId}/edit`}
             className={cn(
               buttonVariants.variants.variant.ghost,
               buttonVariants.variants.size.icon,
@@ -74,11 +71,11 @@ export default newsPage;
 const Breadcrumbs = ({
   collageTitle: title,
   collageId,
-  newsTitle,
+  dataTitle,
 }: {
   collageTitle?: string;
   collageId: string;
-  newsTitle?: string;
+  dataTitle?: string;
 }) => {
   return (
     <Breadcrumb>
@@ -115,18 +112,18 @@ const Breadcrumbs = ({
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>{newsTitle}</BreadcrumbPage>
+          <BreadcrumbPage>{dataTitle}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
   );
 };
 
-export async function generateStaticParams({
-  params,
-}: {
-  params: { id: string; newsId: string };
-}) {
-  const news = await getNews({ id: params.id });
-  return news.map((collage) => ({ id: collage.id }));
-}
+// export async function generateStaticParams({
+//   params,
+// }: {
+//   params: { id: string; newsId: string };
+// }) {
+//   const news = await getNews({ id: params.id });
+//   return news.map((collage) => ({ id: collage.id }));
+// }

@@ -10,37 +10,32 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
-import { EditNewsForm } from "../../../components/forms";
+import { UpdateDataForm } from "../../components/forms";
+import { getSpecificData } from "../../seed";
 
 const page = async ({
   params,
 }: {
-  params: { newsIdEdit: string; id: string };
+  params: { id: string; dataId: string };
 }) => {
-  const { newsIdEdit: id, id: collageId } = params;
-  console.log(params);
-  const news = await getNews({ id: id });
-  console.log(news);
-  if (news.length < 1 || !news) {
-    return notFound();
-  }
-  const currentNew = news[0];
+  const { id, dataId } = params;
+  const data = await getSpecificData({ id: dataId, });
   return (
     <section>
       <Breadcrumbs
-        id={collageId}
-        newsTitle={currentNew.arContent?.title ?? ""}
-        title={currentNew.Collage?.ArCollageData?.title}
+        collageId={id}
+        dataTitle={data?.Pages[0]?.title}
+        collageTitle={data?.Collage[0].ArCollageData?.title}
       />
-      <EditNewsForm
+      {/* <UpdateDataForm
         body={currentNew.arContent?.body}
         collageId={collageId}
         enBody={currentNew.enContent?.body}
         enTitle={currentNew.enContent?.title}
         image={currentNew.image}
-        newsId={currentNew.id}
+        pageId={currentNew.id}
         title={currentNew.arContent?.title}
-      />
+      /> */}
     </section>
   );
 };
@@ -48,13 +43,13 @@ const page = async ({
 export default page;
 
 const Breadcrumbs = ({
-  title,
-  id,
-  newsTitle,
+  collageTitle: title,
+  collageId,
+  dataTitle,
 }: {
-  title?: string;
-  id: string;
-  newsTitle: string;
+  collageTitle?: string;
+  collageId: string;
+  dataTitle?: string;
 }) => {
   return (
     <Breadcrumb>
@@ -79,18 +74,19 @@ const Breadcrumbs = ({
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/dashboard/collages/${id}`}>{title ?? ""}</Link>
+            <Link href={`/dashboard/collages/${collageId}`}>{title}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
+        {/*  */}
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/dashboard/collages/${id}/news`}>{"الأخبار"}</Link>
+            <Link href={`/dashboard/collages/${collageId}/offices-and-administrative-departments`}>المكاتب والأقسام الإدارية</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>{newsTitle}</BreadcrumbPage>
+          <BreadcrumbPage>{dataTitle}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
