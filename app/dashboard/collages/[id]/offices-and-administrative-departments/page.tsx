@@ -14,11 +14,9 @@ import { getData } from "./seed";
 import ListItem from "@/app/dashboard/components/list-item";
 
 const page = async ({ params }: { params: { id: string; query?: string } }) => {
-  // console.log(params);
   const { id } = params;
   const offices = await getData({ id: id })
   console.log(offices)
-  // const news = await getNews({ collageId: id, query: query });
   return (
     <section className="relative">
       <Breadcrumbs id={id} title={offices[0]?.ArCollageData?.title} />

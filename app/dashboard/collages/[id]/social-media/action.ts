@@ -46,7 +46,7 @@ export async function updateSocialAction(
         z.literal("fax"),
         z.literal("x"),
         z.literal("address"),
-        z.literal("locainote"),
+        z.literal("location"),
       ]),
     });
 

@@ -5,15 +5,17 @@ import { usePathname } from "next/navigation";
 import { ReactNode } from "react";
 // import SectionHeader from "./SectionHeader";
 
-export const RenderMainHeader = ({ children }: { children: ReactNode }) => {
+export const MainRender = ({ children }: { children: ReactNode }) => {
   const pathName = usePathname();
+
   if (!pathName.includes("collages") || !pathName.includes("sections")) {
+    // console.log('fk libya')
     return children;
   } else {
     return <></>;
   }
 };
-export const RenderCollageHeader = ({ children }: { children: ReactNode }) => {
+export const CollageRender = ({ children }: { children: ReactNode }) => {
   const pathName = usePathname();
   if (pathName.includes("collages")) {
     return children;

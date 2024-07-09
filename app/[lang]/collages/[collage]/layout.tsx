@@ -2,7 +2,7 @@ import { getCollageById } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import React, { ReactNode } from "react";
 import CollegeHeader from "../../components/header/collage-header";
-import { RenderCollageHeader } from "../../components/header/dynamic-header";
+import { CollageRender } from "../../components/header/dynamic-header";
 import { Metadata } from "next";
 export async function generateMetadata({
   params,
@@ -33,7 +33,7 @@ const layout = async ({
   const { lang } = params;
   return (
     <main>
-      <RenderCollageHeader>
+      <CollageRender>
         <CollegeHeader
           category={collage.category}
           logo={collage.logo}
@@ -41,7 +41,7 @@ const layout = async ({
           ArCollageData={collage.ArCollageData}
           EnCollageData={collage.EnCollageData}
         />
-      </RenderCollageHeader>
+      </CollageRender>
       {children}
     </main>
   );

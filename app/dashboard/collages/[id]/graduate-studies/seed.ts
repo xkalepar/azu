@@ -155,6 +155,11 @@ export const getSpecificData = async ({ id }: { id: string }) => {
                 title: true,
               },
             },
+            EnCollageData: {
+              select: {
+                title: true,
+              },
+            },
           },
         },
       },

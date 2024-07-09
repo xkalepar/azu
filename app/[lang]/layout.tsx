@@ -14,7 +14,7 @@ import { getCollages, getUniversity } from "@/prisma/seed";
 import { cn } from "@/lib/utils";
 import HomeFooter from "./components/footers/home-footer";
 import { SocialMedia } from "@prisma/client";
-import { RenderMainHeader } from "./components/header/dynamic-header";
+import { CollageRender, MainRender } from "./components/header/dynamic-header";
 import Header from "./components/header/header";
 import { Metadata } from "next";
 // import { getCollages } from "@/prisma/seed";
@@ -39,7 +39,7 @@ export default async function Root({
         <main
           className={cn("mt-20 flex flex-col justify-between  min-h-screen")}
         >
-          <RenderMainHeader>
+          <MainRender>
             <Header
               collages={collages}
               centers={univeristy?.Centers}
@@ -50,13 +50,16 @@ export default async function Root({
               graduates={univeristy?.GraduatesForUniversity}
               projects={univeristy?.Projects}
             />
-          </RenderMainHeader>
+          </MainRender>
 
           <div className=" flex-1">{children}</div>
-          <HomeFooter
-            socialMedia={univeristy?.SocialMedia as SocialMedia}
-            lang={lang}
-          ></HomeFooter>
+
+          <MainRender>
+            <HomeFooter
+              socialMedia={univeristy?.SocialMedia as SocialMedia}
+              lang={lang}
+            ></HomeFooter>
+          </MainRender>
         </main>
       </body>
     </html>
