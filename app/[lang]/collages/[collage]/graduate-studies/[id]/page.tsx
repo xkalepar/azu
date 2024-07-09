@@ -27,7 +27,7 @@ export async function generateMetadata({
     if (!graduates) {
         return {
             title: "404 غير موجود",
-        };
+        }
     }
 
     return {
