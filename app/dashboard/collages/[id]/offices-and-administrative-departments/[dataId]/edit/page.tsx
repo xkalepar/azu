@@ -19,7 +19,11 @@ const page = async ({
   params: { id: string; dataId: string };
 }) => {
   const { id, dataId } = params;
+  console.log("id: " + id);
+  console.log("dataId: " + dataId);
   const data = await getSpecificData({ id: dataId, });
+  const currentData = data?.Pages[0];
+
   return (
     <section>
       <Breadcrumbs
@@ -27,15 +31,14 @@ const page = async ({
         dataTitle={data?.Pages[0]?.title}
         collageTitle={data?.Collage[0].ArCollageData?.title}
       />
-      {/* <UpdateDataForm
-        body={currentNew.arContent?.body}
-        collageId={collageId}
-        enBody={currentNew.enContent?.body}
-        enTitle={currentNew.enContent?.title}
-        image={currentNew.image}
-        pageId={currentNew.id}
-        title={currentNew.arContent?.title}
-      /> */}
+      <UpdateDataForm
+        body={currentData?.body}
+        collageId={id}
+        enBody={currentData?.enBody}
+        enTitle={currentData?.title}
+        pageId={currentData?.id ?? ""}
+        title={currentData?.title}
+      />
     </section>
   );
 };

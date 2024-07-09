@@ -70,9 +70,9 @@ export async function updateDataAction(
 
     const data = schema.safeParse({
       title: formData.get("title"),
-      enTitle: formData.get("entitle"),
+      entitle: formData.get("entitle"),
       body: formData.get("body"),
-      enBody: formData.get("enbody"),
+      enbody: formData.get("enbody"),
       pageId: formData.get("pageId"),
     });
     console.log(data);

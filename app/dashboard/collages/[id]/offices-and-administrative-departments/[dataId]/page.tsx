@@ -23,6 +23,9 @@ const newsPage = async ({
 }) => {
   const { id, dataId } = params;
   const data = await getSpecificData({ id: dataId, });
+  console.log("id: " + id);
+  console.log("dataId: " + dataId);
+
   return (
     <section className=" relative ">
       <Breadcrumbs
