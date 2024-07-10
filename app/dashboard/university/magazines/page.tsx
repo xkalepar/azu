@@ -27,7 +27,7 @@ const page = async () => {
       <Link
         href={"magazines/new"}
         className={cn(
-          "absolute left-2 top-2",
+          "absolute z-50 left-2 top-2",
           buttonVariants.default,
           buttonVariants.variants.variant.default,
           buttonVariants.variants.size.default
