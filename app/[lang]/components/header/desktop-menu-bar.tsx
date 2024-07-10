@@ -1,17 +1,14 @@
 "use client";
-
 import * as React from "react";
 import Link from "next/link";
-
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
+  navigationMenuTriggerStyle
+
 } from "@/components/ui/navigation-menu";
 import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
@@ -27,8 +24,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { BarChart } from "lucide-react";
 import DropdownMenuButton from "./drop-down-menu-item";
 
 type Props = {
@@ -163,18 +158,8 @@ export function DesktopMenuHeader({
   projects,
   scientificResearchs,
 }: Props) {
-  // const pathName = usePathname();
   const { lang }: { lang: "ar" | "en" } = useParams();
-  // console.log(academicPrograms)
   return (
-    // <Sheet >
-    //   <SheetTrigger>
-    //     <BarChart />
-    //   </SheetTrigger>
-    //   <SheetContent side={"top"}>
-
-    //   </SheetContent>
-    // </Sheet>
     <NavigationMenu
       className=" text-lg flex-1"
       dir={lang === "ar" ? "rtl" : "ltr"}

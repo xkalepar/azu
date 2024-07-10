@@ -52,7 +52,7 @@ const collagePage = async ({ params }: { params: { id: string } }) => {
         body={collage.ArCollageData?.content}
         enBody={collage.EnCollageData?.content}
         title={collage.ArCollageData?.title}
-        enTitle={collage.ArCollageData?.title}
+        enTitle={collage.EnCollageData?.title}
         logo={collage.logo}
         collageId={collage.id}
         selected={collage.category}

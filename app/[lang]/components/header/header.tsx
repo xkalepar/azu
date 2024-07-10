@@ -11,6 +11,7 @@ import {
 } from "@/app/components/client-parser";
 import { $Enums, Centers } from "@prisma/client";
 import { DesktopMenuHeader } from "./desktop-menu-bar";
+import ToggleLangauge from "./toggle-lang";
 
 type Props = {
   collages: ({
@@ -165,16 +166,8 @@ const Header = ({
             />
 
           </div>
-          <Link
-            className={cn(
-              buttonVariants.default,
-              buttonVariants.variants.variant.ghost,
-              "px-2 py-1"
-            )}
-            href={`${lang === "en" ? "/ar" : "/en"}`}
-          >
-            {lang === "en" ? "العربية" : "english"}
-          </Link>
+          <ToggleLangauge />
+
         </ParseToScreenMoreThanWidth>
         <ParseToScreenLessThanWidth>
           <MobileNavigationBar

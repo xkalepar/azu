@@ -6,26 +6,19 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Category } from "@prisma/client";
-import { useParams, usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import Lang from "../lang";
 import { buttonVariants } from "@/lib/constant";
 import {
   Accordion,
-  AccordionContent,
   AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -39,6 +32,7 @@ import {
   ParseToScreenLessThanWidth,
   ParseToScreenMoreThanWidth,
 } from "@/app/components/client-parser";
+import DropdownMenuButton from "./drop-down-menu-item";
 type CollageProps = {
   ArCollageData?: {
     id: string;
@@ -53,18 +47,17 @@ type CollageProps = {
 } & {
   id: string;
   logo: string;
-  //   arabicId: string | null;
-  //   englishId: string | null;
   category: $Enums.Category;
+  graduates: { title: string, body: string, enTitle: string, enBody: string, id: string }[][] | undefined
+  offices: { title: string, body: string, enTitle: string, enBody: string, id: string }[][] | undefined
 };
 function DesktopMenuHeaderCollage({
-  logo,
   id,
-  ArCollageData,
-  EnCollageData,
+  graduates,
+  offices
 }: CollageProps) {
   // const pathName = usePathname();
-  const { lang }: { lang: "ar" | "en" } = useParams();
+  const { lang, collage }: { lang: "ar" | "en", collage: string } = useParams();
 
   return (
     <NavigationMenu
@@ -88,6 +81,74 @@ function DesktopMenuHeaderCollage({
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
+
+        <DropdownMenuButton
+          title={
+
+            <Lang lang={lang} ar={"الدراسات العليا"} en={"graduate studies"} />
+
+          }
+        >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            {graduates?.map((page) => (
+              page.map((data, i) => (<li className="row-span-3" key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/collages/${collage}/graduate-studies/${data.id}`}
+                  >
+                    {" "}
+                    <Lang
+                      ar={data?.title}
+                      en={data?.enTitle}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
+              </li>))
+            ))}
+          </ul>
+        </DropdownMenuButton>
+        <DropdownMenuButton
+          title={
+            <Lang lang={lang} ar={"المكاتب والأقسام الإدارية"} en={"offices and administrative departments"} />
+          }
+        >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            {offices?.map((page) => (
+              page.map((data, i) => (<li className="row-span-3" key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}
+                  >
+                    {" "}
+                    <Lang
+                      ar={data?.title}
+                      en={data?.enTitle}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
+              </li>))
+            ))}
+          </ul>
+        </DropdownMenuButton>
+
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -167,7 +228,7 @@ const ListItem = ({
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
-          // {...props}
+        // {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -186,8 +247,11 @@ const CollegeHeader = ({
   ArCollageData,
   EnCollageData,
   category,
+  graduates,
+  offices
 }: CollageProps) => {
   const { lang }: { lang: "ar" | "en" } = useParams();
+  // console.log(graduates)
   return (
     <Fragment>
       <header className="flex items-center justify-between gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
@@ -197,30 +261,23 @@ const CollegeHeader = ({
             <DesktopMenuHeaderCollage
               ArCollageData={ArCollageData}
               EnCollageData={EnCollageData}
+              offices={offices}
               category={category}
               logo={logo}
-              id={id}
-            />
-            <Link
-              className={cn(
-                buttonVariants.default,
-                buttonVariants.variants.variant.ghost,
-                "px-2 py-1"
-              )}
-              href={`${lang === "en" ? "/ar" : "/en"}`}
-            >
-              {lang === "en" ? "العربية" : "english"}
-            </Link>
+              id={id} graduates={graduates} />
+
+            <ToggleLangauge />
           </Fragment>
         </ParseToScreenMoreThanWidth>
         <ParseToScreenLessThanWidth>
           <MobileNavigationBarCollage
+            offices={offices}
+
             ArCollageData={ArCollageData}
             EnCollageData={EnCollageData}
             category={category}
             logo={logo}
-            id={id}
-          />
+            id={id} graduates={graduates} />
         </ParseToScreenLessThanWidth>
       </header>
       <Separator />

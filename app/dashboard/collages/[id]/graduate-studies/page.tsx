@@ -12,22 +12,23 @@ import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
 import { getData } from "./seed";
 import ListItem from "@/app/dashboard/components/list-item";
+import { getCollageById } from "@/prisma/seed";
 
 const page = async ({ params }: { params: { id: string; query?: string } }) => {
   // console.log(params);
   const { id } = params;
   const data = await getData({ id: id })
-  // console.log(data)
-  // const news = await getNews({ collageId: id, query: query });
+  const collage = await getCollageById(id)
+
   return (
     <section className="relative">
-      <Breadcrumbs id={id} title={data[0]?.ArCollageData?.title} />
+      <Breadcrumbs id={id} title={collage?.ArCollageData?.title} />
 
       <div className="grid my-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-3 xl:gap-4">
-        {data?.map((graduate, index) => (
-          <ListItem href={`graduate-studies/${graduate.graduateStudiesId}`} key={index}>
-            <div>{graduate.GraduateStudies?.Pages[0]?.title}</div>
-          </ListItem>
+        {data?.map((graduate) => (
+          graduate.Pages.map((page, i) => <ListItem href={`graduate-studies/${page.id}`} key={i}>
+            <div>{page.title}</div>
+          </ListItem>)
         ))}
       </div>
       <Link
@@ -38,8 +39,7 @@ const page = async ({ params }: { params: { id: string; query?: string } }) => {
           buttonVariants.variants.variant.default,
           buttonVariants.variants.size.default
         )}
-      >
-        جديد <IoIosAdd className="mr-2 h-4 w-4" />
+      >جديد<IoIosAdd className="mr-2 h-4 w-4" />
       </Link>
     </section>
   );

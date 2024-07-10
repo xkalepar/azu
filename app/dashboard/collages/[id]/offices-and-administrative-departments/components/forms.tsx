@@ -1,13 +1,7 @@
 "use client";
 
 import Form from "@/app/components/form"; import SubmitButton from "@/app/components/custom-sumbit-btn";
-import { Suspense, useState } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { MdOutlineCancel } from "react-icons/md";
-import Image from "next/image";
-import { UploadButton } from "@/app/dashboard/components/upload";
-import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

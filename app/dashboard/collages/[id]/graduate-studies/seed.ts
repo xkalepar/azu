@@ -6,23 +6,19 @@ import { revalidateTag, unstable_cache } from "next/cache";
 export const getData = unstable_cache(
   async ({ id }: { id: string }) => {
     try {
-      const offices = await prisma.collage.findMany({
+      const offices = await prisma.graduateStudies.findMany({
         where: {
-          id,
+          Collage: {
+            every: {
+              id: id,
+            },
+          },
         },
         include: {
-          ArCollageData: {
-            select: {
-              title: true,
-            },
-          },
-          GraduateStudies: {
-            include: {
-              Pages: true,
-            },
-          },
+          Pages: true,
         },
       });
+
       if (!offices) {
         return [];
       }
@@ -116,21 +112,16 @@ export const updateData = async ({
   }
 };
 export const deleteData = async ({
-  id,
   pageId,
 }: {
-  id: string;
   pageId: string;
 }): Promise<{ message: string }> => {
   try {
-    const deletedData = await prisma.graduateStudies.delete({
-      where: { id },
-    });
     const deletedPage = await prisma.page.delete({
       where: { id: pageId },
     });
 
-    if (!deletedData || !deletedPage) {
+    if (!deletedPage) {
       return { message: "فشل حذف البيانات " };
     }
     revalidateTag("collages");
@@ -144,25 +135,8 @@ export const deleteData = async ({
 
 export const getSpecificData = async ({ id }: { id: string }) => {
   try {
-    const center = await prisma.graduateStudies.findUnique({
+    const center = await prisma.page.findUnique({
       where: { id },
-      include: {
-        Pages: true,
-        Collage: {
-          select: {
-            ArCollageData: {
-              select: {
-                title: true,
-              },
-            },
-            EnCollageData: {
-              select: {
-                title: true,
-              },
-            },
-          },
-        },
-      },
     });
     if (!center) {
       return undefined;

@@ -16,14 +16,17 @@ import Link from "next/link";
 
 import Lang from "@/app/[lang]/components/lang";
 import { getData, getSpecificData } from "@/app/dashboard/collages/[id]/graduate-studies/seed";
+import { getCollageById } from "@/prisma/seed";
 
 export async function generateMetadata({
     params,
 }: {
-    params: { id: string; lang: "ar" | "en" };
+    params: { id: string; lang: "ar" | "en", collage: string };
 }): Promise<Metadata> {
-    const { id, lang } = params;
+    const { id, lang, collage } = params;
     const graduates = await getSpecificData({ id });
+    const college = await getCollageById(collage)
+
     if (!graduates) {
         return {
             title: "404 غير موجود",
@@ -33,10 +36,10 @@ export async function generateMetadata({
     return {
         title:
             lang === "ar"
-                ? ` ${graduates.Collage[0].ArCollageData?.title} | الدراسات العليا ${graduates.Pages[0]?.title}`
-                : `${graduates.Collage[0].EnCollageData?.title} | graduates studies ${graduates.Pages[0]?.title}`,
+                ? ` ${college?.ArCollageData?.title} | الدراسات العليا ${graduates?.title}`
+                : `${college?.EnCollageData?.title} | graduates studies ${graduates?.title}`,
         description:
-            lang === "ar" ? graduates.Pages[0]?.body : graduates.Pages[0]?.enBody,
+            lang === "ar" ? graduates?.body : graduates?.enBody,
     };
 }
 
@@ -71,7 +74,7 @@ const graduateStudiesPage = async ({
                     <BreadcrumbSeparator />
                     <BreadcrumbItem>
                         <BreadcrumbLink asChild>
-                            <Link href={`/${lang}/graduate-studies`}>
+                            <Link href={`#`}>
                                 <Lang lang={lang} ar={"الدراسات العليا"} en={"graduate studies"} />
                             </Link>
                         </BreadcrumbLink>
@@ -81,8 +84,8 @@ const graduateStudiesPage = async ({
                     <BreadcrumbItem>
                         <BreadcrumbPage>
                             <Lang
-                                ar={graduateStudies.Pages[0]?.title}
-                                en={graduateStudies.Pages[0]?.enTitle}
+                                ar={graduateStudies?.title}
+                                en={graduateStudies?.enTitle}
                                 lang={lang}
                             />
                         </BreadcrumbPage>
@@ -163,10 +166,10 @@ const graduateStudiesPage = async ({
                 <Lang
                     lang={lang}
                     ar={
-                        <ParseData dir="rtl" content={graduateStudies.Pages[0]?.body ?? ""} />
+                        <ParseData dir="rtl" content={graduateStudies?.body ?? ""} />
                     }
                     en={
-                        <ParseData dir="ltr" content={graduateStudies.Pages[0]?.body ?? ""} />
+                        <ParseData dir="ltr" content={graduateStudies?.body ?? ""} />
                     }
                 />
             </Suspense>

@@ -104,13 +104,11 @@ export async function deleteDataAction(
 ) {
   try {
     const schema = z.object({
-      id: z.string(),
       pageId: z.string(),
     });
     console.log(`schema: ${schema}`);
 
     const data = schema.safeParse({
-      id: formData.get("id"),
       pageId: formData.get("pageId"),
     });
 
@@ -118,9 +116,8 @@ export async function deleteDataAction(
       return { message: "يجب أن يتم ملء جميع الحقول" };
     }
 
-    const { id, pageId } = data.data;
+    const { pageId } = data.data;
     const res = await deleteData({
-      id,
       pageId,
     });
 

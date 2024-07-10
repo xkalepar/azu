@@ -12,20 +12,23 @@ import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
 import { getData } from "./seed";
 import ListItem from "@/app/dashboard/components/list-item";
+import { getCollageById } from "@/prisma/seed";
 
 const page = async ({ params }: { params: { id: string; query?: string } }) => {
   const { id } = params;
-  const offices = await getData({ id: id })
-  console.log(offices)
+  const data = await getData({ id: id })
+  const collage = await getCollageById(id)
+
+  console.log(data)
   return (
     <section className="relative">
-      <Breadcrumbs id={id} title={offices[0]?.ArCollageData?.title} />
+      <Breadcrumbs id={id} title={collage?.ArCollageData?.title} />
 
       <div className="grid my-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-3 xl:gap-4">
-        {offices?.map((office, index) => (
-          <ListItem href={`offices-and-administrative-departments/${office.theOfficesAndAdministrativeDepartmentsId}`} key={index}>
-            <div>{office.TheOfficesAndAdministrativeDepartments?.Pages[0]?.title}</div>
-          </ListItem>
+        {data?.map((graduate) => (
+          graduate.Pages.map((page, i) => <ListItem href={`offices-and-administrative-departments/${page.id}`} key={i}>
+            <div>{page.title}</div>
+          </ListItem>)
         ))}
       </div>
       <Link

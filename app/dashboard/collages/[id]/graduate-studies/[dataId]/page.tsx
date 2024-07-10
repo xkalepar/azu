@@ -15,6 +15,7 @@ import { DeleteIcon, Edit2 } from "lucide-react";
 import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
 import { getSpecificData } from "../seed";
 import { DeleteDataForm } from "../components/forms";
+import { getCollageById } from "@/prisma/seed";
 
 const newsPage = async ({
   params,
@@ -23,14 +24,14 @@ const newsPage = async ({
 }) => {
   const { id, dataId } = params;
   const data = await getSpecificData({ id: dataId, });
-  console.log('data: ' + data)
+  const collage = await getCollageById(id)
 
   return (
     <section className=" relative ">
       <Breadcrumbs
         collageId={id}
-        dataTitle={data?.Pages[0]?.title}
-        collageTitle={data?.Collage[0].ArCollageData?.title}
+        dataTitle={data?.title}
+        collageTitle={collage?.ArCollageData?.title}
       />
 
       <div className="relative">
@@ -53,16 +54,16 @@ const newsPage = async ({
               </Button>
             }
             dialogTitle=""
-            dialogDescription={`هل أنت متأكد من حذف ${data?.Pages[0]?.title}`}
+            dialogDescription={`هل أنت متأكد من حذف ${data?.title}`}
           >
             <DeleteDataForm
               collageId={id}
               id={dataId}
-              pageId={data?.Pages[0].id ?? ""}
+              pageId={data?.id ?? ""}
             />
           </ResponiseDialog>
         </div>
-        <ParseData content={data?.Pages[0]?.body ?? ""} />
+        <ParseData content={data?.body ?? ""} />
 
       </div>
     </section>

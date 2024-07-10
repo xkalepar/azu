@@ -1,5 +1,3 @@
-import { getNews } from "@/prisma/seed";
-import { notFound } from "next/navigation";
 import React from "react";
 import {
   Breadcrumb,
@@ -12,6 +10,7 @@ import {
 import Link from "next/link";
 import { UpdateDataForm } from "../../components/forms";
 import { getSpecificData } from "../../seed";
+import { getCollageById } from "@/prisma/seed";
 
 const page = async ({
   params,
@@ -19,25 +18,24 @@ const page = async ({
   params: { id: string; dataId: string };
 }) => {
   const { id, dataId } = params;
-  console.log("id: " + id);
-  console.log("dataId: " + dataId);
   const data = await getSpecificData({ id: dataId, });
-  const currentData = data?.Pages[0];
+  const college = await getCollageById(id)
 
   return (
     <section>
       <Breadcrumbs
         collageId={id}
-        dataTitle={data?.Pages[0]?.title}
-        collageTitle={data?.Collage[0].ArCollageData?.title}
+        dataTitle={data?.title}
+        collageTitle={college?.ArCollageData?.title}
+        dataId={data?.id}
       />
       <UpdateDataForm
-        body={currentData?.body}
+        body={data?.body}
         collageId={id}
-        enBody={currentData?.enBody}
-        enTitle={currentData?.enTitle}
-        pageId={currentData?.id ?? ""}
-        title={currentData?.title}
+        enBody={data?.enBody}
+        enTitle={data?.enTitle}
+        pageId={data?.id ?? ""}
+        title={data?.title}
       />
     </section>
   );
@@ -49,10 +47,12 @@ const Breadcrumbs = ({
   collageTitle: title,
   collageId,
   dataTitle,
+  dataId
 }: {
   collageTitle?: string;
   collageId: string;
   dataTitle?: string;
+  dataId?: string
 }) => {
   return (
     <Breadcrumb>
@@ -89,7 +89,13 @@ const Breadcrumbs = ({
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>{dataTitle}</BreadcrumbPage>
+          <BreadcrumbLink asChild>
+            <Link href={`/dashboard/collages/${collageId}/offices-and-administrative-departments/${dataId}`}> {dataTitle}</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+        <BreadcrumbItem>
+          <BreadcrumbPage>{"تعديل"}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

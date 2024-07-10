@@ -155,7 +155,7 @@ export const DeleteDataForm = ({
             action={deleteDataAction}
             replaceLink={`/dashboard/collages/${collageId}/graduate-studies`}
         >
-            <Input type={"hidden"} name="id" value={id} />
+            {/* <Input type={"hidden"} name="id" value={id} /> */}
             <Input type={"hidden"} name="pageId" value={pageId} />
             <SubmitButton className="w-full bg-red-500 hover:bg-red-400">
                 حذف

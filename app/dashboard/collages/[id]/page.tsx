@@ -23,6 +23,7 @@ import { buttonVariants } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { Edit } from "lucide-react";
 import { DeleteCollageForm } from "../new/forms";
+
 export async function generateMetadata({
   params,
 }: {
