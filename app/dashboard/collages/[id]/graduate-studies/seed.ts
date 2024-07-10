@@ -135,13 +135,13 @@ export const deleteData = async ({
 
 export const getSpecificData = async ({ id }: { id: string }) => {
   try {
-    const center = await prisma.page.findUnique({
+    const data = await prisma.page.findUnique({
       where: { id },
     });
-    if (!center) {
+    if (!data) {
       return undefined;
     }
-    return center;
+    return data;
   } catch (error) {
     return undefined;
   }

@@ -73,7 +73,7 @@ export function EditCollageForm({
         router.replace(`/dashboard/collages/${collageId}`);
       }
     }
-  }, [msg, router]);
+  }, [collageId, msg, router]);
   return (
     <form action={dispatch} className={cn(" space-y-6 ", className)}>
       <input type={"hidden"} name="logo" value={image} />
@@ -147,7 +147,7 @@ export function EditCollageForm({
                 type={"text"}
                 placeholder="Enter the name of the college"
                 name={"enname"}
-                // value={enContent}
+              // value={enContent}
               />
             </div>
 

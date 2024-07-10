@@ -169,7 +169,7 @@ const graduateStudiesPage = async ({
                         <ParseData dir="rtl" content={graduateStudies?.body ?? ""} />
                     }
                     en={
-                        <ParseData dir="ltr" content={graduateStudies?.body ?? ""} />
+                        <ParseData dir="ltr" content={graduateStudies?.enBody ?? ""} />
                     }
                 />
             </Suspense>
