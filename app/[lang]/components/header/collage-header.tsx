@@ -18,7 +18,9 @@ import Lang from "../lang";
 import { buttonVariants } from "@/lib/constant";
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -149,6 +151,39 @@ function DesktopMenuHeaderCollage({
           </ul>
         </DropdownMenuButton>
 
+        <DropdownMenuButton
+          title={
+            <Lang lang={lang} ar={"الأقسام العلمية"} en={"Scientific section"} />
+          }
+        >
+          <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+            {offices?.map((page) => (
+              page.map((data, i) => (<li className="row-span-3" key={i}>
+                {" "}
+                <NavigationMenuLink asChild>
+                  <Link
+                    className={cn(
+                      "text-sm w-full ",
+                      buttonVariants.default,
+                      buttonVariants.variants.variant.secondary,
+                      buttonVariants.variants.size.default,
+                      "justify-start bg-transparent"
+                    )}
+                    href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}
+                  >
+                    {" "}
+                    <Lang
+                      ar={data?.title}
+                      en={data?.enTitle}
+                      lang={lang}
+                    />
+                  </Link>
+                </NavigationMenuLink>
+              </li>))
+            ))}
+          </ul>
+        </DropdownMenuButton>
+
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -159,9 +194,11 @@ function MobileNavigationBarCollage({
   id,
   ArCollageData,
   EnCollageData,
+  graduates,
+  offices
 }: CollageProps) {
   const [open, setOpen] = useState(false);
-  const { lang }: { lang: "ar" | "en" } = useParams();
+  const { lang, collage }: { lang: "ar" | "en", collage: string } = useParams();
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -197,6 +234,60 @@ function MobileNavigationBarCollage({
               <Link href={`/${lang}/collages/${id}/about`}>
                 <Lang lang={lang} ar={"حول الكلية"} en={"About"} />
               </Link>
+            </AccordionItem>
+
+
+
+            {/* graduates */}
+            <AccordionItem
+              value="graduates "
+              className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+            >
+              <AccordionTrigger className=" text-sm ">
+                <Lang lang={lang} ar={"الدراسات العليا"} en={"graduate studies"} />
+
+              </AccordionTrigger>
+              <AccordionContent className=" w-4/5 mx-auto my-2">
+                {graduates !== undefined &&
+                  graduates.length > 0 &&
+                  graduates?.map((pages) => (
+                    pages.map((data, index) => (<div onClick={() => setOpen(!open)} key={index}>
+                      <Link href={`/${lang}/collages/${collage}/graduate-studies/${data.id}`}>
+                        <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                          <Lang lang={lang} ar={data.title} en={data.enTitle} />
+                        </div>
+                      </Link>
+                    </div>))
+                  ))}
+              </AccordionContent>
+            </AccordionItem>
+
+
+            {/* offices */}
+            <AccordionItem
+              value="item-The-Administrations-and-Centers"
+              className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+            >
+              <AccordionTrigger className=" text-sm ">
+                <Lang
+                  lang={lang}
+                  ar={"الإدارات والمراكز"}
+                  en={"The Administrations and Centers"}
+                />
+              </AccordionTrigger>
+              <AccordionContent className=" w-4/5 mx-auto my-2">
+                {offices !== undefined &&
+                  offices.length > 0 &&
+                  offices?.map((pages) => (
+                    pages.map((data, index) => (<div onClick={() => setOpen(!open)} key={index}>
+                      <Link href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}>
+                        <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                          <Lang lang={lang} ar={data.title} en={data.enTitle} />
+                        </div>
+                      </Link>
+                    </div>))
+                  ))}
+              </AccordionContent>
             </AccordionItem>
           </Accordion>
         </ScrollArea>

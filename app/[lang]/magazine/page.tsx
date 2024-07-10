@@ -1,5 +1,5 @@
 import CardPreview from "@/app/components/card-preview";
-import { getConferences, getUniNews } from "@/prisma/seed";
+import { getConferences, getMagazines, getUniNews } from "@/prisma/seed";
 import React from "react";
 import {
   Breadcrumb,
@@ -17,11 +17,11 @@ import { Metadata } from "next";
 import { getDir } from "../components/footers/home-footer";
 type Lang = "en" | "ar";
 export const metadata: Metadata = {
-  title: "المؤتمرات العلمية",
+  title: "المجلات العلمية",
 };
 const page = async ({ params }: { params: { lang: Lang } }) => {
   const { lang } = params;
-  const confernces = await getConferences({
+  const magazines = await getMagazines({
     page: 1,
     qty: 20,
   });
@@ -39,13 +39,13 @@ const page = async ({ params }: { params: { lang: Lang } }) => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbPage>
-              <Lang lang={lang} ar={"المؤتمرات العلمية"} en={"conferences"} />
+              <Lang lang={lang} ar={"المجلة"} en={"magazine"} />
             </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
       <div className="grid md:grid-cols-2 my-2 sm:grid-cols-3 gap-2 lg:grid-cols-4">
-        {confernces.map((item, index) => {
+        {magazines.map((item, index) => {
           return (
             <CardPreview
               key={index}
@@ -58,7 +58,7 @@ const page = async ({ params }: { params: { lang: Lang } }) => {
               title={
                 lang === "ar" ? item.arContent?.title : item.enContent?.title
               }
-              href={`/${lang}/conferences/${item.id}`}
+              href={`/${lang}/magazine/${item.id}`}
             >
               <div className="my-1 py-1" dir={getDir(lang)}>
                 <Lang

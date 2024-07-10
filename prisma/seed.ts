@@ -328,6 +328,23 @@ export const getMagazines = async ({
     return [];
   }
 };
+export const getAllMagazines =
+  // unstable_cache(
+  async ({}: {}) => {
+    try {
+      const magazines = await prisma.mangzine.findMany({});
+      if (!magazines) {
+        return [];
+      }
+      return magazines;
+    } catch (error) {
+      return [];
+    }
+  };
+// ["magazine", "university"],
+// { tags: ["magazine", "university"] }
+// );
+
 export const getConferences = async ({
   qty,
   page = 1,

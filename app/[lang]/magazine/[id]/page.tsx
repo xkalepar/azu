@@ -1,4 +1,3 @@
-// import Statiscs from "@/app/[lang]/components/statiscs";
 import ParseData from "@/app/components/parse-data";
 import { Skeleton } from "@/components/ui/skeleton";
 import { notFound } from "next/navigation";
@@ -14,10 +13,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
-import {
-  getConference,
-  getConferences,
-} from "@/app/dashboard/university/conferences/seed";
+
+import { getMagazine } from "@/app/dashboard/university/magazines/seed";
+import { getAllMagazines, getMagazines } from "@/prisma/seed";
+import { DownloadCloudIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/lib/constant";
 
 export async function generateMetadata({
   params,
@@ -25,8 +26,8 @@ export async function generateMetadata({
   params: { id: string; lang: "ar" | "en" };
 }): Promise<Metadata> {
   const { id, lang } = params;
-  const conference = await getConference({ id });
-  if (!conference) {
+  const magazine = await getMagazine({ id });
+  if (!magazine) {
     return {
       title: "404 غير موجود",
     };
@@ -35,29 +36,32 @@ export async function generateMetadata({
   return {
     title:
       lang === "ar"
-        ? ` المؤتمرات العلمية | ${conference.arContent?.title}`
-        : ` Conferences | ${conference.enContent?.title}`,
+        ? ` المجلات | ${magazine.arContent?.title}`
+        : ` magazines | ${magazine.enContent?.title}`,
     description:
-      lang === "ar" ? conference.arContent?.body : conference.enContent?.body,
+      lang === "ar" ? magazine.arContent?.body : magazine.enContent?.body,
   };
 }
 
-export async function generateStaticParams() {
-  const conferences = await getConferences();
-  return conferences.map((id) => ({ id: id.id }));
+export async function generateStaticParams(
+
+) {
+  const magazine = await getAllMagazines({});
+  return magazine.map((id) => ({ id: id.id }));
 }
 
-const conferencesPage = async ({
+const magazinePage = async ({
   params,
 }: {
   params: { id: string; lang: "ar" | "en" };
 }) => {
   const { id } = params;
-  const conference = await getConference({ id });
+  const magazine = await getMagazine({ id });
+  console.log(magazine)
   // console.log("#".repeat(30));
   // console.log(conference);
   // console.log("#".repeat(30));
-  if (!conference) {
+  if (!magazine) {
     return notFound();
   }
   const { lang } = params;
@@ -75,8 +79,8 @@ const conferencesPage = async ({
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/${lang}/conferences`}>
-                <Lang lang={lang} ar={"المؤتمرات العلمية"} en={"conferences"} />
+              <Link href={`/${lang}/magazine`}>
+                <Lang lang={lang} ar={"المجلة"} en={"magazine"} />
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
@@ -85,8 +89,8 @@ const conferencesPage = async ({
           <BreadcrumbItem>
             <BreadcrumbPage>
               <Lang
-                ar={conference.arContent?.title}
-                en={conference.enContent?.title}
+                ar={magazine.arContent?.title}
+                en={magazine.enContent?.title}
                 lang={lang}
               />
             </BreadcrumbPage>
@@ -167,15 +171,31 @@ const conferencesPage = async ({
         <Lang
           lang={lang}
           ar={
-            <ParseData dir="rtl" content={conference.arContent?.body ?? ""} />
+            <ParseData dir="rtl" content={magazine.arContent?.body ?? ""} />
           }
           en={
-            <ParseData dir="ltr" content={conference.enContent?.body ?? ""} />
+            <ParseData dir="ltr" content={magazine.enContent?.body ?? ""} />
           }
         />
+
+        <Link className={cn(" w-full my-2 sm:w-fit mx-auto flex justify-center items-center gap-2", "bg-primary text-primary-foreground shadow hover:bg-primary/90 rounded-md px-4 py-2")} target={"_blank"}
+          download={true}
+          href={magazine!.pdfUri as string}>
+          <DownloadCloudIcon></DownloadCloudIcon>
+          <Lang
+            lang={lang}
+            ar={
+              "تحميل"
+            }
+            en={
+              "download"
+            }
+          />
+        </Link>
+
       </Suspense>
     </main>
   );
 };
 
-export default conferencesPage;
+export default magazinePage;

@@ -82,8 +82,8 @@ export default async function home({
           {<Lang lang={lang} ar={"معرض الصور"} en={"Gallery"} />}
         </h3>
         {univeristy !== undefined &&
-        univeristy !== null &&
-        univeristy.gallery.length > 0 ? (
+          univeristy !== null &&
+          univeristy.gallery.length > 0 ? (
           <ImageGridView list={univeristy.gallery} />
         ) : (
           <div>
@@ -237,7 +237,7 @@ export default async function home({
                 title={item?.enContent?.title}
                 src={item.logo}
                 lang={lang}
-                href={`/magazines/${item.id}`}
+                href={`/magazine/${item.id}`}
               >
                 <div className="w-full my-2">
                   {lang === "ar" ? (
@@ -269,9 +269,9 @@ export default async function home({
             buttonVariants.default,
             "mx-auto w-fit mb-2"
           )}
-          href={`${lang}/conferences`}
+          href={`${lang}/magazine`}
         >
-          <Lang ar={"كل مجلات"} en={"conferences"} lang={lang} />
+          <Lang ar={"كل مجلات"} en={"magazine"} lang={lang} />
         </Link>
         {/*  */}
 
