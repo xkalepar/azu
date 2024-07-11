@@ -5,6 +5,8 @@ import { i18n } from "./i18n-config";
 
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
+import { getSession } from "./lib/auth";
+import { redirect } from "next/navigation";
 
 function getLocale(request: NextRequest): string | undefined {
   // Negotiator expects plain object so we need to transform headers
@@ -24,50 +26,69 @@ function getLocale(request: NextRequest): string | undefined {
   return locale;
 }
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
-  // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
-  // // If you have one
-  // if (
-  //   [
-  //     '/manifest.json',
-  //     '/favicon.ico',
-  //     // Your other files in `public`
-  //   ].includes(pathname)
-  // )
-  //   return
+  // Check if the request is for a dashboard route
+  if (pathname.startsWith("/dashboard")) {
+    // Check if the user is authenticated
+    const currentUser = await getSession();
+    if (
+      (currentUser && currentUser.user.role === "admin") ||
+      (currentUser && currentUser.user.role === "superAdmin")
+    ) {
+      return;
+    } else {
+      return NextResponse.redirect("/login");
+    }
+  }
+  if (!pathname.includes("dashboard")) {
+    // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
+    // // If you have one
+    // if (
+    //   [
+    //     '/manifest.json',
+    //     '/favicon.ico',
+    //     // Your other files in `public`
+    //   ].includes(pathname)
+    // )
+    //   return
 
-  // Check if there is any supported locale in the pathname
-  const pathnameIsMissingLocale = i18n.locales.every((locale) => {
-    return !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`;
-  });
+    // Check if there is any supported locale in the pathname
+    const pathnameIsMissingLocale = i18n.locales.every((locale) => {
+      return !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`;
+    });
 
-  // Redirect if there is no locale
-  if (pathnameIsMissingLocale) {
-    const locale = getLocale(request);
+    // Redirect if there is no locale
+    if (pathnameIsMissingLocale) {
+      const locale = getLocale(request);
 
-    // e.g. incoming request is /products
-    // The new URL is now /en-US/products
+      // e.g. incoming request is /products
+      // The new URL is now /en-US/products
 
-    return NextResponse.redirect(
-      new URL(
-        `/ar${pathname.startsWith("/") ? "" : "/"}${pathname}`,
-        request.url
-      )
-    );
+      return NextResponse.redirect(
+        new URL(
+          `/ar${pathname.startsWith("/") ? "" : "/"}${pathname}`,
+          request.url
+        )
+      );
+    }
   }
 }
 
 export const config = {
-  // Matcher ignoring `/_next/` and `/api/`
-  // matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
-  // matcher: ["/((?!dashboard|api|_next/static|_next/image|favicon.ico).*)"],
   matcher: [
-    "/((?!dashboard|api|_next/static|_next/image|favicon.ico|bg.jpeg|pdf.png}).*)",
-    // "/((?!dashboard|api|_next/static|_next/image|favicon.ico|pdf.png}).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|bg.jpeg|pdf.png}).*)",
   ],
-  // matcher: [
-  //   "/((?!dashboard|api|_next/static/|_next/image/|_next/logos/|favicon.ico).*)",
-  // ],
 };
+// export const config = {
+//   matcher: [
+//     // Exclude specific paths and extensions from middleware
+//     "/api/(.*)",
+//     "/_next/static/(.*)",
+//     "/_next/image/(.*)",
+//     "/favicon.ico",
+//     "/bg.jpeg",
+//     "/pdf.png",
+//   ],
+// };

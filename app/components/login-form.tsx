@@ -16,10 +16,10 @@ const LoginForm = ({
 }) => {
   return (
     <Form className={className} action={signIn}>
-      <Label htmlFor="username">
-        <Lang ar={"اسم المستخدم"} en={"username"} lang={lang} />
+      <Label htmlFor="phone">
+        <Lang ar={"رقم الهاتف"} en={"phone number"} lang={lang} />
       </Label>
-      <Input type={"text"} name="username" id="username" required className="bg-white" />
+      <Input type={"tel"} name="phone" id="phone" required className="bg-white" />
 
       <Label htmlFor="password">
         <Lang ar={"كلمة المرور"} en={"password"} lang={lang} />
