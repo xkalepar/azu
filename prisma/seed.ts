@@ -482,6 +482,7 @@ export const updateCollage = async ({
     if (!newCollage) {
       return { message: "فشل انشاء كلية جديدة" };
     }
+    revalidatePath("/");
     revalidateTag("collages");
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
