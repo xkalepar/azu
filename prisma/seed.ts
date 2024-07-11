@@ -445,7 +445,6 @@ export const updateCollage = async ({
   category,
   welcome,
   collageId,
-
   arId,
   enId,
 }: NewCollageProps & {
@@ -480,9 +479,9 @@ export const updateCollage = async ({
       },
     });
     if (!newCollage) {
-      return { message: "فشل انشاء كلية جديدة" };
+      return { message: "فشل تعديل كلية" };
     }
-    revalidatePath("/");
+    revalidatePath(`/dashboard/collages/${collageId}`);
     revalidateTag("collages");
     return { message: "تمت العملية بنجاح" };
   } catch (error) {

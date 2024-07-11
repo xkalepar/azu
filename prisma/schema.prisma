@@ -24,6 +24,7 @@ model University {
   UniversityActivities            UniversityActivities[]
   Projects                        Projects[]
   SocialMedia                     SocialMedia?
+  User                            User[]
 }
 
 model Centers {
@@ -423,16 +424,19 @@ model PdfReference {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  username  String   @unique
-  password  String
-  role      Role     @default(teacher)
-  collage   Collage? @relation(fields: [collageId], references: [id])
-  collageId String?  @unique @db.ObjectId
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  username     String      @unique
+  password     String
+  role         Role        @default(teacher)
+  collage      Collage?    @relation(fields: [collageId], references: [id])
+  university   University? @relation(fields: [universityId], references: [id])
+  collageId    String?     @unique @db.ObjectId
+  universityId String?     @db.ObjectId
 }
 
 enum Role {
   admin
   teacher
   student
+  superAdmin
 }

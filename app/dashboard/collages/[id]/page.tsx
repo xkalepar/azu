@@ -47,11 +47,9 @@ export async function generateStaticParams() {
 }
 
 const collagePage = async ({ params }: { params: { id: string } }) => {
-  // console.log(params.id);
   const collage = await getCollageById(params.id);
-  // console.log(collage);
-
   if (!collage) return notFound();
+
   return (
     <main className="px-4 py-2">
       <div className="flex-col  md:flex-row flex justify-start items-start md:justify-between md:items-center">
