@@ -27,6 +27,7 @@ import {
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 import Editor from "@/app/components/editor";
+import SubmitButton from "@/app/components/custom-sumbit-btn";
 
 type EditProps = {
   className?: string;
@@ -180,11 +181,9 @@ export function EditCollageForm({
         }
       />
 
-      <Button>
-        حفظ
+      <SubmitButton>  حفظ
         <FaSave className="mr-2 h-4 w-4" />
-      </Button>
-      {/* <SubmitBtn>تأكيد</SubmitBtn> */}
+      </SubmitButton>
     </form>
   );
 }

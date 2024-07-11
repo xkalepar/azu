@@ -42,6 +42,12 @@ const layout = async ({
               href={`/dashboard/sections/${collageId}/${id}/welcome`}
               content="ترحيب"
             />
+            <TabLink
+              href={`/dashboard/sections/${collageId}/${id}/teachers`}
+              content="أعضاء هيئة التدريس"
+            />
+
+
 
             <TabLink
               href={`/dashboard/sections/${collageId}/${id}/department-coordinators`}

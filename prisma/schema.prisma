@@ -24,7 +24,6 @@ model University {
   UniversityActivities            UniversityActivities[]
   Projects                        Projects[]
   SocialMedia                     SocialMedia?
-  User                            User[]
 }
 
 model Centers {
@@ -130,8 +129,8 @@ model Collage {
   formsAndApplicationsId                   String?                                 @db.ObjectId
   News                                     News[]
   location                                 String?
-  User                                     User?
   SocialMedia                              SocialMedia?
+  User                                     User[]
 }
 
 /// االأقسام العلمية
@@ -181,6 +180,9 @@ model SectionPage {
   academicGuidanceHandbookId     String?            @db.ObjectId
   DepartmentFormsAndGuidelines   ScientificSection? @relation("DepartmentFormsAndGuidelines", fields: [departmentFormsAndGuidelinesId], references: [id])
   departmentFormsAndGuidelinesId String?            @db.ObjectId
+  User                           User[]
+  ///             @relation(fields: [userIds], references: [id])
+  /// userIds                        String[]           @db.ObjectId
 }
 
 /// المكاتب واالقسام االدارية
@@ -424,14 +426,21 @@ model PdfReference {
 }
 
 model User {
-  id           String      @id @default(auto()) @map("_id") @db.ObjectId
-  username     String      @unique
-  password     String
-  role         Role        @default(teacher)
-  collage      Collage?    @relation(fields: [collageId], references: [id])
-  university   University? @relation(fields: [universityId], references: [id])
-  collageId    String?     @unique @db.ObjectId
-  universityId String?     @db.ObjectId
+  id               String  @id @default(auto()) @map("_id") @db.ObjectId
+  fullName         String
+  password         String
+  image            String?
+  cv               String?
+  acadamicCondtion String?
+  phone            Int     @unique
+  content          String?
+  role             Role    @default(teacher)
+
+  // university       University[]
+  Collage       Collage?     @relation(fields: [collageId], references: [id])
+  collageId     String?      @db.ObjectId
+  SectionPage   SectionPage? @relation(fields: [sectionPageId], references: [id])
+  sectionPageId String?      @db.ObjectId
 }
 
 enum Role {

@@ -1,14 +1,12 @@
 "use server";
-import {  Role } from "@prisma/client";
+import { PrismaClient, Role } from "@prisma/client";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-
 import bcrypt from "bcrypt";
-import { revalidatePath, revalidateTag } from "next/cache";
-import prisma from "@/prisma/db";
 
+const prisma = new PrismaClient();
 const secretKey = process.env.SECRET_KEY;
 const key = new TextEncoder().encode(secretKey);
 
@@ -17,7 +15,7 @@ const checkPassword = async (password: string, hashedPassword: string) => {
   return validPassword;
 };
 
-const hashPassword = async (password: string) => {
+export const hashPassword = async (password: string) => {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hash(password, salt);
   return hash;
@@ -48,7 +46,7 @@ export async function decrypt(input: string): Promise<any> {
   return payload;
 }
 
-export async function signUp(
+/* export async function signUp(
   prevState: {
     message: string;
   },
@@ -56,34 +54,43 @@ export async function signUp(
 ) {
   try {
     const schema = z.object({
-      password: z.string().min(8, {
+      email: z
+        .string()
+        .min(4, {
+          message: "يجب ان يحتوي الأيميل على اربع حروف على الأقل لأ",
+        })
+        .email({
+          message: "ادخل ايميل صالح",
+        }),
+
+      password: z.string().min(6, {
         message: "يجب ان تحوي كلمة السر على ست علامات على الأقل",
       }),
-      username: z.string(),
+      fullName: z.string().optional(),
     });
     const data = schema.parse({
+      email: formData.get("email") as string,
       password: formData.get("password") as string,
-      username: formData.get("username") as string,
+      fullName: formData.get("fullName") as string,
     });
 
     if (!data) {
       return { message: "يجب ملء جميع الحقول" };
     }
-    const checkUsername = await prisma.user.findUnique({
-      where: {
-        username: data.username
-      }
-      });
+    const checkEmail = await prisma.user.findUnique({
+      where: { email: data.email },
+    });
 
-    if (checkUsername) {
-      return { message: " اسم المستخدم هذا مستعمل بالفعل يرجي إدخال مستخدم اخر" };
+    if (checkEmail) {
+      return { message: "هذا البريد مستعمل بالفعل يرجي إدخال بريد اخر" };
     }
     const hashedPassword = await hashPassword(data.password);
     const user = await prisma.user.create({
       data: {
-        username: data.username,
-        password: data.password,
-        role: "teacher",
+        email: data.email,
+        hashedPassword,
+        fullName: data.fullName,
+        role: "user",
       },
     });
     if (!user) {
@@ -104,9 +111,9 @@ export async function signUp(
     return { message: "فشل إنشاء الحساب" };
   }
   // console.log(msg);
-}
+} */
 
-export async function signAdmin(
+/* export async function signAdmin(
   prevState: {
     message: string;
   },
@@ -114,34 +121,43 @@ export async function signAdmin(
 ) {
   try {
     const schema = z.object({
-   
+      email: z
+        .string()
+        .min(4, {
+          message: "يجب ان يحتوي الأيميل على اربع حروف على الأقل لأ",
+        })
+        .email({
+          message: "ادخل ايميل صالح",
+        }),
+
       password: z.string().min(6, {
         message: "يجب ان تحوي كلمة السر على ست علامات على الأقل",
       }),
-      username: z.string()
+      fullName: z.string().optional(),
     });
     const data = schema.parse({
+      email: formData.get("email") as string,
       password: formData.get("password") as string,
-      username: formData.get("username") as string,
+      fullName: formData.get("fullName") as string,
     });
 
     if (!data) {
       return { message: "يجب ملء جميع الحقول" };
     }
-    const checkUsername = await prisma.user.findUnique({
-      where: { username: data.username },
+    const checkEmail = await prisma.user.findUnique({
+      where: { email: data.email },
     });
 
-    if (checkUsername) {
+    if (checkEmail) {
       return { message: "هذا البريد مستعمل بالفعل يرجي إدخال بريد اخر" };
     }
     const hashedPassword = await hashPassword(data.password);
     const user = await prisma.user.create({
       data: {
-       
-        password: data.password,
-        username: data.username,
-        role: "teacher",
+        email: data.email,
+        hashedPassword,
+        fullName: data.fullName,
+        role: "admin",
       },
     });
     if (!user) {
@@ -156,7 +172,7 @@ export async function signAdmin(
     return { message: "فشل إنشاء الحساب" };
   }
   // console.log(msg);
-}
+} */
 
 export async function signIn(
   prevState: {
@@ -166,18 +182,15 @@ export async function signIn(
 ) {
   try {
     const schema = z.object({
-      username: z
-        .string()
-        .min(4, {
-          message: "يجب ان يحتوي الأيميل على اربع حروف على الأقل لأ",
-        }),
-
-      password: z.string().min(8, {
+      phone: z.string().min(10, {
+        message: "يجب إضافة رقمك الشخصي",
+      }),
+      password: z.string().min(6, {
         message: "يجب ان تحوي كلمة السر على ست علامات على الأقل",
       }),
     });
     const data = schema.parse({
-      username: formData.get("username") as string,
+      phone: formData.get("phone") as string,
       password: formData.get("password") as string,
     });
 
@@ -185,22 +198,17 @@ export async function signIn(
       return { message: "يجب ملء جميع الحقول" };
     }
 
-    
-
     const user = await prisma.user.findUnique({
-      where: { username: data.username },
+      where: { phone: Number(data.phone) },
     });
 
     if (!user) {
       return {
-        message: "هذا البريد غير مسجل. يرجى التحقق من البريد الإلكتروني المدخل",
+        message: "لم يتم إيجاد المستخدم",
       };
     }
 
-    const passwordMatch = await checkPassword(
-      data.password,
-      user.password
-    );
+    const passwordMatch = await checkPassword(data.password, user.password);
 
     if (!passwordMatch) {
       return { message: "كلمة المرور غير صحيحة" };
@@ -212,7 +220,6 @@ export async function signIn(
     // Save the session in a cookie
     setCookie(session, expires);
     return { message: "تم تسجيل الدخول بنجاح" };
-
     // return cookies().set("session", session, { expires, httpOnly: true });
   } catch (error) {
     console.log(error);
@@ -234,9 +241,9 @@ export async function logout() {
 export async function getSession(): Promise<{
   user: {
     id: string;
-    email: string;
-    fullName?: string;
-    hashedPassword: string;
+    fullName: string;
+    password: string;
+    phone: number;
     role: Role;
   };
 } | null> {
