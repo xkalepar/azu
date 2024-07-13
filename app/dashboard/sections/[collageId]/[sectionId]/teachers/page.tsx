@@ -27,7 +27,6 @@ const page = async ({ params }: { params: { collageId: string, sectionId: string
     <main className="mx-1">
       <div className="flex-between sm:flex-row flex-col gap-2">
         <Breadcrumbs collageId={collageId} collageTitle={collage.ArCollageData?.title}
-
           sectionId={sectionId}
           sectionTitle={section?.ArContent?.title}
 

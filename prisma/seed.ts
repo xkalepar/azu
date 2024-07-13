@@ -579,6 +579,7 @@ export const getCollageByIdForSection = async (id: string) => {
       where: { id },
       include: {
         ArCollageData: true,
+        EnCollageData: true,
         ScientificSection: {
           include: {
             ArContent: true,
@@ -764,7 +765,6 @@ export const getNewsForSection = unstable_cache(
       const news = await prisma.news.findMany({
         where: {
           id: id,
-          collageId: collageId,
           scientificSectionId: sectinoId,
           arContent: {
             body: {
@@ -804,6 +804,7 @@ interface newNewsProps {
   arContent: Content;
   enContent: Content;
   collageId: string;
+  sectionId?: string;
 }
 interface Content {
   title: string;
@@ -814,12 +815,12 @@ export const newNews = async ({
   arContent,
   enContent,
   collageId,
+  sectionId,
 }: newNewsProps): Promise<{ message: string }> => {
   try {
     const newCollage = await prisma.news.create({
       data: {
         image,
-
         arContent: {
           create: arContent,
         },
@@ -827,6 +828,11 @@ export const newNews = async ({
           create: enContent,
         },
         Collage: {
+          connect: {
+            id: collageId,
+          },
+        },
+        ScientificSection: {
           connect: {
             id: collageId,
           },

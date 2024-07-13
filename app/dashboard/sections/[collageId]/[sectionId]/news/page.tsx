@@ -20,7 +20,6 @@ const page = async ({
   // console.log(params);
   const { collageId: id, sectionId, query } = params;
   const news = await getNewsForSection({
-    collageId: id,
     query: query,
     sectinoId: sectionId,
   });

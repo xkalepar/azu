@@ -1,4 +1,4 @@
-import { getCollageById } from "@/prisma/seed";
+import { getCollageById, getCollageByIdForSection } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import React, { ReactNode } from "react";
 import CollegeHeader from "../../components/header/collage-header";
@@ -32,7 +32,7 @@ const layout = async ({
 }) => {
   const { collage: id } = params;
   const graduate = await getGraduates({ id });
-  const collage = await getCollageById(id)
+  const collage = await getCollageByIdForSection(id)
   const offices = await getOffices({ id })
 
   if (!collage) return notFound();
@@ -54,6 +54,16 @@ const layout = async ({
       id: page.id
     }))
   });
+  const formattedSections = collage.ScientificSection.map((page) => {
+    return {
+      title: page.ArContent?.title,
+      enTitle: page.EnContent?.title,
+      body: page.ArContent?.body,
+      enBody: page.EnContent?.body,
+      id: page.id
+    }
+  });
+  console.log(formattedSections)
 
   // console.log(formattedGradautes)
 
@@ -64,13 +74,13 @@ const layout = async ({
     <main>
       <CollageRender>
         <CollegeHeader
+          sections={formattedSections}
           // gradutes={graduatesData}
           category={collage.category}
           logo={collage.logo}
           id={collage.id}
           ArCollageData={collage.ArCollageData}
           EnCollageData={collage.EnCollageData
-
           }
           graduates={
             formattedGradautes

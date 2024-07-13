@@ -51,14 +51,21 @@ type CollageProps = {
   logo: string;
   category: $Enums.Category;
   graduates: { title: string, body: string, enTitle: string, enBody: string, id: string }[][] | undefined
-  offices: { title: string, body: string, enTitle: string, enBody: string, id: string }[][] | undefined
+  offices: { title: string, body: string, enTitle: string, enBody: string, id: string }[][] | undefined;
+  sections: {
+    title?: string | null;
+    enTitle?: string | null;
+    body?: string | null;
+    enBody?: string | null;
+    id: string;
+  }[]
 };
 function DesktopMenuHeaderCollage({
   id,
   graduates,
-  offices
+  offices, sections,
+
 }: CollageProps) {
-  // const pathName = usePathname();
   const { lang, collage }: { lang: "ar" | "en", collage: string } = useParams();
 
   return (
@@ -157,8 +164,8 @@ function DesktopMenuHeaderCollage({
           }
         >
           <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-            {offices?.map((page) => (
-              page.map((data, i) => (<li className="row-span-3" key={i}>
+            {sections?.map((page, i) => (
+              (<li className="row-span-3" key={i}>
                 {" "}
                 <NavigationMenuLink asChild>
                   <Link
@@ -169,17 +176,17 @@ function DesktopMenuHeaderCollage({
                       buttonVariants.variants.size.default,
                       "justify-start bg-transparent"
                     )}
-                    href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}
+                    href={`/${lang}/collages/${collage}/sections/${page.id}`}
                   >
                     {" "}
                     <Lang
-                      ar={data?.title}
-                      en={data?.enTitle}
+                      ar={page?.title}
+                      en={page?.enTitle}
                       lang={lang}
                     />
                   </Link>
                 </NavigationMenuLink>
-              </li>))
+              </li>)
             ))}
           </ul>
         </DropdownMenuButton>
@@ -195,7 +202,8 @@ function MobileNavigationBarCollage({
   ArCollageData,
   EnCollageData,
   graduates,
-  offices
+  offices,
+  sections
 }: CollageProps) {
   const [open, setOpen] = useState(false);
   const { lang, collage }: { lang: "ar" | "en", collage: string } = useParams();
@@ -339,7 +347,8 @@ const CollegeHeader = ({
   EnCollageData,
   category,
   graduates,
-  offices
+  offices,
+  sections
 }: CollageProps) => {
   const { lang }: { lang: "ar" | "en" } = useParams();
   // console.log(graduates)
@@ -355,7 +364,9 @@ const CollegeHeader = ({
               offices={offices}
               category={category}
               logo={logo}
-              id={id} graduates={graduates} />
+              id={id} graduates={graduates}
+              sections={sections}
+            />
 
             <ToggleLangauge />
           </Fragment>
@@ -363,6 +374,7 @@ const CollegeHeader = ({
         <ParseToScreenLessThanWidth>
           <MobileNavigationBarCollage
             offices={offices}
+            sections={sections}
 
             ArCollageData={ArCollageData}
             EnCollageData={EnCollageData}

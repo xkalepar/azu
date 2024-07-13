@@ -78,15 +78,15 @@ const collagePage = async ({
         </div>
       </div>
       <div className="container">
-        <AnimatedCard XorY="x" intialX={100}>
+        {/* <AnimatedCard XorY="x" intialX={100}>
           <NewsBar className="py-8" content={collage?.welcome ?? ""} />
-        </AnimatedCard>
+        </AnimatedCard> */}
         <h3 className="text-xl text-center my-4 font-bold">
           {<Lang lang={lang} ar={"معرض الصور"} en={"Gallery"} />}
         </h3>
         {collage !== undefined &&
-        collage !== null &&
-        collage.gallery.length > 0 ? (
+          collage !== null &&
+          collage.gallery.length > 0 ? (
           <ImageGridView list={collage.gallery} />
         ) : (
           <div>
@@ -164,33 +164,5 @@ const collagePage = async ({
   );
 };
 
-interface FastLinkProps {
-  href?: string;
-  title?: string;
-  children: ReactNode;
-  className?: string;
-}
-
-const FastLink = ({
-  href = "soon",
-  title,
-  children,
-  className,
-}: FastLinkProps) => {
-  return (
-    <Link href={href} className="w-full">
-      <div
-        className={cn(
-          className,
-          "flex w-full justify-center items-center gap-2",
-          "rounded-md bg-background hover:bg-card transition-all px-4 py-2"
-        )}
-      >
-        <div>{children}</div>
-        <p>{title}</p>
-      </div>
-    </Link>
-  );
-};
 
 export default collagePage;

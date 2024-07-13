@@ -29,7 +29,7 @@ export const NewsForm = ({ collageId, sectionId }: NewsFormProps) => {
     <Form
       className="my-2 px-4 "
       action={newNewsAction}
-      replaceLink={`/dashboard/collages/${collageId}/${sectionId}/news`}
+      replaceLink={`/dashboard/sections/${collageId}/${sectionId}/news`}
     >
       <Input type={"hidden"} name="collageId" value={collageId} />
       <Input type={"hidden"} name="sectionId" value={sectionId} />

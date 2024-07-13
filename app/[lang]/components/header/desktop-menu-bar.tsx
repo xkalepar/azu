@@ -487,6 +487,7 @@ const enCategories: { title: string; value: Category }[] = [
 type Lang = "ar" | "en";
 
 const CollageMenu = ({ collages }: Props) => {
+  const pathname = usePathname()
   const { lang }: { lang: Lang } = useParams();
   const [showCollages, setShowCollages] = React.useState<Boolean>(false);
   const [category, setCategory] = React.useState<Category>("one");
@@ -500,7 +501,7 @@ const CollageMenu = ({ collages }: Props) => {
         <Lang lang={lang} ar={"الكليات"} en={"Collages"} />
       } >
       <ul
-        className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] "
+        className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]"
         dir={lang === "ar" ? "rtl" : "ltr"}
       >
         {!showCollages && (
@@ -557,7 +558,7 @@ const CollageMenu = ({ collages }: Props) => {
               {/* <Separator /> */}
               {filteredCollages.map((collage, index) => (
                 <NavigationMenuLink asChild key={index}>
-                  <Link href={`/collages/${collage.id}`}>
+                  <Link href={`${lang}/collages/${collage.id}`}>
                     <div className="flex group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
                       <Avatar>
                         <AvatarImage src={collage.logo} />

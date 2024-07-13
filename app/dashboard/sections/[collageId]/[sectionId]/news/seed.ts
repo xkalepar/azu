@@ -37,11 +37,6 @@ export const newNews = async ({
         enContent: {
           create: enContent,
         },
-        Collage: {
-          connect: {
-            id: collageId,
-          },
-        },
         ScientificSection: {
           connect: {
             id: sectionId,

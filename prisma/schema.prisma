@@ -160,6 +160,9 @@ model ScientificSection {
   AcademicGuidanceHandbook     SectionPage[] @relation("AcademicGuidanceHandbook")
   /// نماذج وادلة القسم
   DepartmentFormsAndGuidelines SectionPage[] @relation("DepartmentFormsAndGuidelines")
+
+  welcome   String?
+  enWelcome String?
 }
 
 model SectionPage {
@@ -181,8 +184,6 @@ model SectionPage {
   DepartmentFormsAndGuidelines   ScientificSection? @relation("DepartmentFormsAndGuidelines", fields: [departmentFormsAndGuidelinesId], references: [id])
   departmentFormsAndGuidelinesId String?            @db.ObjectId
   User                           User[]
-  ///             @relation(fields: [userIds], references: [id])
-  /// userIds                        String[]           @db.ObjectId
 }
 
 /// المكاتب واالقسام االدارية
