@@ -11,11 +11,10 @@ import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/lib/constant";
-import { getCollages, aa } from "@/prisma/seed";
+import { getCollages } from "@/prisma/seed";
 import CardPreview from "../../components/card-preview";
 
 const collagesPage = async () => {
-  aa();
   const collages = await getCollages();
   console.log(collages);
   return (
