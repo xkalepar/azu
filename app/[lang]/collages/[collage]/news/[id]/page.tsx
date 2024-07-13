@@ -1,43 +1,92 @@
 // import Statiscs from "@/app/[lang]/components/statiscs";
-import Lang from "@/app/[lang]/components/lang";
 import ParseData from "@/app/components/parse-data";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getCollageById, getCollages } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 import { Suspense } from "react";
+import { getNews, getNewsbyId } from "@/prisma/seed";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import Link from "next/link";
+import Lang from "@/app/[lang]/components/lang";
 export async function generateMetadata({
   params,
 }: {
-  params: { collage: string; lang: "ar" | "en" };
+  params: { id: string; lang: "ar" | "en" };
 }): Promise<Metadata> {
-  const collage = await getCollageById(params.collage);
-  if (!collage) {
+  const { id, lang } = params;
+  const center = await getNewsbyId(id);
+  if (!center) {
     return {
       title: "404 غير موجود",
     };
   }
+
   return {
-    title: collage.ArCollageData!.title,
-    description: collage.ArCollageData!.content,
-    icons: collage.logo,
+    title:
+      lang === "ar"
+        ? ` الأخبار | ${center.arContent?.title}`
+        : ` News | ${center.enContent?.title}`,
+    description:
+      lang === "ar" ? center.arContent?.body : center.enContent?.body,
   };
 }
+
 export async function generateStaticParams() {
-  const collages = await getCollages();
-  return collages.map((collage) => ({ id: collage.id }));
+  const news = await getNews({});
+  return news.map((id) => ({ id: id.id }));
 }
 
-const collagePage = async ({
+const centerPage = async ({
   params,
 }: {
-  params: { collage: string; lang: "ar" | "en" };
+  params: { id: string; lang: "ar" | "en" };
 }) => {
-  const collage = await getCollageById(params.collage);
-  if (!collage) return notFound();
+  const { id } = params;
+  const news = await getNewsbyId(id);
+  if (!news) {
+    return notFound();
+  }
   const { lang } = params;
   return (
     <main className="container xl:mx-4 xl:px-4">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/${lang}`}>
+                {" "}
+                <Lang lang={lang} ar={"الرئيسية"} en={"home"} />
+              </Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink asChild>
+              <Link href={`/${lang}/news`}>
+                <Lang lang={lang} ar={"الأخبار"} en={"News"} />
+              </Link>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>
+              <Lang
+                ar={news.arContent?.title}
+                en={news.enContent?.title}
+                lang={lang}
+              />
+            </BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
 
       <Suspense
         fallback={
@@ -111,12 +160,12 @@ const collagePage = async ({
       >
         <Lang
           lang={lang}
-          ar={<ParseData dir="rtl" content={collage.ArCollageData!.content} />}
-          en={<ParseData dir="ltr" content={collage.EnCollageData!.content} />}
+          ar={<ParseData dir="rtl" content={news.arContent?.body ?? ""} />}
+          en={<ParseData dir="ltr" content={news.enContent?.body ?? ""} />}
         />
       </Suspense>
     </main>
   );
 };
 
-export default collagePage;
+export default centerPage;

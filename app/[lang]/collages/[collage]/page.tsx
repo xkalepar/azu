@@ -78,9 +78,7 @@ const collagePage = async ({
         </div>
       </div>
       <div className="container">
-        {/* <AnimatedCard XorY="x" intialX={100}>
-          <NewsBar className="py-8" content={collage?.welcome ?? ""} />
-        </AnimatedCard> */}
+
         <h3 className="text-xl text-center my-4 font-bold">
           {<Lang lang={lang} ar={"معرض الصور"} en={"Gallery"} />}
         </h3>
@@ -123,7 +121,7 @@ const collagePage = async ({
                 title={item?.enContent?.title}
                 src={item.image}
                 lang={lang}
-                href={`/${lang}/news/${item.id}`}
+                href={`/${lang}/collages/${params.collage}/news/${item.id}`}
               >
                 <div className="w-full my-2">
                   {lang === "ar" ? (
@@ -155,7 +153,7 @@ const collagePage = async ({
             buttonVariants.default,
             "mx-auto w-fit mb-2"
           )}
-          href={`/${lang}/news`}
+          href={`/${lang}/collages/${params.collage}/news`}
         >
           {dictionary.pages.univeristy.overview.allnews}
         </Link>

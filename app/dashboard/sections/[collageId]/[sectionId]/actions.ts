@@ -16,6 +16,7 @@ export async function newNewsAction(
       body: z.string(),
       enbody: z.string(),
       collageId: z.string(),
+      sectionId: z.string().optional().nullable(),
     });
     console.log(`schema: ${schema}`);
 
@@ -26,6 +27,7 @@ export async function newNewsAction(
       body: formData.get("body"),
       enbody: formData.get("enbody"),
       collageId: formData.get("collageId"),
+      sectionId: formData.get("sectionId"),
     });
     console.log(data);
 
@@ -34,9 +36,11 @@ export async function newNewsAction(
       return { message: "يجب أن يتم ملء جميع الحقول" };
     }
     console.log(data);
-    const { collageId, body, enbody, entitle, image, title } = data.data;
+    const { collageId, body, enbody, entitle, image, title, sectionId } =
+      data.data;
     const res = await newNews({
       collageId,
+      sectionId,
       image,
       arContent: {
         title: title,
@@ -66,7 +70,6 @@ export async function editNewsAction(
       entitle: z.string(),
       body: z.string(),
       enbody: z.string(),
-      collageId: z.string(),
       newsId: z.string(),
     });
     console.log(`schema: ${schema}`);
@@ -77,7 +80,6 @@ export async function editNewsAction(
       entitle: formData.get("entitle"),
       body: formData.get("body"),
       enbody: formData.get("enbody"),
-      collageId: formData.get("collageId"),
       newsId: formData.get("newsId"),
     });
     console.log(data);
@@ -87,11 +89,10 @@ export async function editNewsAction(
       return { message: "يجب أن يتم ملء جميع الحقول" };
     }
     console.log(data);
-    const { collageId, body, enbody, entitle, image, title, newsId } =
-      data.data;
+    const { body, enbody, entitle, image, title, newsId } = data.data;
     const res = await editNews({
+      collageId: "",
       newsId,
-      collageId,
       image,
       arContent: {
         title: title,

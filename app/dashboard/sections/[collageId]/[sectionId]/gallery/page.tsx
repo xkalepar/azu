@@ -8,18 +8,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { getCollageById } from "@/prisma/seed";
+import { getSectionById } from "@/prisma/seed";
 import { notFound } from "next/navigation";
-const page = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  const collage = await getCollageById(id);
-  if (!collage) {
+const page = async ({ params }: { params: { sectionId: string } }) => {
+  const { sectionId } = params;
+  const section = await getSectionById(sectionId)
+  if (!section) {
     return notFound();
   }
   return (
     <section>
-      <Breadcrumbs id={id} title={collage.ArCollageData?.title} />
-      <ImageGridView id={id} list={collage.gallery} />
+      <Breadcrumbs id={sectionId} title={section.ArContent?.title} />
+      <ImageGridView id={sectionId} list={section.gallery} />
     </section>
   );
 };
@@ -43,7 +43,7 @@ const Breadcrumbs = ({ title, id }: { title?: string; id: string }) => {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/dashboard/collages">الكليات</Link>
+            <Link href="/dashboard/sections">الأقسام</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

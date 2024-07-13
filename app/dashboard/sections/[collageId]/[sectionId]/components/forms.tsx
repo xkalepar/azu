@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Editor from "@/app/components/editor";
 import LangTabs from "@/app/components/tabs";
+import { useParams } from "next/navigation";
 
 interface NewsFormProps {
   collageId: string;
@@ -121,34 +122,31 @@ export const NewsForm = ({ collageId, sectionId }: NewsFormProps) => {
 };
 
 export const EditNewsForm = ({
-  collageId,
   image: oldImage = "",
   body: oldBody = "",
   enBody: oldEnBody = "",
   enTitle = "",
   title = "",
-  newsId,
 }: {
   image: string;
-  collageId: string;
   body?: string;
   enBody?: string;
   title?: string;
-  newsId: string;
   enTitle?: string;
 }) => {
   const [image, setImage] = useState<string>(oldImage);
   const [body, setBody] = useState<string>(oldBody);
   const [enBody, setEnBody] = useState<string>(oldEnBody);
+  const { collageId, sectionId, newsId } = useParams()
 
   return (
     <Form
       className="my-2 px-4"
       action={editNewsAction}
-      replaceLink={`/dashboard/collages/${collageId}/news`}
+      replaceLink={`/dashboard/sections/${collageId}/${sectionId}/news/${newsId}`}
     >
       <Input type={"hidden"} name="newsId" value={newsId} />
-      <Input type={"hidden"} name="collageId" value={collageId} />
+      <Input type={"hidden"} name="sectionId" value={sectionId} />
       <div className="flex gap-2 items-start  justify-between px-4 flex-col sm:flex-row w-full">
         {image ? (
           <div className="w-[200px] h-[200px] rounded-lg overflow-hidden relative">
@@ -238,19 +236,15 @@ export const EditNewsForm = ({
   );
 };
 
-const DeleteNewsForm = ({
-  id,
-  collageId,
-}: {
-  id: string;
-  collageId: string;
-}) => {
+const DeleteNewsForm = () => {
+  const { collageId, sectionId, newsId } = useParams()
+
   return (
     <Form
       action={deleteNewsAction}
-      replaceLink={`/dashboard/collages/${collageId}/news`}
+      replaceLink={`/dashboard/sections/${collageId}/${sectionId}/news/`}
     >
-      <Input type={"hidden"} name="id" value={id} />
+      <Input type={"hidden"} name="id" value={newsId} />
       <SubmitButton className="w-full bg-red-500 hover:bg-red-400">
         حذف
       </SubmitButton>

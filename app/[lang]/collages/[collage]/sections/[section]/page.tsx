@@ -2,18 +2,21 @@ import AnimatedCard from '@/app/[lang]/components/animated-card'
 import ImageGridView from '@/app/[lang]/components/image-grid-view';
 import Lang from '@/app/[lang]/components/lang'
 import Statiscs from '@/app/[lang]/components/statiscs';
+import CardPreview from '@/app/components/card-preview';
+import ParseData from '@/app/components/parse-data';
 import { getDictionary } from '@/get-dictionary';
 import { buttonVariants } from '@/lib/constant';
-import { cn } from '@/lib/utils';
-import { getSectionById } from '@/prisma/seed';
+import { cn, cutString } from '@/lib/utils';
+import { getNewsForSection, getSectionById } from '@/prisma/seed';
 import Link from 'next/link';
 import React from 'react'
 
 const page = async (
-    { lang, params }: { params: { section: string; collage: string }; lang: "ar" | "en"; }
+    { params }: { params: { section: string; collage: string; lang: "ar" | "en"; }; }
 ) => {
-    const { collage: collageId, section: sectionId } = params;
+    const { collage: collageId, section: sectionId, lang } = params;
     const section = await getSectionById(sectionId);
+    const news = await getNewsForSection({ sectionId })
     const dictionary = await getDictionary(lang)
     return (
         <main>
@@ -69,7 +72,7 @@ const page = async (
                     {dictionary.pages.univeristy["overview"]["statistics"]}
                 </h3>
                 <Statiscs />
-                {/* <h3 className="text-xl text-center my-4 font-bold">
+                <h3 className="text-xl text-center my-4 font-bold">
                     {<Lang lang={lang} ar={"اخر الأخبار"} en={"Latest News"} />}
                 </h3>
                 {news.length === 0 && (
@@ -80,8 +83,8 @@ const page = async (
                             lang={lang}
                         />
                     </div>
-                )} */}
-                {/* <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+                )}
+                <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
                     {news.map((item, i) => (
                         <AnimatedCard key={i} XorY="x" intialX={20}>
                             <CardPreview
@@ -113,7 +116,7 @@ const page = async (
                             </CardPreview>
                         </AnimatedCard>
                     ))}
-                </div> */}
+                </div>
                 <Link
                     className={cn(
                         buttonVariants.variants.variant.link,

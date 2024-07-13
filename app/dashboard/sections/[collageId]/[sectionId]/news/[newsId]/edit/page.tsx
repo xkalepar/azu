@@ -15,11 +15,11 @@ import { EditNewsForm } from "../../../components/forms";
 const page = async ({
   params,
 }: {
-  params: { newsIdEdit: string; id: string };
+  params: { sectionId: string; newsId: string };
 }) => {
-  const { newsIdEdit: id, id: collageId } = params;
+  const { newsId, sectionId } = params;
   console.log(params);
-  const news = await getNews({ id: id });
+  const news = await getNews({ id: newsId });
   console.log(news);
   if (news.length < 1 || !news) {
     return notFound();
@@ -28,17 +28,15 @@ const page = async ({
   return (
     <section>
       <Breadcrumbs
-        id={collageId}
+        id={sectionId}
         newsTitle={currentNew.arContent?.title ?? ""}
         title={currentNew.Collage?.ArCollageData?.title}
       />
       <EditNewsForm
         body={currentNew.arContent?.body}
-        collageId={collageId}
         enBody={currentNew.enContent?.body}
         enTitle={currentNew.enContent?.title}
         image={currentNew.image}
-        newsId={currentNew.id}
         title={currentNew.arContent?.title}
       />
     </section>

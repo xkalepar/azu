@@ -3,9 +3,9 @@ import ResponsiveDialog from "@/app/[lang]/components/responsive-dialog";
 import { UploadButton } from "@/app/dashboard/components/upload";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { addImageGallery, imagesGallery } from "@/prisma/seed";
 import { Upload } from "lucide-react";
 import React from "react";
+import { addImageGallery } from "../seed";
 interface Props {
   id: string;
   images: string[];
@@ -28,14 +28,9 @@ const UploadImageForm = ({ id, images, setImages }: Props) => {
         <UploadButton
           endpoint="imageUploader"
           onClientUploadComplete={(res) => {
-            // console.log(`image: ${res[0].url}`);
-            // console.log(images);
             setImages([...images, res[0].url]);
-            // console.log("################################");
-            // console.log(images);
             toast({ title: "uploaded successfully" });
             uploadImage(res[0]!.url as string);
-            // await imagesGallery({ id, list: images });
           }}
           onUploadError={(error: Error) => {
             alert(`ERROR! ${error.message}`);
