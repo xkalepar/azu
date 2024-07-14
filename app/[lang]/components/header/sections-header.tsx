@@ -228,7 +228,7 @@ function DesktopMenuHeaderSection({ departments, AcadamicAffairs, AcademicGuidan
                 </DropdownMenuButton>
                 <DropdownMenuButton
                     title={
-                        <Lang lang={lang} ar={"نماذج وادلة القسم"} en={"academic guidance handbook"} />
+                        <Lang lang={lang} ar={"نماذج وادلة القسم"} en={"department forms and guidelines"} />
                     }
                 >
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
@@ -265,107 +265,193 @@ function DesktopMenuHeaderSection({ departments, AcadamicAffairs, AcademicGuidan
     );
 }
 
-// function MobileNavigationBarSection({
-//     logo,
-//     departments }: SectionProps) {
-//     const [open, setOpen] = useState(false);
-//     const { lang, collage, section }: { lang: "ar" | "en", collage: string; section: string } = useParams();
+function MobileNavigationBarSection(
+    { departments, AcadamicAffairs, AcademicGuidanceHandbook, DepartmentFormsAndGuidelines, DepartmentLaboratories }: HeaderProps) {
+    const [open, setOpen] = useState(false);
+    const { lang, collage, section }: { lang: "ar" | "en", collage: string; section: string } = useParams();
 
-//     return (
-//         <Sheet open={open} onOpenChange={setOpen}>
-//             <SheetTrigger asChild>
-//                 <Button variant={"ghost"} size={"icon"}>
-//                     <FaBars />
-//                 </Button>
-//             </SheetTrigger>
-//             <SheetContent
-//                 side={lang === "ar" ? "right" : "left"}
-//                 className="min-h-screen w-[90%] max-h-screen py-10"
-//             >
-//                 <ScrollArea
-//                     dir={lang === "ar" ? "rtl" : "ltr"}
-//                     className="h-full w-full relative rounded-md"
-//                 >
-//                     <Accordion type="multiple" className="w-full">
-//                         <ToggleLangauge />
-//                         <AccordionItem
-//                             onClick={() => setOpen(!open)}
-//                             value="item-1"
-//                             className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
-//                         >
-//                             <Link href={`/${lang}`}>
-//                                 <Lang lang={lang} ar={"الرئيسية"} en={"home"} />
-//                             </Link>
-//                         </AccordionItem>
-//                         <AccordionItem
-//                             onClick={() => setOpen(!open)}
-//                             value="item-1"
-//                             className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
-//                         >
-//                             <Link href={`/${lang}/collages/${id}/about`}>
-//                                 <Lang lang={lang} ar={"حول الكلية"} en={"About"} />
-//                             </Link>
-//                         </AccordionItem>
+    return (
+        <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger asChild>
+                <Button variant={"ghost"} size={"icon"}>
+                    <FaBars />
+                </Button>
+            </SheetTrigger>
+            <SheetContent
+                side={lang === "ar" ? "right" : "left"}
+                className="min-h-screen w-[90%] max-h-screen py-10"
+            >
+                <ScrollArea
+                    dir={lang === "ar" ? "rtl" : "ltr"}
+                    className="h-full w-full relative rounded-md"
+                >
+                    <Accordion type="multiple" className="w-full">
+                        <ToggleLangauge />
+                        <AccordionItem
+                            onClick={() => setOpen(!open)}
+                            value="item-1"
+                            className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
+                        >
+                            <Link href={`/${lang}`}>
+                                <Lang lang={lang} ar={"الرئيسية"} en={"home"} />
+                            </Link>
+                        </AccordionItem>
+                        <AccordionItem
+                            onClick={() => setOpen(!open)}
+                            value="item-1"
+                            className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
+                        >
+                            <Link href={`/${lang}/collages/${collage}/sections/${section}/about`}>
+                                <Lang lang={lang} ar={"حول القسم"} en={"About"} />
+                            </Link>
+                        </AccordionItem>
+                        <AccordionItem
+                            onClick={() => setOpen(!open)}
+                            value="item-1"
+                            className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
+                        >
+                            <Link href={`/${lang}/collages/${collage}/sections/${section}/teachers`}>
+                                <Lang lang={lang} ar={"أعضاء هيئة التدريس"} en={"Faculty members"} />
+                            </Link>
+
+                        </AccordionItem>
+
+                        <AccordionItem
+                            value="coordinators"
+                            className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+                        >
+                            <AccordionTrigger className=" text-sm ">
+                                <Lang lang={lang} ar={"منسقي القسم"} en={"Department coordinators"} />
+                            </AccordionTrigger>
+                            <AccordionContent className=" w-4/5 mx-auto my-2">
+                                {departments !== undefined &&
+                                    departments.length > 0 &&
+                                    departments.map((page, index) => {
+                                        return <Link key={index}
+
+                                            href={`/${lang}/collages/${collage}/sections/${section}/department-coordinators/${page.id}`}>
+                                            <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                                                <Lang
+                                                    ar={page?.title}
+                                                    en={page?.enTitle}
+                                                    lang={lang}
+                                                />                                            </div>
+
+                                        </Link>
+                                    })}
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem
+                            value="affairs"
+                            className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+                        >
+                            <AccordionTrigger className=" text-sm ">
+                                <Lang lang={lang} ar={"الشؤون الأكاديمية"} en={"academic affairs"} />
+                            </AccordionTrigger>
+                            <AccordionContent className=" w-4/5 mx-auto my-2">
+                                {AcadamicAffairs !== undefined &&
+                                    AcadamicAffairs.length > 0 &&
+                                    AcadamicAffairs.map((page, index) => {
+                                        return <Link key={index}
+
+                                            href={`/${lang}/collages/${collage}/sections/${section}/academic-affairs/${page.id}`}
+                                        >                                            <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                                                <Lang
+                                                    ar={page?.title}
+                                                    en={page?.enTitle}
+                                                    lang={lang}
+                                                />                                            </div>
+
+                                        </Link>
+                                    })}
+                            </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem
+                            value="laboratories"
+                            className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+                        >
+                            <AccordionTrigger className=" text-sm ">
+                                <Lang lang={lang} ar={"معامل القسم"} en={"department laboratories"} />
+                            </AccordionTrigger>
+                            <AccordionContent className=" w-4/5 mx-auto my-2">
+                                {DepartmentLaboratories !== undefined &&
+                                    DepartmentLaboratories.length > 0 &&
+                                    DepartmentLaboratories.map((page, index) => {
+                                        return <Link key={index}
+
+                                            href={`/${lang}/collages/${collage}/sections/${section}/department-laboratories/${page.id}`}
+                                        >                                            <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                                                <Lang
+                                                    ar={page?.title}
+                                                    en={page?.enTitle}
+                                                    lang={lang}
+                                                />                                            </div>
+
+                                        </Link>
+                                    })}
+                            </AccordionContent>
+                        </AccordionItem>
 
 
+                        <AccordionItem
+                            value="handbook"
+                            className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+                        >
+                            <AccordionTrigger className=" text-sm ">
+                                <Lang lang={lang} ar={"دليل االإرشاد االكاديمي"} en={"academic guidance handbook"} />
+                            </AccordionTrigger>
+                            <AccordionContent className=" w-4/5 mx-auto my-2">
+                                {AcademicGuidanceHandbook !== undefined &&
+                                    AcademicGuidanceHandbook.length > 0 &&
+                                    AcademicGuidanceHandbook.map((page, index) => {
+                                        return <Link key={index}
 
-//                         {/* graduates */}
-//                         <AccordionItem
-//                             value="graduates "
-//                             className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
-//                         >
-//                             <AccordionTrigger className=" text-sm ">
-//                                 <Lang lang={lang} ar={"الدراسات العليا"} en={"graduate studies"} />
+                                            href={`/${lang}/collages/${collage}/sections/${section}/academic-guidance-handbook/${page.id}`}
+                                        >                                            <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                                                <Lang
+                                                    ar={page?.title}
+                                                    en={page?.enTitle}
+                                                    lang={lang}
+                                                />                                            </div>
 
-//                             </AccordionTrigger>
-//                             <AccordionContent className=" w-4/5 mx-auto my-2">
-//                                 {graduates !== undefined &&
-//                                     graduates.length > 0 &&
-//                                     graduates?.map((pages) => (
-//                                         pages.map((data, index) => (<div onClick={() => setOpen(!open)} key={index}>
-//                                             <Link href={`/${lang}/collages/${collage}/graduate-studies/${data.id}`}>
-//                                                 <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-//                                                     <Lang lang={lang} ar={data.title} en={data.enTitle} />
-//                                                 </div>
-//                                             </Link>
-//                                         </div>))
-//                                     ))}
-//                             </AccordionContent>
-//                         </AccordionItem>
+                                        </Link>
+                                    })}
+                            </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem
+                            value="guidelines"
+                            className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+                        >
+                            <AccordionTrigger className=" text-sm ">
+                                <Lang lang={lang} ar={"نماذج وادلة القسم"} en={"department forms and guidelines"} />
+                            </AccordionTrigger>
+                            <AccordionContent className=" w-4/5 mx-auto my-2">
+                                {DepartmentFormsAndGuidelines !== undefined &&
+                                    DepartmentFormsAndGuidelines.length > 0 &&
+                                    DepartmentFormsAndGuidelines.map((page, index) => {
+                                        return <Link key={index}
 
+                                            href={`/${lang}/collages/${collage}/sections/${section}/department-forms-and-guidelines/${page.id}`}
+                                        >                                            <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                                                <Lang
+                                                    ar={page?.title}
+                                                    en={page?.enTitle}
+                                                    lang={lang}
+                                                />                                            </div>
 
-//                         {/* offices */}
-//                         <AccordionItem
-//                             value="item-The-Administrations-and-Centers"
-//                             className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
-//                         >
-//                             <AccordionTrigger className=" text-sm ">
-//                                 <Lang
-//                                     lang={lang}
-//                                     ar={"الإدارات والمراكز"}
-//                                     en={"The Administrations and Centers"}
-//                                 />
-//                             </AccordionTrigger>
-//                             <AccordionContent className=" w-4/5 mx-auto my-2">
-//                                 {offices !== undefined &&
-//                                     offices.length > 0 &&
-//                                     offices?.map((pages) => (
-//                                         pages.map((data, index) => (<div onClick={() => setOpen(!open)} key={index}>
-//                                             <Link href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}>
-//                                                 <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-//                                                     <Lang lang={lang} ar={data.title} en={data.enTitle} />
-//                                                 </div>
-//                                             </Link>
-//                                         </div>))
-//                                     ))}
-//                             </AccordionContent>
-//                         </AccordionItem>
-//                     </Accordion>
-//                 </ScrollArea>
-//             </SheetContent>
-//         </Sheet>
-//     );
-// }
+                                        </Link>
+                                    })}
+                            </AccordionContent>
+                        </AccordionItem>
+
+                    </Accordion>
+                </ScrollArea>
+            </SheetContent>
+        </Sheet>
+    );
+}
 
 const ListItem = ({
     href,
@@ -414,7 +500,7 @@ const SectionHeader = ({
         <Fragment>
             <header className="flex items-center justify-between gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
                 <Logo href={`/${lang}/collages/${collage}/sections/${section}`} src={logo} />
-                <ParseToScreenMoreThanWidth>
+                <ParseToScreenMoreThanWidth width="1401px">
                     <Fragment>
                         <DesktopMenuHeaderSection
                             departments={departments}
@@ -426,19 +512,16 @@ const SectionHeader = ({
                         <ToggleLangauge />
                     </Fragment>
                 </ParseToScreenMoreThanWidth>
-                <ParseToScreenLessThanWidth>
-                    well
-                    {/* 
-                    <MobileNavigationBarSection
-                        offices={offices}
-                        sections={sections}
+                <ParseToScreenLessThanWidth width="1400px">
 
-                        ArCollageData={ArCollageData}
-                        EnCollageData={EnCollageData}
-                        category={category}
-                        logo={logo}
-                        id={id} graduates={graduates} />
-                         */}
+                    <MobileNavigationBarSection
+                        departments={departments}
+                        AcadamicAffairs={AcadamicAffairs}
+                        AcademicGuidanceHandbook={AcademicGuidanceHandbook}
+                        DepartmentFormsAndGuidelines={DepartmentFormsAndGuidelines}
+                        DepartmentLaboratories={DepartmentLaboratories}
+                    />
+
                 </ParseToScreenLessThanWidth>
             </header>
             <Separator />
