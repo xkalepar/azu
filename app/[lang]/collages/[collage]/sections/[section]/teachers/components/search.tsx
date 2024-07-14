@@ -19,7 +19,7 @@ const SearchForm = ({ placeholder }: { placeholder: string }) => {
         replace(`${pathname}?${params.toString()}`);
     }, 100);
     return (
-        <div className="w-full sm:w-1/2 my-2" dir={lang === "ar" ? "rtl" : "ltr"}>
+        <div className="w-full sm:w-1/2 lg:w-1/4 my-2" dir={lang === "ar" ? "rtl" : "ltr"}>
             <Input
                 placeholder={placeholder}
                 onChange={(e) => {

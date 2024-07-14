@@ -1,4 +1,4 @@
-import { getCollageById, getCollageByIdForSection } from "@/prisma/seed";
+import { getCollageById, getCollageByIdForSection, getSectionById } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import React, { ReactNode } from "react";
 import { Metadata } from "next";
@@ -28,45 +28,59 @@ const layout = async ({
     params,
 }: {
     children: ReactNode;
-    params: { collage: string; lang: "ar" | "en" };
+    params: { section: string; lang: "ar" | "en" };
 }) => {
-    const { collage: id } = params;
-    const graduate = await getGraduates({ id });
-    const collage = await getCollageByIdForSection(id)
-    const offices = await getOffices({ id })
+    const { section: id } = params;
+    const section = await getSectionById(id)
+    // const departemnts = await get({ id })
 
-    if (!collage) return notFound();
-    const formattedGradautes = graduate.map((pages) => {
-        return pages.Pages.map((page) => ({
-            title: page.title,
-            enTitle: page.enTitle,
-            body: page.body,
-            enBody: page.enBody,
-            id: page.id
-        }))
-    });
-    const formattedOffices = offices.map((pages) => {
-        return pages.Pages.map((page) => ({
-            title: page.title,
-            enTitle: page.enTitle,
-            body: page.body,
-            enBody: page.enBody,
-            id: page.id
-        }))
-    });
-    const formattedSections = collage.ScientificSection.map((page) => {
+    if (!section) return notFound();
+    const formattedDepartment = section.departmentCoordinators.map((department) => {
         return {
-            title: page.ArContent?.title,
-            enTitle: page.EnContent?.title,
-            body: page.ArContent?.body,
-            enBody: page.EnContent?.body,
-            id: page.id
+            title: department.ArContent?.title,
+            enTitle: department.EnContent?.title,
+            body: department.ArContent?.body,
+            enBody: department.EnContent?.body,
+            id: department.id
         }
     });
-    console.log(formattedSections)
-
-    // console.log(formattedGradautes)
-
+    const formattedAcadamicAffairs = section.AcademicAffairs.map((data) => {
+        return {
+            title: data.ArContent?.title,
+            enTitle: data.EnContent?.title,
+            body: data.ArContent?.body,
+            enBody: data.EnContent?.body,
+            id: data.id
+        }
+    });
+    const formattedAcademicGuidanceHandbook = section.AcademicGuidanceHandbook.map((data) => {
+        return {
+            title: data.ArContent?.title,
+            enTitle: data.EnContent?.title,
+            body: data.ArContent?.body,
+            enBody: data.EnContent?.body,
+            id: data.id
+        }
+    });
+    const formattedDepartmentFormsAndGuidelines = section.DepartmentFormsAndGuidelines.map((data) => {
+        return {
+            title: data.ArContent?.title,
+            enTitle: data.EnContent?.title,
+            body: data.ArContent?.body,
+            enBody: data.EnContent?.body,
+            id: data.id
+        }
+    });
+    const formattedDepartmentLaboratories = section.DepartmentLaboratories.map((data) => {
+        return {
+            title: data.ArContent?.title,
+            enTitle: data.EnContent?.title,
+            body: data.ArContent?.body,
+            enBody: data.EnContent?.body,
+            id: data.id
+        }
+    });
+    console.log(formattedDepartment)
 
 
     const { lang }: { lang: 'ar' | "en" } = params;
@@ -74,14 +88,13 @@ const layout = async ({
         <main>
             <SectionRender>
                 <SectionHeader
-                    sections={formattedSections}
-                    category={collage.category}
-                    logo={collage.logo}
-                    id={collage.id}
-                    ArCollageData={collage.ArCollageData}
-                    EnCollageData={collage.EnCollageData}
-                    graduates={formattedGradautes}
-                    offices={formattedOffices}
+                    departments={formattedDepartment}
+                    logo={section.Collage?.logo ?? ""}
+                    AcadamicAffairs={formattedAcadamicAffairs}
+                    DepartmentLaboratories={formattedDepartmentLaboratories}
+                    AcademicGuidanceHandbook={formattedAcademicGuidanceHandbook}
+                    DepartmentFormsAndGuidelines={formattedDepartmentFormsAndGuidelines}
+
                 />
 
             </SectionRender>

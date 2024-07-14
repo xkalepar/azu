@@ -11,6 +11,16 @@ interface newProps {
   sectionId: string;
 }
 
+interface EditProps {
+  body: string;
+  enbody: string;
+  title: string;
+  entitle: string;
+  dataId: string;
+  arId: string;
+  enId: string;
+}
+
 export const addSectionDepartmentCoordinatorsData = async ({
   body,
   enbody,
@@ -52,15 +62,7 @@ export const addSectionDepartmentCoordinatorsData = async ({
     return { message: "فشلت العملية" };
   }
 };
-interface EditProps {
-  body: string;
-  enbody: string;
-  title: string;
-  entitle: string;
-  dataId: string;
-  arId: string;
-  enId: string;
-}
+
 export const updateSectionDepartmentCoordinatorsData = async ({
   body,
   enbody,

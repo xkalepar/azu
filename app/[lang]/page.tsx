@@ -118,30 +118,12 @@ export default async function home({
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
                 className=" min-h-[300px]"
-                title={item?.enContent?.title}
+                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
                 src={item.image}
                 lang={lang}
                 href={`/news/${item.id}`}
               >
-                <div className="w-full my-2">
-                  {lang === "ar" ? (
-                    <ParseData
-                      content={cutString(
-                        item.arContent?.body ?? "",
-                        200,
-                        "المزيد"
-                      )}
-                    />
-                  ) : (
-                    <ParseData
-                      content={cutString(
-                        item.enContent?.body ?? "",
-                        200,
-                        "more"
-                      )}
-                    />
-                  )}
-                </div>
+
               </CardPreview>
             </AnimatedCard>
           ))}
@@ -176,30 +158,12 @@ export default async function home({
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
                 className=" min-h-[300px]"
-                title={item?.enContent?.title}
+                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
                 src={item.logo}
                 lang={lang}
                 href={`/conferences/${item.id}`}
               >
-                <div className="w-full my-2">
-                  {lang === "ar" ? (
-                    <ParseData
-                      content={cutString(
-                        item.arContent?.body ?? "",
-                        200,
-                        "المزيد"
-                      )}
-                    />
-                  ) : (
-                    <ParseData
-                      content={cutString(
-                        item.enContent?.body ?? "",
-                        200,
-                        "more"
-                      )}
-                    />
-                  )}
-                </div>
+
               </CardPreview>
             </AnimatedCard>
           ))}
@@ -223,7 +187,7 @@ export default async function home({
         {magazines.length === 0 && (
           <div>
             <Lang
-              ar={"لا يوجد مؤتمرات"}
+              ar={"لا يوجد مجلات بعد"}
               en={"no magazines have been uploaded yet"}
               lang={lang}
             />
@@ -234,30 +198,12 @@ export default async function home({
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
                 className=" min-h-[300px]"
-                title={item?.enContent?.title}
+                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
                 src={item.logo}
                 lang={lang}
                 href={`/magazine/${item.id}`}
               >
-                <div className="w-full my-2">
-                  {lang === "ar" ? (
-                    <ParseData
-                      content={cutString(
-                        item.arContent?.body ?? "",
-                        200,
-                        "المزيد"
-                      )}
-                    />
-                  ) : (
-                    <ParseData
-                      content={cutString(
-                        item.enContent?.body ?? "",
-                        200,
-                        "more"
-                      )}
-                    />
-                  )}
-                </div>
+
               </CardPreview>
             </AnimatedCard>
           ))}

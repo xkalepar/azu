@@ -1,21 +1,15 @@
-// import Statiscs from "@/app/[lang]/components/statiscs";
-import ParseData from "@/app/components/parse-data";
-import { Skeleton } from "@/components/ui/skeleton";
 import { getCollageById, getCollages, getNews } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
-import { ReactNode, Suspense } from "react";
 import Lang from "../../components/lang";
 import Link from "next/link";
-import { cn, cutString } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import AnimatedCard from "../../components/animated-card";
 import CardPreview from "@/app/components/card-preview";
-import { FaUniversity } from "react-icons/fa";
 import Statiscs from "../../components/statiscs";
 import { getDictionary } from "@/get-dictionary";
 import ImageGridView from "../../components/image-grid-view";
 import { buttonVariants } from "@/lib/constant";
-import NewsBar from "../../components/news/newsBar";
 export async function generateMetadata({
   params,
 }: {
@@ -118,30 +112,11 @@ const collagePage = async ({
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
                 className=" min-h-[300px]"
-                title={item?.enContent?.title}
+                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
                 src={item.image}
                 lang={lang}
                 href={`/${lang}/collages/${params.collage}/news/${item.id}`}
               >
-                <div className="w-full my-2">
-                  {lang === "ar" ? (
-                    <ParseData
-                      content={cutString(
-                        item.arContent?.body ?? "",
-                        200,
-                        "المزيد"
-                      )}
-                    />
-                  ) : (
-                    <ParseData
-                      content={cutString(
-                        item.enContent?.body ?? "",
-                        200,
-                        "more"
-                      )}
-                    />
-                  )}
-                </div>
               </CardPreview>
             </AnimatedCard>
           ))}
