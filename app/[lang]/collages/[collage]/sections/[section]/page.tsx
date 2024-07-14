@@ -92,7 +92,7 @@ const page = async (
                                 title={item?.enContent?.title}
                                 src={item.image}
                                 lang={lang}
-                                href={`/${lang}/news/${item.id}`}
+                                href={`/${lang}/collages/${collageId}/sections/${sectionId}/news/${item.id}`}
                             >
                                 <div className="w-full my-2">
                                     {lang === "ar" ? (
@@ -124,7 +124,7 @@ const page = async (
                         buttonVariants.default,
                         "mx-auto w-fit mb-2"
                     )}
-                    href={`/${lang}/news`}
+                    href={`/${lang}/collages/${collageId}/sections/${sectionId}/news`}
                 >
                     {dictionary.pages.univeristy.overview.allnews}
                 </Link>

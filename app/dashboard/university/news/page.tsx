@@ -9,12 +9,11 @@ import {
 } from "@/components/ui/breadcrumb";
 import { buttonVariants } from "@/lib/constant";
 import { cn } from "@/lib/utils";
-import { aa, getNews, getUniNews } from "@/prisma/seed";
+import { getNews, getUniNews } from "@/prisma/seed";
 import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
 
 const page = async ({ params }: { params: { query?: string } }) => {
-  // await aa();
   const news = await getUniNews({ page: 1, take: 100 });
   console.log(news);
   console.log(news);
