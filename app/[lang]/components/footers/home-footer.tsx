@@ -21,7 +21,7 @@ const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
 
   return (
     <MainRender>
-      <section
+      <footer
         className={cn("container py-10 bg-slate-300 ", className)}
         dir={getDir(lang)}
       >
@@ -115,7 +115,7 @@ const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
             <AddressMap />
           </div>
         </div>
-      </section>
+      </footer>
     </MainRender>
   );
 };

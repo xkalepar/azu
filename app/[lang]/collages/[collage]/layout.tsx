@@ -64,7 +64,8 @@ const layout = async ({
       id: page.id
     }
   });
-  console.log(formattedSections)
+  // console.log(formattedSections)
+  console.log(collage.SocialMedia?.location)
 
   // console.log(formattedGradautes)
 
@@ -92,8 +93,8 @@ const layout = async ({
       </CollageRender>
 
       {children}
+
       <CollageFooter lang={"ar"} socialMedia={{
-        id: "",
         facebook: null,
         whatsapp: null,
         youtube: null,
@@ -104,9 +105,7 @@ const layout = async ({
         fax: null,
         x: null,
         address: null,
-        location: null,
-        collageId: null,
-        universityId: null
+        location: collage?.SocialMedia?.location
       }} />
     </main>
   );

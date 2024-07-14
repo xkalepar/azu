@@ -283,6 +283,7 @@ export const location = async ({
   collageId: string;
 }) => {
   try {
+    const theNewStringValue = extractIframeLink(value);
     const collage = await prisma.collage.findUnique({
       where: { id: collageId },
       include: { SocialMedia: true },
@@ -293,7 +294,7 @@ export const location = async ({
     if (!collage.SocialMedia) {
       const createSocial = await prisma.socialMedia.create({
         data: {
-          location: value,
+          location: theNewStringValue,
           Collage: {
             connect: {
               id: collageId,
@@ -314,7 +315,7 @@ export const location = async ({
         id: collage.SocialMedia?.id ?? "",
       },
       data: {
-        location: value,
+        location: theNewStringValue,
       },
     });
 
@@ -329,6 +330,12 @@ export const location = async ({
     return { message: "فشلت العملية" };
   }
 };
+
+function extractIframeLink(html: string): string {
+  const regex = /src="([^"]+)"/;
+  const match = html.match(regex);
+  return match ? match[1] : "";
+}
 
 export const whatsapp = async ({
   collageId,

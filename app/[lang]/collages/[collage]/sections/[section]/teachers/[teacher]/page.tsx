@@ -9,11 +9,11 @@ const page = async ({ params: { teacher: teacherId } }: { params: { teacher: str
     const teacher = await getUserById({ userId: teacherId })
     return (
         <main className='flex container justify-between items-start sm:flex-row flex-col-reverse'>
-            <section className='flex-[2]'>
+            <section className='sm:flex-[2]'>
                 <ParseData content={teacher?.content ?? ""} />
             </section>
-            <section>
-                <div className='w-full flex-1 h-[200px] max-h-[200px] rounded-sm'>
+            <section className='w-full sm:w-fit'>
+                <div className='w-full sm:flex-1 h-[200px] max-h-[200px] rounded-sm'>
                     <Image
                         src={teacher?.image ?? env.NotFoundImage as string}
                         alt={teacher?.fullName ?? "nothing"}

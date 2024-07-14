@@ -580,6 +580,7 @@ export const getCollageByIdForSection = async (id: string) => {
       include: {
         ArCollageData: true,
         EnCollageData: true,
+        SocialMedia: true,
         ScientificSection: {
           include: {
             ArContent: true,
