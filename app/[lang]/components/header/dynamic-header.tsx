@@ -6,7 +6,8 @@ import { ReactNode } from "react";
 export const MainRender = ({ children }: { children: ReactNode }) => {
   const pathName = usePathname();
 
-  if (!pathName.includes("collages") || !pathName.includes("sections")) {
+  if (!pathName.includes("collages") && !pathName.includes("sections")) {
+
     return children;
   } else {
     return <></>;

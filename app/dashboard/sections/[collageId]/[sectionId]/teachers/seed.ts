@@ -43,7 +43,7 @@ export const createUser = async ({
         image,
         content,
         collageId,
-        sectionPageId: sectionId,
+        sectionId,
       },
     });
     if (!user) {
@@ -58,11 +58,21 @@ export const createUser = async ({
   }
 };
 
-export const getUsers = async ({ role = "teacher" }: { role: UserRole }) => {
+export const getUsers = async ({
+  role = "teacher",
+  query,
+  sectionId,
+}: {
+  role: UserRole;
+  query?: string;
+  sectionId: string;
+}) => {
   try {
     const users = await prisma.user.findMany({
       where: {
         role,
+        fullName: { contains: query },
+        sectionId,
       },
     });
     if (!users) {

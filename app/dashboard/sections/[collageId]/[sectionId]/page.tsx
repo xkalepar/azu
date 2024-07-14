@@ -90,7 +90,7 @@ const Breadcrumbs = ({ collageTitle, collageId, sectionId, sectionTitle }: { col
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>أعضاء هيئة التدريس</BreadcrumbPage>
+          <BreadcrumbPage>عام</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

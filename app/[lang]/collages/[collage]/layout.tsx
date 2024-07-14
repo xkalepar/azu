@@ -6,6 +6,7 @@ import { CollageRender } from "../../components/header/dynamic-header";
 import { Metadata } from "next";
 import { getData as getGraduates } from "@/app/dashboard/collages/[id]/graduate-studies/seed";
 import { getData as getOffices } from "@/app/dashboard/collages/[id]/offices-and-administrative-departments/seed";
+import CollageFooter from "../../components/footers/collage-footer";
 export async function generateMetadata({
   params,
 }: {
@@ -91,6 +92,22 @@ const layout = async ({
       </CollageRender>
 
       {children}
+      <CollageFooter lang={"ar"} socialMedia={{
+        id: "",
+        facebook: null,
+        whatsapp: null,
+        youtube: null,
+        email: null,
+        telegram: null,
+        phone1: null,
+        phone2: null,
+        fax: null,
+        x: null,
+        address: null,
+        location: null,
+        collageId: null,
+        universityId: null
+      }} />
     </main>
   );
 };

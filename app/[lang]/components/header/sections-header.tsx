@@ -85,6 +85,13 @@ function DesktopMenuHeaderSection() {
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
+                <NavigationMenuItem>
+                    <Link href={`/${lang}/collages/${collage}/sections/${section}/teachers`}>
+                        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                            <Lang lang={lang} ar={"أعضاء هيئة التدريس"} en={"Faculty members"} />
+                        </NavigationMenuLink>
+                    </Link>
+                </NavigationMenuItem>
 
 
                 {/* 

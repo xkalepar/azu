@@ -197,10 +197,7 @@ function DesktopMenuHeaderCollage({
 }
 
 function MobileNavigationBarCollage({
-  logo,
   id,
-  ArCollageData,
-  EnCollageData,
   graduates,
   offices,
   sections
@@ -295,6 +292,28 @@ function MobileNavigationBarCollage({
                       </Link>
                     </div>))
                   ))}
+              </AccordionContent>
+            </AccordionItem>
+            {/* Scientific-sections */}
+
+            <AccordionItem
+              value="Scientific-sections"
+              className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+            >
+              <AccordionTrigger className=" text-sm ">
+                <Lang lang={lang} ar={"الأقسام العلمية"} en={"Scientific section"} />
+              </AccordionTrigger>
+              <AccordionContent className=" w-4/5 mx-auto my-2">
+                {sections !== undefined &&
+                  sections.length > 0 &&
+                  sections.map((section, index) => {
+                    return <Link key={index} href={`/${lang}/collages/${collage}/sections/${section.id}`}>
+                      <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                        <Lang lang={lang} ar={section?.title} en={section?.enTitle} />
+                      </div>
+
+                    </Link>
+                  })}
               </AccordionContent>
             </AccordionItem>
           </Accordion>

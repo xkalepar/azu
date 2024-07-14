@@ -20,7 +20,7 @@ const page = async ({ params }: { params: { collageId: string, sectionId: string
   const collage = await getCollageById(collageId);
   const section = await getSectionById(sectionId);
   if (!collage) return notFound();
-  const users = await getUsers({ role: "teacher" })
+  const users = await getUsers({ role: "teacher", sectionId })
   console.log(users)
 
   return (
