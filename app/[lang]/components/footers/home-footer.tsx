@@ -1,5 +1,7 @@
 import { getDictionary } from "@/get-dictionary";
 import { buttonVariants } from "@/lib/constant";
+import { IoLogoWhatsapp } from "react-icons/io";
+import { FaFacebookSquare } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
 import { Lang } from "@/types/types";
@@ -41,13 +43,13 @@ const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
               </li>
               <li className=" text-sm flex justify-start gap-2 items-center">
                 <span> {dictionary.pages.univeristy.overview.footer.Email}</span>
-                {": "}
-                <span>{socialMedia?.email}</span>
+                {" :"}
+                <span>{"info@azu.edu.ly"}</span>
               </li>
               <li className=" text-sm flex justify-start gap-2 items-center">
                 <span> {dictionary.pages.univeristy.overview.footer.Phone}</span>
                 {": "}
-                <span>{socialMedia?.phone1}</span>
+                <span>{"0537621379"}</span>
               </li>
             </ul>
           </div>
@@ -110,6 +112,17 @@ const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
                 </Link>
               </li>
             </ul>
+          </div>
+          <div className="flex justify-center items-start gap-2">
+            <Link href={`https://wa.me/0537621379`} target="_blank" rel="noopener noreferrer" >
+              <IoLogoWhatsapp color="#25d366" width={48} />
+            </Link>
+            <Link href={`https://wa.me/0537621380`} target="_blank" rel="noopener noreferrer" >
+              <IoLogoWhatsapp color="#25d366" width={48} />
+            </Link>
+            <Link href={`https://www.facebook.com/profile.php?id=100064726957604`} target="_blank" rel="noopener noreferrer" >
+              <FaFacebookSquare color="#1877f2" width={48} />
+            </Link>
           </div>
           <div>
             <AddressMap />
