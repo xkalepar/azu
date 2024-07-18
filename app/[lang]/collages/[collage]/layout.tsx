@@ -64,14 +64,7 @@ const layout = async ({
       id: page.id
     }
   });
-  // console.log(formattedSections)
-  console.log(collage.SocialMedia?.location)
 
-  // console.log(formattedGradautes)
-
-
-
-  const { lang }: { lang: 'ar' | "en" } = params;
   return (
     <main className="min-h-screen flex flex-col justify-between ">
       <CollageRender>
