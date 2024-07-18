@@ -93,6 +93,21 @@ function DesktopMenuHeaderCollage({
 
         <DropdownMenuButton
           title={
+            <Lang
+              lang={lang}
+              ar={"البحث العلمي"}
+              en={"Scientific Research"}
+            />}
+        >
+          <Link href={`/${lang}/collages/${collage}/magazines/`}>
+            <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+              <Lang lang={lang} ar={"مؤتمرات و مجلات "} en={"magazines"} />
+            </div>
+          </Link>
+        </DropdownMenuButton>
+
+        <DropdownMenuButton
+          title={
 
             <Lang lang={lang} ar={"الدراسات العليا"} en={"graduate studies"} />
 

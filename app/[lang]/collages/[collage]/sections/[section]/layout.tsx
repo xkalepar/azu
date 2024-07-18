@@ -31,9 +31,7 @@ const layout = async ({
     params: { section: string; lang: "ar" | "en" };
 }) => {
     const { section: id } = params;
-    const section = await getSectionById(id)
-    // const departemnts = await get({ id })
-
+    const section = await getSectionById(id);
     if (!section) return notFound();
     const formattedDepartment = section.departmentCoordinators.map((department) => {
         return {
