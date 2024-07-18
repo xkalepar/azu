@@ -243,6 +243,26 @@ function MobileNavigationBarCollage({
 
 
 
+            {/* البحث العلمي */}
+            <AccordionItem
+              value="magazines"
+              className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
+            >
+              <AccordionTrigger className=" text-sm ">
+                <Lang
+                  lang={lang}
+                  ar={"البحث العلمي"}
+                  en={"Scientific Research"}
+                />
+              </AccordionTrigger>
+              <AccordionContent className=" w-4/5 mx-auto my-2">
+                <Link href={`/${lang}/collages/${collage}/magazines/`}>
+                  <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                    <Lang lang={lang} ar={"مؤتمرات و مجلات "} en={"magazines"} />
+                  </div>
+                </Link>
+              </AccordionContent>
+            </AccordionItem>
             {/* graduates */}
             <AccordionItem
               value="graduates "

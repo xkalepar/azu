@@ -73,7 +73,7 @@ const layout = async ({
 
   const { lang }: { lang: 'ar' | "en" } = params;
   return (
-    <main>
+    <main className="min-h-screen flex flex-col justify-between ">
       <CollageRender>
         <CollegeHeader
           sections={formattedSections}
@@ -107,6 +107,7 @@ const layout = async ({
         address: null,
         location: collage?.SocialMedia?.location
       }} />
+
     </main>
   );
 };

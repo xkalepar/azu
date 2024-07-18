@@ -197,7 +197,20 @@ const Header = async ({
             graduates={graduates}
             projects={projects}
           >
-            {/* {children} */}
+            <>
+              <DontRenderUnlessSessionIsDefined >
+                <Link className="text-sm" href={`/${lang}/login`}>
+                  <Lang lang={lang} ar={"تسجيل الدخول"} en={"login"} />
+                </Link>
+
+              </DontRenderUnlessSessionIsDefined>
+              <RenderToRole appliedRole={"admin"}>
+                <Link className=" text-sm " href={`/dashboard/collages`}>
+                  <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
+                </Link>
+
+              </RenderToRole>
+            </>
 
           </MobileNavigationBar>
         </ParseToScreenLessThanWidth>

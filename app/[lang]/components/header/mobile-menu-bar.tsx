@@ -12,7 +12,7 @@ import { FaBars } from "react-icons/fa";
 import Lang from "../lang";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { Fragment, ReactNode, useState } from "react";
 import { $Enums, Category } from "@prisma/client";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ToggleLangauge from "./toggle-lang";
@@ -178,7 +178,8 @@ export default function MobileNavigationBar({
   projects,
   graduates,
   actvities: activities,
-}: Props) {
+  children
+}: Props & { children: ReactNode }) {
   console.log(centers);
   const [open, setOpen] = useState(false);
   const { lang }: { lang: Lang } = useParams();
@@ -496,6 +497,15 @@ export default function MobileNavigationBar({
                   ))}
               </AccordionContent>
             </AccordionItem>
+            {/* more */}
+            <AccordionItem
+              onClick={() => setOpen(!open)}
+              value="item-123"
+              className=" border-none bg-secondary py-3 mb-2 w-full px-2 rounded-md"
+            >
+              {children}
+            </AccordionItem>
+
           </Accordion>
         </ScrollArea>
       </SheetContent>

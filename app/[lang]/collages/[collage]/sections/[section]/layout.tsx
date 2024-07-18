@@ -80,12 +80,9 @@ const layout = async ({
             id: data.id
         }
     });
-    console.log(formattedDepartment)
 
-
-    const { lang }: { lang: 'ar' | "en" } = params;
     return (
-        <main>
+        <main className="">
             <SectionRender>
                 <SectionHeader
                     departments={formattedDepartment}
