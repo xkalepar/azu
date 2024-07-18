@@ -14,9 +14,10 @@ import { getCollages, getUniversity } from "@/prisma/seed";
 import { cn } from "@/lib/utils";
 import HomeFooter from "./components/footers/home-footer";
 import { SocialMedia } from "@prisma/client";
-import { CollageRender, MainRender } from "./components/header/dynamic-header";
+import { MainRender } from "./components/header/dynamic-header";
 import Header from "./components/header/header";
 import { Metadata } from "next";
+import { Toaster } from "@/components/ui/toaster";
 // import { getCollages } from "@/prisma/seed";
 export default async function Root({
   children,
@@ -49,7 +50,9 @@ export default async function Root({
               actvities={univeristy?.UniversityActivities}
               graduates={univeristy?.GraduatesForUniversity}
               projects={univeristy?.Projects}
-            />
+            >
+
+            </Header>
           </MainRender>
 
           <div className=" flex-1">{children}</div>
@@ -61,6 +64,8 @@ export default async function Root({
             ></HomeFooter>
           </MainRender>
         </main>
+        <Toaster />
+
       </body>
     </html>
   );

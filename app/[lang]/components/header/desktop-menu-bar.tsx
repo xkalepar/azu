@@ -25,6 +25,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import DropdownMenuButton from "./drop-down-menu-item";
+import RenderToRole from "@/app/components/render-to-role";
 
 type Props = {
   collages: ({
@@ -157,7 +158,8 @@ export function DesktopMenuHeader({
   graduates,
   projects,
   scientificResearchs,
-}: Props) {
+  children
+}: Props & { children: React.ReactNode }) {
   const { lang }: { lang: "ar" | "en" } = useParams();
   return (
     <NavigationMenu
@@ -357,7 +359,7 @@ export function DesktopMenuHeader({
               </li>
             ))}
             <li>
-              <Link href={`/${lang}`}>
+              <Link href={`/${lang}/conferences`}>
                 <NavigationMenuLink
                   className={cn(navigationMenuTriggerStyle(), " text-sm")}
                 >
@@ -369,7 +371,22 @@ export function DesktopMenuHeader({
                 </NavigationMenuLink>
               </Link>
             </li>
+            <li>
+              <Link href={`/${lang}/magazine`}>
+                <NavigationMenuLink
+                  className={cn(navigationMenuTriggerStyle(), " text-sm")}
+                >
+                  <Lang
+                    lang={lang}
+                    ar={"المجلات و المنشورات"}
+                    en={"magazines"}
+                  />
+                </NavigationMenuLink>
+              </Link>
+            </li>
+
           </ul>
+
         </DropdownMenuButton>
 
 
@@ -451,6 +468,9 @@ export function DesktopMenuHeader({
           </ul>
         </DropdownMenuButton>
 
+
+        {children}
+
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -487,7 +507,6 @@ const enCategories: { title: string; value: Category }[] = [
 type Lang = "ar" | "en";
 
 const CollageMenu = ({ collages }: Props) => {
-  const pathname = usePathname()
   const { lang }: { lang: Lang } = useParams();
   const [showCollages, setShowCollages] = React.useState<Boolean>(false);
   const [category, setCategory] = React.useState<Category>("one");

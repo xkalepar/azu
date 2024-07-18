@@ -305,13 +305,18 @@ export const getMagazines = async ({
   qty,
   page = 1,
   query,
+  linkedId,
 }: {
   query?: string;
   qty: number;
   page?: number;
+  linkedId?: string;
 }) => {
   try {
     const magazines = await prisma.mangzine.findMany({
+      where: {
+        linkedId: linkedId,
+      },
       take: qty,
       skip: page === 1 ? 0 : page * qty,
       include: {

@@ -14,7 +14,7 @@ const page = ({ params }: { params: { lang: "ar" | "en" } }) => {
         <h1 className="font-bold text-xl my-4">
           تسجيل الدخول
         </h1>
-        <LoginForm className="w-full" lang={lang} />
+        <LoginForm className="w-full" />
       </div>
     </main>
   );

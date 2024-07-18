@@ -18,6 +18,8 @@ import {
   getConference,
   getConferences,
 } from "@/app/dashboard/university/conferences/seed";
+import { DownloadCloudIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export async function generateMetadata({
   params,
@@ -54,9 +56,6 @@ const conferencesPage = async ({
 }) => {
   const { id } = params;
   const conference = await getConference({ id });
-  // console.log("#".repeat(30));
-  // console.log(conference);
-  // console.log("#".repeat(30));
   if (!conference) {
     return notFound();
   }
@@ -173,6 +172,20 @@ const conferencesPage = async ({
             <ParseData dir="ltr" content={conference.enContent?.body ?? ""} />
           }
         />
+        <Link className={cn(" w-full my-2 sm:w-fit mx-auto flex justify-center items-center gap-2", "bg-primary text-primary-foreground shadow hover:bg-primary/90 rounded-md px-4 py-2")} target={"_blank"}
+          download={true}
+          href={conference!.pdfUri as string}>
+          <DownloadCloudIcon></DownloadCloudIcon>
+          <Lang
+            lang={lang}
+            ar={
+              "تحميل"
+            }
+            en={
+              "download"
+            }
+          />
+        </Link>
       </Suspense>
     </main>
   );

@@ -9,7 +9,7 @@ import {
   getUniversity,
 } from "@/prisma/seed";
 import { getDictionary } from "@/get-dictionary";
-import { cn, cutString } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { FaUniversity } from "react-icons/fa";
 import AnimatedCard from "./components/animated-card";
 import Statiscs from "./components/statiscs";
@@ -19,7 +19,6 @@ import { buttonVariants } from "@/lib/constant";
 import { ReactNode } from "react";
 import { GiTeacher } from "react-icons/gi";
 import Lang from "./components/lang";
-import ParseData from "../components/parse-data";
 
 export default async function home({
   params: { lang },
@@ -32,9 +31,8 @@ export default async function home({
   const news = await getUniNews({ page: 1, take: 9 });
   const conferences = await getConferences({ page: 1, qty: 9 });
   const magazines = await getMagazines({ page: 1, qty: 9 });
-  // console.log("#".repeat(30));
-  // console.log(univeristy?.Centers);
-  // console.log("#".repeat(30));
+
+
   return (
     <main>
       <div className="bg-[url('/bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">

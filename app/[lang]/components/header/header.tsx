@@ -1,9 +1,6 @@
 import Logo from "./logo";
 import { Fragment } from "react";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
-import { buttonVariants } from "@/lib/constant";
-import { cn } from "@/lib/utils";
 import MobileNavigationBar from "./mobile-menu-bar";
 import {
   ParseToScreenMoreThanWidth,
@@ -12,6 +9,9 @@ import {
 import { $Enums, Centers } from "@prisma/client";
 import { DesktopMenuHeader } from "./desktop-menu-bar";
 import ToggleLangauge from "./toggle-lang";
+import RenderToRole, { DontRenderUnlessSessionIsDefined } from "@/app/components/render-to-role";
+import Link from "next/link";
+import Lang from "../lang";
 
 type Props = {
   collages: ({
@@ -138,7 +138,7 @@ type Props = {
   })[];
 };
 
-const Header = ({
+const Header = async ({
   collages,
   centers,
   academicPrograms,
@@ -149,6 +149,7 @@ const Header = ({
   lang = "ar",
   logo = "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
 }: Props) => {
+
   return (
     <Fragment>
       <header className="flex items-center justify-between gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
@@ -163,9 +164,26 @@ const Header = ({
               actvities={actvities}
               graduates={graduates}
               projects={projects}
-            />
+            >
+              <>
+                <DontRenderUnlessSessionIsDefined >
+                  <Link className="text-sm" href={`/${lang}/login`}>
+                    <Lang lang={lang} ar={"تسجيل الدخول"} en={"login"} />
+                  </Link>
+
+                </DontRenderUnlessSessionIsDefined>
+                <RenderToRole appliedRole={"admin"}>
+                  <Link className=" text-sm " href={`/dashboard/collages`}>
+                    <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
+                  </Link>
+
+                </RenderToRole>
+              </>
+            </DesktopMenuHeader>
 
           </div>
+
+
           <ToggleLangauge />
 
         </ParseToScreenMoreThanWidth>
@@ -178,7 +196,10 @@ const Header = ({
             actvities={actvities}
             graduates={graduates}
             projects={projects}
-          />
+          >
+            {/* {children} */}
+
+          </MobileNavigationBar>
         </ParseToScreenLessThanWidth>
       </header>
       <Separator />

@@ -6,16 +6,16 @@ import { signIn } from "@/lib/auth";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Lang from "../[lang]/components/lang";
+import { useParams } from "next/navigation";
 
 const LoginForm = ({
   className,
-  lang,
 }: {
   className?: string;
-  lang: "ar" | "en";
 }) => {
+  const { lang }: { lang: "en" | "ar" } = useParams()
   return (
-    <Form className={className} action={signIn}>
+    <Form className={className} replaceLink={`/${lang}/`} sucess="تم تسجيل الدخول بنجاح" action={signIn}>
       <Label htmlFor="phone">
         <Lang ar={"رقم الهاتف"} en={"phone number"} lang={lang} />
       </Label>

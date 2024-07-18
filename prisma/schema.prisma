@@ -405,6 +405,7 @@ model Mangzine {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   logo        String     @default("https://utfs.io/f/bb000768-6c27-41cb-9900-3718263431c2-13qw.jpg")
+  linkedId    String?    @db.ObjectId
 }
 
 model Conferences {

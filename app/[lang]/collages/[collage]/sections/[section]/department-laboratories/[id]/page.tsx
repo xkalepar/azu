@@ -5,11 +5,11 @@ import { Metadata } from 'next';
 import React from 'react'
 
 export async function generateMetadata({
-    params: { department, lang }
+    params: { id, lang }
 }: {
-    params: { section: string; lang: "ar" | "en"; department: string };
+    params: { section: string; lang: "ar" | "en"; id: string };
 }): Promise<Metadata> {
-    const departemnts = await getDataById(department);
+    const departemnts = await getDataById(id);
 
     if (!departemnts) {
         return {

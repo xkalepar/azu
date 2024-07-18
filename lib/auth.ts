@@ -4,20 +4,20 @@ import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 
 const prisma = new PrismaClient();
 const secretKey = process.env.SECRET_KEY;
 const key = new TextEncoder().encode(secretKey);
 
 const checkPassword = async (password: string, hashedPassword: string) => {
-  const validPassword = await bcrypt.compare(password, hashedPassword);
+  const validPassword = await bcryptjs.compare(password, hashedPassword);
   return validPassword;
 };
 
 export const hashPassword = async (password: string) => {
-  const salt = bcrypt.genSaltSync(10);
-  const hash = bcrypt.hash(password, salt);
+  const salt = bcryptjs.genSaltSync(10);
+  const hash = bcryptjs.hash(password, salt);
   return hash;
 };
 
@@ -182,7 +182,7 @@ export async function signIn(
 ) {
   try {
     const schema = z.object({
-      phone: z.string().min(10, {
+      phone: z.string().min(9, {
         message: "يجب إضافة رقمك الشخصي",
       }),
       password: z.string().min(6, {
@@ -216,7 +216,16 @@ export async function signIn(
 
     // Create the session
     const expires = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
-    const session = await encrypt({ user, expires });
+    const session = await encrypt({
+      ...{
+        fullName: user.fullName,
+        id: user.id,
+        // password: user.password,
+        phone: user.phone,
+        role: user.role,
+      },
+      expires,
+    });
     // Save the session in a cookie
     setCookie(session, expires);
     return { message: "تم تسجيل الدخول بنجاح" };
@@ -239,13 +248,10 @@ export async function logout() {
 }
 
 export async function getSession(): Promise<{
-  user: {
-    id: string;
-    fullName: string;
-    password: string;
-    phone: number;
-    role: Role;
-  };
+  fullName: string;
+  id: string;
+  phone: number;
+  role: Role;
 } | null> {
   const session = cookies().get("session")?.value;
   if (!session) return null;

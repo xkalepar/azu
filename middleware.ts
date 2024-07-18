@@ -5,7 +5,7 @@ import { i18n } from "./i18n-config";
 
 import { match as matchLocale } from "@formatjs/intl-localematcher";
 import Negotiator from "negotiator";
-// import { getSession } from "./lib/auth";
+import { getSession } from "./lib/auth";
 
 function getLocale(request: NextRequest): string | undefined {
   // Negotiator expects plain object so we need to transform headers
@@ -29,18 +29,21 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   // Check if the request is for a dashboard route
-  // if (pathname.startsWith("/dashboard")) {
-  //   // Check if the user is authenticated
-  //   const currentUser = await getSession();
-  //   if (
-  //     (currentUser && currentUser.user.role === "admin") ||
-  //     (currentUser && currentUser.user.role === "superAdmin")
-  //   ) {
-  //     return;
-  //   } else {
-  //     return NextResponse.redirect("/login");
-  //   }
-  // }
+  if (pathname.includes("dashboard")) {
+    // Check if the user is authenticated
+    const currentUser = await getSession();
+    console.log(currentUser?.role);
+    if (
+      (currentUser && currentUser.role === "admin") ||
+      (currentUser && currentUser.role === "superAdmin")
+    ) {
+      return;
+    } else {
+      const url = request.nextUrl.clone();
+      url.pathname = "/login";
+      return NextResponse.redirect(url);
+    }
+  }
   if (!pathname.includes("dashboard")) {
     // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
     // // If you have one

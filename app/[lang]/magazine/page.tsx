@@ -1,5 +1,5 @@
 import CardPreview from "@/app/components/card-preview";
-import { getConferences, getMagazines, getUniNews } from "@/prisma/seed";
+import { getMagazines } from "@/prisma/seed";
 import React from "react";
 import {
   Breadcrumb,
