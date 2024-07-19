@@ -1100,6 +1100,8 @@ export const editNewsUni = async ({
     return { message: "فشلت العملية" };
   }
 };
+
+/// maybe not now but add delete ar content and en content
 export const deleteNewsUni = async ({
   id,
 }: {

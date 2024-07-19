@@ -2,9 +2,9 @@
 
 import Form from "@/app/components/form";
 import {
-  deleteMagazineAction,
-  editMagazineAction,
-  newMagazineAction,
+  deleteConferenceAction,
+  editConferenceAction,
+  newConferenceAction,
 } from "../actions";
 import SubmitButton from "@/app/components/custom-sumbit-btn";
 import { Suspense, useState } from "react";
@@ -33,7 +33,7 @@ export const CreateMagazineForm = () => {
     <Form
       sucess={"تم إنشاء المؤتمر بنجاح"}
       className="my-2 px-4 "
-      action={newMagazineAction}
+      action={newConferenceAction}
       replaceLink={`/dashboard/university/conferences`}
     >
       <div className="flex gap-2 items-start  justify-between px-4 flex-col sm:flex-row w-full">
@@ -197,7 +197,7 @@ export const UpdateMagazineForm = ({
   return (
     <Form
       className="my-2 px-4"
-      action={editMagazineAction}
+      action={editConferenceAction}
       sucess="تم تحديث المؤتمر بنجاح"
       replaceLink={`/dashboard/university/conferences/${magazineId}`}
     >
@@ -349,7 +349,7 @@ export const DeleteMagazineForm = ({
 }) => {
   return (
     <Form
-      action={deleteMagazineAction}
+      action={deleteConferenceAction}
       sucess={"تم حذف المؤتمر بنجاح"}
       replaceLink={`/dashboard/university/conferences`}
     >

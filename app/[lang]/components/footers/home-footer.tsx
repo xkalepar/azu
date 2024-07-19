@@ -113,15 +113,15 @@ const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
               </li>
             </ul>
           </div>
-          <div className="flex justify-center items-start gap-2">
+          <div className="flex justify-center w-full items-start gap-2">
             <Link href={`https://wa.me/0537621379`} target="_blank" rel="noopener noreferrer" >
-              <IoLogoWhatsapp color="#25d366" width={48} />
+              <IoLogoWhatsapp color="#25d366" size={36} />
             </Link>
             <Link href={`https://wa.me/0537621380`} target="_blank" rel="noopener noreferrer" >
-              <IoLogoWhatsapp color="#25d366" width={48} />
+              <IoLogoWhatsapp color="#25d366" size={36} />
             </Link>
             <Link href={`https://www.facebook.com/profile.php?id=100064726957604`} target="_blank" rel="noopener noreferrer" >
-              <FaFacebookSquare color="#1877f2" width={48} />
+              <FaFacebookSquare color="#1877f2" size={36} />
             </Link>
           </div>
           <div>

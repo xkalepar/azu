@@ -2,7 +2,7 @@
 import { z } from "zod";
 import { createConferences, deleteConference, updateConference } from "./seed";
 
-export async function newMagazineAction(
+export async function newConferenceAction(
   prevState: {
     message: string;
   },
@@ -57,7 +57,7 @@ export async function newMagazineAction(
     return { message: "فشلت العملية" };
   }
 }
-export async function editMagazineAction(
+export async function editConferenceAction(
   prevState: {
     message: string;
   },
@@ -120,7 +120,7 @@ export async function editMagazineAction(
     return { message: "فشلت العملية" };
   }
 }
-export async function deleteMagazineAction(
+export async function deleteConferenceAction(
   prevState: {
     message: string;
   },

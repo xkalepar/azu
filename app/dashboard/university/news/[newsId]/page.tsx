@@ -15,25 +15,7 @@ import { getNewsbyId, getAllnews } from "@/prisma/seed";
 import { Button } from "@/components/ui/button";
 import { DeleteIcon, Edit2 } from "lucide-react";
 import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
-import DeleteNewsForm from "../../components/forms";
-
-/* export async function generateMetadata({
-  params,
-}: {
-  params: { collage: string };
-}): Promise<Metadata> {
-  const collage = await getCollageById(params.collage);
-  if (!collage) {
-    return {
-      title: "404 غير موجود",
-    };
-  }
-  return {
-    title: collage.ArCollageData!.title,
-    description: collage.ArCollageData!.content,
-    // keywords: [collage.name, ...collage.categories.map((c) => c.name)],
-  };
-} */
+import DeleteNewsForm from "../new/forms";
 
 const newsPage = async ({ params }: { params: { newsId: string } }) => {
   const { newsId } = params;
@@ -47,7 +29,7 @@ const newsPage = async ({ params }: { params: { newsId: string } }) => {
       <Breadcrumbs title={news?.arContent?.title} />
 
       <div className="relative">
-        <div className=" absolute gap-2 left-2 top-2 flex-between" dir="rtl">
+        <div className=" absolute z-50 gap-2 left-2 top-2 flex-between" dir="rtl">
           <Link
             href={`${newsId}/edit`}
             className={cn(
@@ -69,8 +51,7 @@ const newsPage = async ({ params }: { params: { newsId: string } }) => {
             dialogDescription={`هل أنت متأكد من حذف ${news.arContent?.title}`}
           >
             <DeleteNewsForm
-              enContent={news.enContent?.body}
-              content={news.arContent?.body}
+              id={news.id}
             />
           </ResponiseDialog>
         </div>

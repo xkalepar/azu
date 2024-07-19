@@ -2,6 +2,7 @@
 
 import prisma from "@/prisma/db";
 import { revalidateTag, unstable_cache } from "next/cache";
+import { env } from "process";
 
 type Mangzine = {
   arContent?: ArContent;
@@ -39,15 +40,17 @@ export const getMagazines = unstable_cache(
       return [];
     }
   },
-  ["magazine", "university"],
-  { tags: ["magazine", "university"] }
+  ["magazine", "university", "colllages"],
+  { tags: ["magazine", "university", "colllages"] }
 );
 export const createMagazine = async (
-  data: Omit<Mangzine, "id" | "createdAt" | "updatedAt">
+  data: Omit<Mangzine, "id" | "createdAt" | "updatedAt">,
+  linkedId?: string
 ): Promise<{ message: string }> => {
   try {
     const newMagazine = await prisma.mangzine.create({
       data: {
+        linkedId: linkedId ?? env.UniveristyId,
         arContent: {
           create: {
             title: data?.arContent?.title ?? "",
@@ -68,6 +71,7 @@ export const createMagazine = async (
     // revalidatePath("/");
     revalidateTag("magazine");
     revalidateTag("university");
+    revalidateTag("collages");
 
     return { message: "تم إنشاء المجلة بنجاح" };
   } catch (error) {
@@ -117,6 +121,7 @@ export const deleteMagazine = async ({
     }
     revalidateTag("magazine");
     revalidateTag("university");
+    revalidateTag("collages");
 
     return { message: "تم حذف المجلة بنجاح" };
   } catch (error) {
@@ -163,6 +168,7 @@ export const updateMagazine = async ({
     // revalidatePath("/");
     revalidateTag("magazine");
     revalidateTag("university");
+    revalidateTag("collages");
 
     return { message: "تم تحديث المجلة بنجاح" };
   } catch (error) {

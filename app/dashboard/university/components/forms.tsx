@@ -16,11 +16,6 @@ import LangTabs from "@/app/components/tabs";
 const init = {
   message: "",
 };
-
-enum Lang {
-  ar = "ar",
-  en = "en",
-}
 export default function UniveristyForm({
   className,
   content: defaultContent,
