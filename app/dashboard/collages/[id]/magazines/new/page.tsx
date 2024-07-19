@@ -1,32 +1,23 @@
-import Link from "next/link";
-import ImageGridView from "./components/image-gallery";
 import {
   Breadcrumb,
+  BreadcrumbList,
   BreadcrumbItem,
   BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
   BreadcrumbSeparator,
+  BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
-import { getCollageById } from "@/prisma/seed";
-import { notFound } from "next/navigation";
-const page = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  const collage = await getCollageById(id);
-  if (!collage) {
-    return notFound();
-  }
+import { Link } from "lucide-react";
+import { CreateMagazineForm } from "../components/forms";
+
+const page = async () => {
   return (
     <section>
-      <Breadcrumbs id={id} title={collage.ArCollageData?.title} />
-      <ImageGridView id={id} list={collage.gallery} />
+      <Breadcrumbs />
+      <CreateMagazineForm />
     </section>
   );
 };
-
-export default page;
-
-const Breadcrumbs = ({ title, id }: { title?: string; id: string }) => {
+const Breadcrumbs = () => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
@@ -44,20 +35,21 @@ const Breadcrumbs = ({ title, id }: { title?: string; id: string }) => {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/dashboard/collages">الكليات</Link>
+            <Link href="/dashboard/university">الجامعة</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href={`/dashboard/collages/${id}`}>{title ?? ""}</Link>
+            <Link href="/dashboard/university/news">الأخبار</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbPage>معرض الصور</BreadcrumbPage>
+          <BreadcrumbPage>{"جديد"}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
   );
 };
+export default page;

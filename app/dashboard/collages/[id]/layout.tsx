@@ -38,6 +38,10 @@ const layout = async ({
               content="الأخبار"
             />
             <TabLink
+              href={`/dashboard/collages/${collage.id}/magazines`}
+              content="المجلة"
+            />
+            <TabLink
               href={`/dashboard/collages/${collage.id}/gallery`}
               content="معرض الصور"
             />
