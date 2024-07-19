@@ -12,6 +12,8 @@ import ToggleLangauge from "./toggle-lang";
 import RenderToRole, { DontRenderUnlessSessionIsDefined } from "@/app/components/render-to-role";
 import Link from "next/link";
 import Lang from "../lang";
+import { getSession } from "@/lib/auth";
+import { MainRender } from "./dynamic-header";
 
 type Props = {
   collages: ({
@@ -149,14 +151,47 @@ const Header = async ({
   lang = "ar",
   logo = "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
 }: Props) => {
-
+  const currnetUser = await getSession()
   return (
     <Fragment>
-      <header className="flex items-center justify-between gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
-        <Logo href={`/${lang}`} src={logo} />
-        <ParseToScreenMoreThanWidth>
-          <div className=" flex-between gap-2">
-            <DesktopMenuHeader
+      <MainRender>
+        <header className="flex items-center justify-between gap-2 w-full bg-background  px-8 py-4 fixed max-h-20 min-h-20 top-0 z-[150] left-0">
+          <Logo href={`/${lang}`} src={logo} />
+          <ParseToScreenMoreThanWidth>
+            <div className=" flex-between gap-2">
+              <DesktopMenuHeader
+                collages={collages}
+                centers={centers}
+                academicPrograms={academicPrograms}
+                scientificResearchs={scientificResearchs}
+                actvities={actvities}
+                graduates={graduates}
+                projects={projects}
+              >
+                <>
+                  <DontRenderUnlessSessionIsDefined currnetUser={currnetUser} >
+                    <Link className="text-sm" href={`/${lang}/login`}>
+                      <Lang lang={lang} ar={"تسجيل الدخول"} en={"login"} />
+                    </Link>
+
+                  </DontRenderUnlessSessionIsDefined>
+                  <RenderToRole currnetUser={currnetUser} appliedRole={"admin"}>
+                    <Link className=" text-sm " href={`/dashboard/collages`}>
+                      <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
+                    </Link>
+
+                  </RenderToRole>
+                </>
+              </DesktopMenuHeader>
+
+            </div>
+
+
+            <ToggleLangauge />
+
+          </ParseToScreenMoreThanWidth>
+          <ParseToScreenLessThanWidth>
+            <MobileNavigationBar
               collages={collages}
               centers={centers}
               academicPrograms={academicPrograms}
@@ -166,55 +201,24 @@ const Header = async ({
               projects={projects}
             >
               <>
-                <DontRenderUnlessSessionIsDefined >
+                <DontRenderUnlessSessionIsDefined currnetUser={currnetUser} >
                   <Link className="text-sm" href={`/${lang}/login`}>
                     <Lang lang={lang} ar={"تسجيل الدخول"} en={"login"} />
                   </Link>
 
                 </DontRenderUnlessSessionIsDefined>
-                <RenderToRole appliedRole={"admin"}>
+                <RenderToRole currnetUser={currnetUser} appliedRole={"admin"}>
                   <Link className=" text-sm " href={`/dashboard/collages`}>
                     <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                   </Link>
 
                 </RenderToRole>
               </>
-            </DesktopMenuHeader>
 
-          </div>
-
-
-          <ToggleLangauge />
-
-        </ParseToScreenMoreThanWidth>
-        <ParseToScreenLessThanWidth>
-          <MobileNavigationBar
-            collages={collages}
-            centers={centers}
-            academicPrograms={academicPrograms}
-            scientificResearchs={scientificResearchs}
-            actvities={actvities}
-            graduates={graduates}
-            projects={projects}
-          >
-            <>
-              <DontRenderUnlessSessionIsDefined >
-                <Link className="text-sm" href={`/${lang}/login`}>
-                  <Lang lang={lang} ar={"تسجيل الدخول"} en={"login"} />
-                </Link>
-
-              </DontRenderUnlessSessionIsDefined>
-              <RenderToRole appliedRole={"admin"}>
-                <Link className=" text-sm " href={`/dashboard/collages`}>
-                  <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
-                </Link>
-
-              </RenderToRole>
-            </>
-
-          </MobileNavigationBar>
-        </ParseToScreenLessThanWidth>
-      </header>
+            </MobileNavigationBar>
+          </ParseToScreenLessThanWidth>
+        </header>
+      </MainRender>
       <Separator />
     </Fragment>
   );

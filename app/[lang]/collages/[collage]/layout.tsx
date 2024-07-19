@@ -7,6 +7,9 @@ import { Metadata } from "next";
 import { getData as getGraduates } from "@/app/dashboard/collages/[id]/graduate-studies/seed";
 import { getData as getOffices } from "@/app/dashboard/collages/[id]/offices-and-administrative-departments/seed";
 import CollageFooter from "../../components/footers/collage-footer";
+
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({
   params,
 }: {
