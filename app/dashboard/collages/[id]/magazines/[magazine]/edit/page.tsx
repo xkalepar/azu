@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
 import { UpdateMagazineForm } from "../../components/forms";
-import { getMagazine } from "../../seed";
+import { getMagazine } from "@/app/dashboard/university/magazines/seed";
 // import { EditNewsForm } from "../../../components/forms";
 
 const page = async ({ params }: { params: { id: string } }) => {
