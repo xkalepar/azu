@@ -6,6 +6,8 @@ import NavigationTabs, {
   HomeTabLink,
   TabLink,
 } from "@/app/dashboard/components/tab";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 const layout = async ({
   children,
@@ -16,7 +18,20 @@ const layout = async ({
 }) => {
   const { collageId, sectionId: id } = params;
   const section = await getSectionById(id);
-
+  const user = await getSession();
+  if (!user) {
+    return redirect('/login')
+  }
+  if (user.role !== "superAdmin" && user.role !== "admin") {
+    redirect('/login')
+  }
+  if (user.collageId !== collageId) {
+    if (user.role === "superAdmin") {
+      return;
+    } else {
+      redirect('/login')
+    }
+  }
   return (
     <main>
       <Title

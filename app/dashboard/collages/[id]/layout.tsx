@@ -1,9 +1,10 @@
 import { getCollageById } from "@/prisma/seed";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import React from "react";
 
 import NavigationTabs, { HomeTabLink, TabLink } from "../../components/tab";
 import Title from "../../components/title";
+import { getSession } from "@/lib/auth";
 
 const layout = async ({
   children,
@@ -14,6 +15,20 @@ const layout = async ({
 }) => {
   const collage = await getCollageById(params.id);
   if (!collage) return notFound();
+  const user = await getSession();
+  if (!user) {
+    return redirect('/login')
+  }
+  if (user.role !== "superAdmin" && user.role !== "admin") {
+    redirect('/login')
+  }
+  if (user.collageId !== params.id) {
+    if (user.role === "superAdmin") {
+      return;
+    } else {
+      redirect('/login')
+    }
+  }
   return (
     <main>
       <Title

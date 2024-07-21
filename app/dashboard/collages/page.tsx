@@ -13,10 +13,23 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/lib/constant";
 import { getCollages } from "@/prisma/seed";
 import CardPreview from "../../components/card-preview";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 const collagesPage = async () => {
   const collages = await getCollages();
-  console.log(collages);
+  const user = await getSession();
+  if (!user) {
+    return redirect('/')
+  }
+  if (user.role === "admin") {
+    redirect(`/dashboard/collages/${user.collageId}`)
+  }
+  if (user.role !== "superAdmin") {
+    redirect('/login')
+  }
+
+
   return (
     <main>
       <Title className="text-xl font-normal pr-4 pt-4" title={"الكليات"}>

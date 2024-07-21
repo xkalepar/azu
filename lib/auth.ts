@@ -223,6 +223,7 @@ export async function signIn(
         // password: user.password,
         phone: user.phone,
         role: user.role,
+        collageId: user.collageId,
       },
       expires,
     });
@@ -252,6 +253,7 @@ export async function getSession(): Promise<{
   id: string;
   phone: number;
   role: Role;
+  collageId?: string | null;
 } | null> {
   const session = cookies().get("session")?.value;
   if (!session) return null;

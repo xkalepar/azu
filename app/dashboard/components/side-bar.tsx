@@ -9,35 +9,36 @@ import { buttonVariants } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { GiRadarCrossSection } from "react-icons/gi";
 import { TbLayoutCollage } from "react-icons/tb";
+import { FaUsers } from "react-icons/fa";
 
 import { LiaUniversitySolid } from "react-icons/lia";
 
-const HomeNavItem = ({
-  pathname,
-  href,
-  collapsed,
-  Icon,
-  name,
-}: {
-  pathname: string;
-  href: string;
-  collapsed: boolean;
-  Icon: React.ReactNode;
-  name: string;
-}) => {
-  return (
-    <Link
-      className={`flex justify-center transition-all rounded-[0px] items-center w-full gap-1 sm:gap-2 ${pathname === href
-          ? buttonVariants.variants.variant.secondary
-          : `${buttonVariants.variants.variant.outline} border-0`
-        }   ${buttonVariants.variants.size.default}`}
-      href={href}
-    >
-      <div>{!collapsed && <span>{name}</span>}</div>
-      <div>{Icon}</div>
-    </Link>
-  );
-};
+// const HomeNavItem = ({
+//   pathname,
+//   href,
+//   collapsed,
+//   Icon,
+//   name,
+// }: {
+//   pathname: string;
+//   href: string;
+//   collapsed: boolean;
+//   Icon: React.ReactNode;
+//   name: string;
+// }) => {
+//   return (
+//     <Link
+//       className={`flex justify-center transition-all rounded-[0px] items-center w-full gap-1 sm:gap-2 ${pathname === href
+//         ? buttonVariants.variants.variant.secondary
+//         : `${buttonVariants.variants.variant.outline} border-0`
+//         }   ${buttonVariants.variants.size.default}`}
+//       href={href}
+//     >
+//       <div>{!collapsed && <span>{name}</span>}</div>
+//       <div>{Icon}</div>
+//     </Link>
+//   );
+// };
 const NavItem = ({
   pathname,
   href,
@@ -54,8 +55,8 @@ const NavItem = ({
   return (
     <Link
       className={`flex justify-center transition-all rounded-[0px] items-center w-full gap-1 sm:gap-2 ${pathname === href || pathname.startsWith(`${href}/`)
-          ? buttonVariants.variants.variant.secondary
-          : `${buttonVariants.variants.variant.outline} border-0`
+        ? buttonVariants.variants.variant.secondary
+        : `${buttonVariants.variants.variant.outline} border-0`
         }   ${buttonVariants.variants.size.default}`}
       href={href}
     >
@@ -112,6 +113,13 @@ const NavigationRail = () => {
           href="/dashboard/sections"
           Icon={<GiRadarCrossSection />}
           name="الأقسام"
+        />
+        <NavItem
+          pathname={pathname}
+          collapsed={collapsed}
+          href="/dashboard/users"
+          Icon={<FaUsers />}
+          name="المستخدمين"
         />
       </Menu>
     </Sidebar>

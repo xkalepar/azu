@@ -1,16 +1,29 @@
 import { Metadata } from "next";
 import Title from "../components/title";
 import NavigationTabs, { HomeTabLink, TabLink } from "../components/tab";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "جامعة ترهونة | لوحة التحكم",
 };
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const collage = { id: "ss" };
+  const user = await getSession();
+  if (!user) {
+    return redirect('/login')
+  }
+  if (user.role !== "superAdmin") {
+    if (user.role === "admin") {
+      redirect(`/dashboard/collages/${user.collageId}`);
+    } else {
+      redirect("/login")
+    }
+  }
+
   return (
     <main>
       <Title className="text-xl font-normal pr-4 pt-4" title={"عن الجامعة"}>

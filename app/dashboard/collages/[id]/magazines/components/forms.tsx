@@ -198,7 +198,6 @@ export const UpdateMagazineForm = ({
   const [pdf, setPdf] = useState<string>(oldPdf);
   const { id } = useParams()
 
-
   return (
     <Form
       className="my-2 px-4"

@@ -11,13 +11,23 @@ import Link from "next/link";
 import { getCollages } from "@/prisma/seed";
 import CardPreview from "../../components/card-preview";
 import { Metadata } from "next";
+import { getSession } from "@/lib/auth";
+import { redirect } from "next/navigation";
 export const metadata: Metadata = {
   title: "جامعة ترهونة | لوحة التحكم | الأقسام",
 };
 const page = async () => {
   const collages = await getCollages();
-  // console.log(collages);
-  return (
+  const user = await getSession();
+  if (!user) {
+    return redirect('/')
+  }
+  if (user.role === "admin") {
+    redirect(`/dashboard/sections/${user.collageId}`)
+  }
+  if (user.role !== "superAdmin") {
+    redirect('/login')
+  } return (
     <main>
       <Title className="text-xl font-normal pr-4 pt-4" title={"الأقسام"}>
         <div className="w-full relative">
