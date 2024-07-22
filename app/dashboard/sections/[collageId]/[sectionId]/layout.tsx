@@ -25,13 +25,10 @@ const layout = async ({
   if (user.role !== "superAdmin" && user.role !== "admin") {
     redirect('/login')
   }
-  if (user.collageId !== collageId) {
-    if (user.role === "superAdmin") {
-      return;
-    } else {
-      redirect('/login')
-    }
+  if (user.role === "admin" && user.collageId !== collageId) {
+    redirect(`/dashboard/sections/${user.collageId}`)
   }
+
   return (
     <main>
       <Title
