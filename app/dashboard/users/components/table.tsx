@@ -1,87 +1,82 @@
+"use client"
+import { Dialog, DialogDescription } from "@/components/ui/dialog";
+import { DeleteUserForm } from "./forms"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { DialogContent, DialogTrigger } from "@radix-ui/react-dialog";
+import { TrashIcon } from "@radix-ui/react-icons";
 
-const invoices = [
-    {
-        invoice: "INV001",
-        paymentStatus: "Paid",
-        totalAmount: "$250.00",
-        paymentMethod: "Credit Card",
-    },
-    {
-        invoice: "INV002",
-        paymentStatus: "Pending",
-        totalAmount: "$150.00",
-        paymentMethod: "PayPal",
-    },
-    {
-        invoice: "INV003",
-        paymentStatus: "Unpaid",
-        totalAmount: "$350.00",
-        paymentMethod: "Bank Transfer",
-    },
-    {
-        invoice: "INV004",
-        paymentStatus: "Paid",
-        totalAmount: "$450.00",
-        paymentMethod: "Credit Card",
-    },
-    {
-        invoice: "INV005",
-        paymentStatus: "Paid",
-        totalAmount: "$550.00",
-        paymentMethod: "PayPal",
-    },
-    {
-        invoice: "INV006",
-        paymentStatus: "Pending",
-        totalAmount: "$200.00",
-        paymentMethod: "Bank Transfer",
-    },
-    {
-        invoice: "INV007",
-        paymentStatus: "Unpaid",
-        totalAmount: "$300.00",
-        paymentMethod: "Credit Card",
-    },
-]
+type UserProp = {
+    fullName: string;
+    phone: number;
+    collageId: string | null;
+    id: string;
+}
+type CollagesProp = {
+    title?: string;
+    id: string
+}
 
-export default function UsersTable() {
+export default function UsersTable({ users, collages }: { users: UserProp[], collages: CollagesProp[] }) {
     return (
-        <Table dir="rtl">
-            <TableCaption>A list of your recent invoices.</TableCaption>
-            <TableHeader dir="rtl" className=" text-left">
+        <Table dir="rtl" className=" text-right ">
+            {/* <TableCaption>قائمة باسماء المشرفين</TableCaption> */}
+            <TableHeader dir="rtl" className=" text-center">
                 <TableRow dir="rtl">
-                    <TableHead dir="rtl">Invoice</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Method</TableHead>
-                    <TableHead>Amount</TableHead>
+                    <TableHead dir="rtl">الاسم</TableHead>
+                    <TableHead>الرقم</TableHead>
+                    <TableHead>الكلية</TableHead>
+                    <TableHead>الأحداث</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {invoices.map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                        <TableCell>{invoice.invoice}</TableCell>
-                        <TableCell>{invoice.paymentStatus}</TableCell>
-                        <TableCell>{invoice.paymentMethod}</TableCell>
-                        <TableCell>{invoice.totalAmount}</TableCell>
+                {users.map((user, index) => (
+                    <TableRow key={index}>
+                        <TableCell>{user.fullName}</TableCell>
+                        <TableCell>{user.phone}</TableCell>
+                        <TableCell>{PasrseCollageName({ collages, user })}</TableCell>
+                        <TableCell>
+
+                            <Dialog>
+                                <DialogTrigger>
+                                    <TrashIcon />
+                                </DialogTrigger>
+                                <DialogContent>
+                                    <DialogDescription>
+                                        هل أنت متأكد من حذف {user.fullName}
+                                    </DialogDescription>
+                                    <DeleteUserForm userId={user.id} />
+                                </DialogContent>
+                            </Dialog>
+                        </TableCell>
                     </TableRow>
                 ))}
             </TableBody>
             <TableFooter>
                 <TableRow>
                     <TableCell colSpan={3}>العدد الكلي</TableCell>
-                    <TableCell className="text-right">$2,500.00</TableCell>
+                    <TableCell className="text-right"> {users.length} مشرف  </TableCell>
                 </TableRow>
             </TableFooter>
         </Table>
     )
+}
+
+
+function PasrseCollageName({ collages, user }: { collages: { title?: string, id: string }[], user: UserProp }): string {
+    let collageTitle = undefined;
+    for (let collage of collages) {
+        if (collage.id === user.collageId) {
+            collageTitle = collage.title
+        }
+    }
+
+    return collageTitle ?? ""
 }

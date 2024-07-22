@@ -63,7 +63,7 @@ export const getUsers = async ({
 }: {
   role: UserRole;
   query?: string;
-  sectionId: string;
+  sectionId?: string;
 }) => {
   try {
     const users = await prisma.user.findMany({
@@ -95,5 +95,24 @@ export const getUserById = async ({ userId: id }: { userId: string }) => {
     return user;
   } catch (error) {
     return undefined;
+  }
+};
+
+export const deleteUser = async ({
+  id,
+}: {
+  id: string;
+}): Promise<{ message: string }> => {
+  try {
+    const user = await prisma.user.delete({
+      where: { id },
+    });
+    if (!user) {
+      return { message: "فشل حذف المستخدم" };
+    }
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return { message: "فشلت العملية" };
   }
 };

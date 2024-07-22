@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createUser } from "./seed";
+import { createUser, deleteUser } from "./seed";
 
 export async function newUserAction(
   prevState: {
@@ -67,6 +67,39 @@ export async function newUserAction(
       content,
       sectionId,
       collageId,
+    });
+    return { message: res.message };
+  } catch (e) {
+    console.log(e);
+    return { message: "فشلت العملية" };
+  }
+}
+
+export async function deleteUserAction(
+  prevState: {
+    message: string;
+  },
+  formData: FormData
+) {
+  try {
+    const schema = z.object({
+      id: z.string().min(2),
+    });
+    console.log(`schema: ${schema}`);
+
+    const data = schema.safeParse({
+      id: formData.get("id"),
+    });
+    console.log(data);
+
+    console.log(data.success);
+    if (!data.success) {
+      return { message: "يجب أن يتم ملء جميع الحقول" };
+    }
+    console.log(data);
+    const { id } = data.data;
+    const res = await deleteUser({
+      id,
     });
     return { message: res.message };
   } catch (e) {
