@@ -20,8 +20,8 @@ export async function newUserAction(
         .enum(["admin", "teacher", "student", "superAdmin"])
         .optional()
         .nullable(),
-      collageId: z.string(),
-      sectionId: z.string(),
+      collageId: z.string().optional().nullable(),
+      sectionId: z.string().optional().nullable(),
     });
     console.log(`schema: ${schema}`);
 

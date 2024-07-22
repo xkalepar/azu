@@ -49,8 +49,6 @@ export const createUser = async ({
     if (!user) {
       return { message: "فشل إنشاء المستخدم" };
     }
-    // revalidateTag("collages");
-    // revalidateTag("users");
     return { message: "تمت العملية بنجاح" };
   } catch (error) {
     console.error("Error creating user:", error);

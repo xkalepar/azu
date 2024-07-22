@@ -6,9 +6,6 @@ import { Label } from "@/components/ui/label";
 import { newUserAction } from "../../sections/[collageId]/[sectionId]/teachers/actions";
 import { ReactNode } from "react";
 import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
-import { Button } from "@/components/ui/button";
-// import { SelectCollage } from "./select-collage";
-
 
 export const CreateAdmin = ({ children }: { children: ReactNode }) => (
     <ResponiseDialog trigger={<>
@@ -54,8 +51,8 @@ export const CreateAdmin = ({ children }: { children: ReactNode }) => (
                     />
                 </div>
             </div>
+            <input type={"hidden"} name="role" value={"superAdmin"} />
             {children}
-            {/* <SelectCollage /> */}
             <SubmitButton className="w-full md:w-1/4" type={"submit"}>
                 حفظ
             </SubmitButton>
