@@ -44,17 +44,10 @@ export default function UsersTable({ users, collages }: { users: UserProp[], col
                         <TableCell>{PasrseCollageName({ collages, user })}</TableCell>
                         <TableCell>
 
-                            <Dialog>
-                                <DialogTrigger>
-                                    <TrashIcon />
-                                </DialogTrigger>
-                                <DialogContent>
-                                    <DialogDescription>
-                                        هل أنت متأكد من حذف {user.fullName}
-                                    </DialogDescription>
-                                    <DeleteUserForm userId={user.id} />
-                                </DialogContent>
-                            </Dialog>
+                            <DeleteUserForm userId={user.id}>
+                                {user.fullName}
+                            </DeleteUserForm>
+
                         </TableCell>
                     </TableRow>
                 ))}

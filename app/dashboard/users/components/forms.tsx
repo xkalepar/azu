@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { deleteUserAction, newUserAction } from "../../sections/[collageId]/[sectionId]/teachers/actions";
 import { ReactNode } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
+import { TrashIcon } from "@radix-ui/react-icons";
 // import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
 
 export const CreateAdmin = ({ children }: { children: ReactNode }) => (
@@ -52,19 +54,29 @@ export const CreateAdmin = ({ children }: { children: ReactNode }) => (
 
     </Form>
 );
-export const DeleteUserForm = ({ userId }: { userId: string }) => (
-    <Form
-        sucess={"تمت العملية بنجاح"}
-        className="my-2 px-4 "
-        replaceLink="#"
-        action={deleteUserAction}
-    >
+export const DeleteUserForm = ({ userId, children }: { userId: string, children?: ReactNode }) => (
+    <Dialog>
+        <DialogTrigger>
+            <TrashIcon></TrashIcon>
+        </DialogTrigger>
+        <DialogContent>
+            <DialogDescription>
+                هل أنت متأكد من حذف: {children}
+            </DialogDescription>
+            <Form
+                sucess={"تمت العملية بنجاح"}
+                className="my-2 px-4 "
+                replaceLink="#"
+                action={deleteUserAction}
+            >
 
-        <input type={"hidden"} name="id" value={userId} />
+                <input type={"hidden"} name="id" value={userId} />
 
-        <SubmitButton className="w-full md:w-1/4" type={"submit"}>
-            حذف
-        </SubmitButton>
+                <SubmitButton className="w-full md:w-1/4" type={"submit"}>
+                    حذف
+                </SubmitButton>
 
-    </Form>
+            </Form>
+        </DialogContent>
+    </Dialog>
 );

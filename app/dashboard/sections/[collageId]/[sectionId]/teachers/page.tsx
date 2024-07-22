@@ -14,6 +14,7 @@ import { buttonVariants } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { getUsers } from "./seed";
 import { Separator } from "@/components/ui/separator";
+import { DeleteUserForm } from "@/app/dashboard/users/components/forms";
 
 const page = async ({ params }: { params: { collageId: string, sectionId: string } }) => {
   const { collageId, sectionId } = params;
@@ -48,7 +49,12 @@ const page = async ({ params }: { params: { collageId: string, sectionId: string
       <div className='grid sm:grid-cols-4 gap-4 '>
         {users?.map((user, i) => {
           return <div className="py-2 rounded-md bg-secondary flex-center" key={i}>
-            <div className="flex w-full flex-col">
+            <div className="flex w-full flex-col relative">
+              <div>
+                <DeleteUserForm userId={user.id} >
+                  {user.fullName}
+                </DeleteUserForm>
+              </div>
               <p className="px-4 mx-auto">{user.fullName}</p>
               <Separator className=" my-1 h-0.5" />
               <p className="px-4 mx-auto">{user.phone}</p>

@@ -35,6 +35,7 @@ export async function middleware(request: NextRequest) {
     console.log(currentUser?.role);
     if (
       (currentUser && currentUser.role === "admin") ||
+      (currentUser && currentUser.role === "teacher") ||
       (currentUser && currentUser.role === "superAdmin")
     ) {
       return;

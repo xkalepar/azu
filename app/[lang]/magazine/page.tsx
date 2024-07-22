@@ -15,6 +15,7 @@ import { cutString } from "@/lib/utils";
 import ParseData from "@/app/components/parse-data";
 import { Metadata } from "next";
 import { getDir } from "../components/footers/home-footer";
+import { env } from "process";
 type Lang = "en" | "ar";
 export const metadata: Metadata = {
   title: "المجلات العلمية",
@@ -24,6 +25,7 @@ const page = async ({ params }: { params: { lang: Lang } }) => {
   const magazines = await getMagazines({
     page: 1,
     qty: 20,
+    linkedId: env.UniveristyId
   });
   return (
     <main className=" container ">
