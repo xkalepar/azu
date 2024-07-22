@@ -220,7 +220,19 @@ const Header = async ({
 
                 </DontRenderUnlessSessionIsDefined>
                 <RenderToRole currnetUser={currnetUser} appliedRole={"admin"}>
-                  <Link className=" text-sm " href={`/dashboard/collages`}>
+                  <Link className=" text-sm " href={`/dashboard/collages/${currnetUser?.collageId}`}>
+                    <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
+                  </Link>
+
+                </RenderToRole>
+                <RenderToRole currnetUser={currnetUser} appliedRole={'superAdmin'}>
+                  <Link className=" text-sm " href={`/dashboard/users`}>
+                    <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
+                  </Link>
+
+                </RenderToRole>
+                <RenderToRole currnetUser={currnetUser} appliedRole={"teacher"}>
+                  <Link className=" text-sm " href={`/dashboard/teachers/${currnetUser?.id}`}>
                     <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                   </Link>
 
