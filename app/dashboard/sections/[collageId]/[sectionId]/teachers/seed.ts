@@ -116,3 +116,44 @@ export const deleteUser = async ({
     return { message: "فشلت العملية" };
   }
 };
+
+export const updateUser = async ({
+  fullName,
+  password,
+  role = "teacher",
+  phone,
+  acadamicCondtion,
+  cv,
+  image,
+  content,
+  collageId,
+  sectionId,
+  userId,
+}: Props & { userId: string }): Promise<{ message: string }> => {
+  try {
+    const hashedPassword = await hashPassword(password);
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: {
+        fullName,
+        password: hashedPassword,
+        role,
+        phone,
+        acadamicCondtion,
+        cv,
+        image,
+        content,
+        collageId,
+        sectionId,
+      },
+    });
+    if (!user) {
+      return { message: "فشل إنشاء المستخدم" };
+    }
+    return { message: "تمت العملية بنجاح" };
+  } catch (error) {
+    console.error("Error creating user:", error);
+    return { message: "فشلت العملية" };
+  }
+};

@@ -506,16 +506,31 @@ export const deleteCollage = async ({
   enId: string;
 }): Promise<{ message: string }> => {
   try {
+    const deletedNews = await prisma.news.deleteMany({ where: { collageId } });
+    const magazines = await prisma.mangzine.deleteMany({
+      where: { linkedId: collageId },
+    });
+    // const sections = await prisma.scientificSection.updateMany({
+    //   where: { collageId },
+    //   data: {},
+    // });
     const deletedCollage = await prisma.collage.delete({
       where: { id: collageId },
     });
+
     const deletedAr = await prisma.arCollageData.delete({
       where: { id: arId },
     });
     const deletedEn = await prisma.enCollageData.delete({
       where: { id: enId },
     });
-    if (!deletedCollage || !deletedEn || !deletedAr) {
+    if (
+      !deletedCollage ||
+      !deletedEn ||
+      !deletedAr ||
+      !deletedNews ||
+      !magazines
+    ) {
       return { message: "فشل حذف كلية" };
     }
     revalidateTag("collages");

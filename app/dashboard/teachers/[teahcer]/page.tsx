@@ -1,11 +1,13 @@
 import { getSession } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import React from 'react'
+import { getUserById } from '../../sections/[collageId]/[sectionId]/teachers/seed'
 
 const pages = async ({ params: { teacher: id } }: {
     params: { teacher: string }
 }) => {
-    const user = await getSession()
+    const user = await getSession();
+    const teacher = await getUserById({ userId: id })
     if (!user) {
         redirect('/login')
     }
@@ -20,7 +22,9 @@ const pages = async ({ params: { teacher: id } }: {
         }
     }
     return (
-        <main>pages</main>
+        <main>
+
+        </main>
     )
 }
 

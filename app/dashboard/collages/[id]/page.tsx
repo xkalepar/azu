@@ -1,7 +1,7 @@
 import ParseData from "@/app/components/parse-data";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getCollageById, getCollages } from "@/prisma/seed";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Metadata } from "next/types";
 import {
   Breadcrumb,
@@ -23,6 +23,7 @@ import { buttonVariants } from "@/lib/constant";
 import { cn } from "@/lib/utils";
 import { Edit } from "lucide-react";
 import { DeleteCollageForm } from "../new/forms";
+import { getSession } from "@/lib/auth";
 
 export async function generateMetadata({
   params,
@@ -49,6 +50,10 @@ export async function generateStaticParams() {
 const collagePage = async ({ params }: { params: { id: string } }) => {
   const collage = await getCollageById(params.id);
   if (!collage) return notFound();
+  const user = await getSession();
+  if (!user) {
+    redirect('/login')
+  }
 
   return (
     <main className="px-4 py-2">
@@ -66,28 +71,31 @@ const collagePage = async ({ params }: { params: { id: string } }) => {
           >
             <Edit size={16} />
           </Link>
-          <Dialog>
-            <DialogTrigger
-              className={cn(
-                " z-50 flex justify-center items-center",
-                buttonVariants.default,
-                buttonVariants.variants.variant.ghost,
-                buttonVariants.variants.size.icon
-              )}
-            >
-              <Trash2Icon size={16}></Trash2Icon>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                هل انت متاكد من حذف {collage.ArCollageData?.title}
-              </DialogHeader>
-              <DeleteCollageForm
-                arId={collage?.arabicId ?? ""}
-                enId={collage?.englishId ?? ""}
-                collageId={collage.id}
-              />
-            </DialogContent>
-          </Dialog>
+          {
+            user.role === "superAdmin" && <Dialog>
+              <DialogTrigger
+                className={cn(
+                  " z-50 flex justify-center items-center",
+                  buttonVariants.default,
+                  buttonVariants.variants.variant.ghost,
+                  buttonVariants.variants.size.icon
+                )}
+              >
+                <Trash2Icon size={16}></Trash2Icon>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  هل انت متاكد من حذف {collage.ArCollageData?.title}
+                </DialogHeader>
+                <DeleteCollageForm
+                  arId={collage?.arabicId ?? ""}
+                  enId={collage?.englishId ?? ""}
+                  collageId={collage.id}
+                />
+              </DialogContent>
+            </Dialog>
+          }
+
         </div>
       </div>
       <Tabs defaultValue="ar" dir="rtl">

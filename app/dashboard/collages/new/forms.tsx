@@ -157,7 +157,7 @@ export default function CollageForm({
               type={"text"}
               placeholder="Enter the name of the college"
               name={"enname"}
-              // value={enContent}
+            // value={enContent}
             />
           </div>
 
@@ -177,7 +177,7 @@ export default function CollageForm({
   );
 }
 
-type deleltProps = {
+type deletedProps = {
   className?: string;
 
   collageId: string;
@@ -189,7 +189,7 @@ export function DeleteCollageForm({
   collageId,
   arId,
   enId,
-}: deleltProps) {
+}: deletedProps) {
   const router = useRouter();
   const [msg, dispatch] = useFormState(deleteCollageAction, init);
   useEffect(() => {

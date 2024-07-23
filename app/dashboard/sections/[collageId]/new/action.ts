@@ -1,6 +1,4 @@
-// import { verifyOrder } from "@/lib/vanex";
-import { newCollage, newSection } from "@/prisma/seed";
-import { Category } from "@prisma/client";
+import { newSection } from "@/prisma/seed";
 import { z } from "zod";
 
 export async function newSectionAction(
