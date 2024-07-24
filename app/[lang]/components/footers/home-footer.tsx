@@ -15,10 +15,10 @@ export const getDir = (lang: Lang): "rtl" | "ltr" =>
   lang === "ar" ? "rtl" : "ltr";
 interface Props {
   lang: Lang;
-  socialMedia: SocialMedia;
+  // socialMedia: SocialMedia;
   className?: string;
 }
-const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
+const HomeFooter = async ({ lang, className, }: Props) => {
   const dictionary = await getDictionary(lang);
 
   return (
@@ -33,14 +33,14 @@ const HomeFooter = async ({ lang, className, socialMedia }: Props) => {
               {dictionary.pages.univeristy.overview.title}
             </h4>
             <ul>
-              <li className=" text-sm flex justify-start gap-2 items-center">
+              {/* <li className=" text-sm flex justify-start gap-2 items-center">
                 <span>
                   {" "}
                   {dictionary.pages.univeristy.overview.footer.Address}
                   {": "}
                 </span>
-                <span>{socialMedia?.address}</span>
-              </li>
+              <span>{socialMedia?.address}</span> 
+              </li> */}
               <li className=" text-sm flex justify-start gap-2 items-center">
                 <span> {dictionary.pages.univeristy.overview.footer.Email}</span>
                 {" :"}
