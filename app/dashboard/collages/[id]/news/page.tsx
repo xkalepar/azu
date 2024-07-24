@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { getNews } from "@/prisma/seed";
 import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
+export const dynamic = 'force-dynamic';
 
 const page = async ({ params }: { params: { id: string; query?: string } }) => {
   // console.log(params);

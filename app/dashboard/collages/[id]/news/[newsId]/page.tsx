@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { DeleteIcon, Edit2 } from "lucide-react";
 import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
 import DeleteNewsForm from "../../components/forms";
+// export const dynamic = 'force-dynamic';
 
 /* export async function generateMetadata({
   params,
@@ -153,11 +154,11 @@ const Breadcrumbs = ({
   );
 };
 
-export async function generateStaticParams({
-  params,
-}: {
-  params: { id: string; newsId: string };
-}) {
-  const news = await getNews({ id: params.id });
-  return news.map((collage) => ({ id: collage.id }));
-}
+// export async function generateStaticParams({
+//   params,
+// }: {
+//   params: { id: string; newsId: string };
+// }) {
+//   const news = await getNews({ id: params.id });
+//   return news.map((collage) => ({ id: collage.id }));
+// }
