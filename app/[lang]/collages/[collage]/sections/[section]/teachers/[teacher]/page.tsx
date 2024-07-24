@@ -1,8 +1,8 @@
 import ParseData from '@/app/components/parse-data'
 import { getUserById, } from '@/app/dashboard/sections/[collageId]/[sectionId]/teachers/seed'
-import { Button } from '@/components/ui/button'
 import { buttonVariants } from '@/lib/constant'
 import { cn } from '@/lib/utils'
+import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { env } from 'process'
@@ -33,5 +33,14 @@ const page = async ({ params: { teacher: teacherId } }: { params: { teacher: str
         </main>
     )
 }
+
+export async function generateMetadata({ params: { teacher: teacherId } }: { params: { teacher: string } }): Promise<Metadata> {
+    const teacher = await getUserById({ userId: teacherId })
+    return {
+        title: teacher?.fullName,
+    }
+}
+
+
 
 export default page
