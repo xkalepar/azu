@@ -91,16 +91,16 @@ const layout = async ({
       {children}
 
       <CollageFooter lang={"ar"} socialMedia={{
-        facebook: null,
-        whatsapp: null,
-        youtube: null,
-        email: null,
-        telegram: null,
-        phone1: null,
-        phone2: null,
-        fax: null,
-        x: null,
-        address: null,
+        facebook: collage.SocialMedia?.facebook,
+        whatsapp: collage.SocialMedia?.whatsapp,
+        youtube: collage.SocialMedia?.youtube,
+        email: collage.SocialMedia?.email,
+        telegram: collage.SocialMedia?.telegram,
+        phone1: collage.SocialMedia?.phone1,
+        phone2: collage.SocialMedia?.phone2,
+        fax: collage.SocialMedia?.fax,
+        x: collage.SocialMedia?.x,
+        address: collage.SocialMedia?.address,
         location: collage?.SocialMedia?.location
       }} />
 

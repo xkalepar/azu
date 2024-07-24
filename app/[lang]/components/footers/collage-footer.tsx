@@ -6,6 +6,10 @@ import { Lang } from "@/types/types";
 import Link from "next/link";
 import React from "react";
 import AddressMap from "../maps";
+import { IoLogoWhatsapp } from "react-icons/io";
+import { FaFacebookSquare } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+
 type SocialMedia = {
     facebook?: string | null
     whatsapp?: string | null
@@ -27,7 +31,7 @@ interface Props {
     className?: string;
     title?: string
 }
-const CollageFooter = async ({ lang, className, socialMedia, title }: Props) => {
+const CollageFooter = async ({ lang, socialMedia, title }: Props) => {
     const dictionary = await getDictionary(lang)
     return <footer className="container bg-slate-300">
         <div className="grid md:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3 sm:gap-4">
@@ -36,14 +40,14 @@ const CollageFooter = async ({ lang, className, socialMedia, title }: Props) => 
                     {title}
                 </h4>
                 <ul>
-                    <li className=" text-sm flex justify-start gap-2 items-center">
+                    {/* <li className=" text-sm flex justify-start gap-2 items-center">
                         <span>
                             {" "}
                             {dictionary.pages.univeristy.overview.footer.Address}
                             {": "}
                         </span>
                         <span>{socialMedia?.address}</span>
-                    </li>
+                    </li> */}
                     <li className=" text-sm flex justify-start gap-2 items-center">
                         <span> {dictionary.pages.univeristy.overview.footer.Email}</span>
                         {":"}
@@ -121,6 +125,20 @@ const CollageFooter = async ({ lang, className, socialMedia, title }: Props) => 
                     </li>
                 </ul>
             </div>
+
+            <div className="flex justify-center w-full items-start gap-2">
+                <Link href={`https://wa.me/${socialMedia.whatsapp}`} target="_blank" rel="noopener noreferrer" >
+                    <IoLogoWhatsapp color="#25d366" size={36} />
+                </Link>
+                <Link href={socialMedia?.facebook ?? "#"} target="_blank" rel="noopener noreferrer" >
+                    <FaFacebookSquare color="#1877f2" size={36} />
+                </Link>
+                <Link href={socialMedia?.x ?? "#"} target="_blank" rel="noopener noreferrer" >
+                    <FaSquareXTwitter color="#000" size={36} />
+                </Link>
+            </div>
+
+
             <div>
                 <AddressMap src={socialMedia?.location ?? "https://maps.app.goo.gl/XoZdgCKCKELtEtsj7"} />
             </div>

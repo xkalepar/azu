@@ -283,7 +283,7 @@ export const location = async ({
   collageId: string;
 }) => {
   try {
-    const theNewStringValue = extractIframeLink(value);
+    const locationLink = extractIframeLink(value);
     const collage = await prisma.collage.findUnique({
       where: { id: collageId },
       include: { SocialMedia: true },
@@ -294,7 +294,7 @@ export const location = async ({
     if (!collage.SocialMedia) {
       const createSocial = await prisma.socialMedia.create({
         data: {
-          location: theNewStringValue,
+          location: locationLink,
           Collage: {
             connect: {
               id: collageId,
@@ -315,7 +315,7 @@ export const location = async ({
         id: collage.SocialMedia?.id ?? "",
       },
       data: {
-        location: theNewStringValue,
+        location: locationLink,
       },
     });
 

@@ -1,4 +1,3 @@
-import { editUniversity } from "@/prisma/seed";
 import { z } from "zod";
 import {
   email,
