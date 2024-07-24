@@ -121,11 +121,11 @@ const Breadcrumbs = ({
   );
 };
 
-export async function generateStaticParams({
-  params,
-}: {
-  params: { id: string; newsId: string };
-}) {
-  const news = await getNews({ id: params.id });
-  return news.map((collage) => ({ id: collage.id }));
-}
+// export async function generateStaticParams({
+//   params,
+// }: {
+//   params: { id: string; newsId: string };
+// }) {
+//   const news = await getNews({ id: params.id });
+//   return news.map((collage) => ({ id: collage.id }));
+// }

@@ -11,6 +11,7 @@ import { getNewsForSection } from "@/prisma/seed";
 import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
 import Breadcrumbs from "./components/breadcrumbs";
+
 export const dynamic = 'force-dynamic';
 
 const page = async ({
