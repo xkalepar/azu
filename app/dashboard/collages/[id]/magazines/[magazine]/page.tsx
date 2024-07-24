@@ -17,7 +17,8 @@ import ResponiseDialog from "@/app/[lang]/components/responsive-dialog";
 import DeleteMagazineForm from "../components/forms";
 import { FaFilePdf } from "react-icons/fa6";
 import { Metadata } from "next";
-import { getMagazine, getMagazines } from "@/app/dashboard/university/magazines/seed";
+import { getMagazine } from "@/app/dashboard/university/magazines/seed";
+export const dynamic = 'force-dynamic';
 
 export async function generateMetadata({
   params,
@@ -97,6 +98,7 @@ const newsPage = async ({ params }: { params: { magazine: string } }) => {
 };
 
 export default newsPage;
+
 const Breadcrumbs = ({ title }: { title?: string }) => {
   return (
     <Breadcrumb>
@@ -133,7 +135,7 @@ const Breadcrumbs = ({ title }: { title?: string }) => {
   );
 };
 
-export async function generateStaticParams() {
-  const magazines = await getMagazines();
-  return magazines.map((magazine) => ({ magazine: magazine.id }));
-}
+// export async function generateStaticParams() {
+//   const magazines = await getMagazines();
+//   return magazines.map((magazine) => ({ magazine: magazine.id }));
+// }
