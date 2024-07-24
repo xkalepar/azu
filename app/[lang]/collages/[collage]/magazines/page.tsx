@@ -60,7 +60,7 @@ const page = async ({ params }: { params: { lang: Lang, collage: string } }) => 
               title={
                 lang === "ar" ? item.arContent?.title : item.enContent?.title
               }
-              href={`/${lang}/magazines/${item.id}`}
+              href={`magazines/${item.id}`}
             >
               <div className="my-1 py-1" dir={getDir(lang)}>
                 <Lang
