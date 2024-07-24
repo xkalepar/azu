@@ -42,11 +42,9 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams(
-
-) {
+export async function generateStaticParams() {
   const magazine = await getAllMagazines({});
-  return magazine.map((id) => ({ id: id.id }));
+  return magazine.map((id) => ({ magazine: id.id }));
 }
 
 const magazinePage = async ({
