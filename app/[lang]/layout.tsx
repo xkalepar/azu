@@ -59,7 +59,6 @@ export default async function Root({
 
           <MainRender>
             <HomeFooter
-              socialMedia={univeristy?.SocialMedia as SocialMedia}
               lang={lang}
             ></HomeFooter>
           </MainRender>
