@@ -126,12 +126,13 @@ export const updateUser = async ({
   cv,
   image,
   content,
-  collageId,
-  sectionId,
+  // collageId,
+  // sectionId,
   userId,
 }: Props & { userId: string }): Promise<{ message: string }> => {
   try {
     const hashedPassword = await hashPassword(password);
+    // console.log(content);
 
     const user = await prisma.user.update({
       where: { id: userId },
@@ -144,8 +145,8 @@ export const updateUser = async ({
         cv,
         image,
         content,
-        collageId,
-        sectionId,
+        // collageId,
+        // sectionId,
       },
     });
     if (!user) {

@@ -1,7 +1,10 @@
 import ParseData from '@/app/components/parse-data'
 import { getUserById, } from '@/app/dashboard/sections/[collageId]/[sectionId]/teachers/seed'
 import { Button } from '@/components/ui/button'
+import { buttonVariants } from '@/lib/constant'
+import { cn } from '@/lib/utils'
 import Image from 'next/image'
+import Link from 'next/link'
 import { env } from 'process'
 import React from 'react'
 
@@ -23,9 +26,9 @@ const page = async ({ params: { teacher: teacherId } }: { params: { teacher: str
                         className="object-cover w-full h-full"
                     />
                 </div>
-                <Button className='w-full'>
+                <Link className={cn("w-full rounded-md flex-center", buttonVariants.variants.size.default, buttonVariants.variants.variant.default)} href={teacher?.cv ?? "#"} target={"_blank"}>
                     تنزيل cv
-                </Button>
+                </Link>
             </section>
         </main>
     )

@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import Editor from "@/app/components/editor";
 import LangTabs from "@/app/components/tabs";
 import { useParams } from "next/navigation";
+import { env } from "process";
 
 export const CreateMagazineForm = () => {
   const { id } = useParams()
@@ -97,7 +98,7 @@ export const CreateMagazineForm = () => {
                   <MdOutlineCancel />
                 </Button>
                 <Image
-                  src={"/pdf.png"}
+                  src={env.PDf_LOGO as string}
                   alt="pdf"
                   width={500}
                   height={500}
@@ -265,7 +266,7 @@ export const UpdateMagazineForm = ({
                   <MdOutlineCancel />
                 </Button>
                 <Image
-                  src={"/pdf.png"}
+                  src={env.PDf_LOGO as string}
                   alt="pdf"
                   width={500}
                   height={500}

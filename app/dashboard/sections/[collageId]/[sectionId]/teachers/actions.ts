@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createUser, deleteUser } from "./seed";
+import { createUser, deleteUser, updateUser } from "./seed";
 
 export async function newUserAction(
   prevState: {
@@ -95,8 +95,8 @@ export async function updateUserAction(
         .enum(["admin", "teacher", "student", "superAdmin"])
         .optional()
         .nullable(),
-      collageId: z.string().optional().nullable(),
-      sectionId: z.string().optional().nullable(),
+      // collageId: z.string().optional().nullable(),
+      // sectionId: z.string().optional().nullable(),
     });
     console.log(`schema: ${schema}`);
 
@@ -110,8 +110,8 @@ export async function updateUserAction(
       cv: formData.get("cv"),
       acadamicCondtion: formData.get("acadamicCondtion"),
       role: formData.get("role"),
-      collageId: formData.get("collageId"),
-      sectionId: formData.get("sectionId"),
+      // collageId: formData.get("collageId"),
+      // sectionId: formData.get("sectionId"),
     });
     console.log(data);
 
@@ -121,6 +121,7 @@ export async function updateUserAction(
     }
     console.log(data);
     const {
+      userId,
       fullName,
       image,
       password,
@@ -129,10 +130,10 @@ export async function updateUserAction(
       content,
       cv,
       role,
-      collageId,
-      sectionId,
+      // collageId,
+      // sectionId,
     } = data.data;
-    const res = await createUser({
+    const res = await updateUser({
       fullName,
       password,
       phone: Number(phone),
@@ -141,8 +142,9 @@ export async function updateUserAction(
       cv,
       image,
       content,
-      sectionId,
-      collageId,
+      userId,
+      // sectionId,
+      // collageId,
     });
     return { message: res.message };
   } catch (e) {

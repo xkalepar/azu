@@ -59,6 +59,7 @@ const Editor = ({ content, onChange }: { content: string; onChange: any }) => {
   return (
     <div className="">
       <EditorProvider
+
         editorProps={{
           attributes: {
             class:
@@ -71,7 +72,7 @@ const Editor = ({ content, onChange }: { content: string; onChange: any }) => {
         slotBefore={<MenuBar content={content} />}
         extensions={extensions}
         content={content}
-        // children={undefined}
+      // children={undefined}
       >
         {""}
       </EditorProvider>
