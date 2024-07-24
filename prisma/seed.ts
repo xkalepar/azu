@@ -79,7 +79,6 @@ export const getUniversity = unstable_cache(
           News: true,
           ArContent: true,
           EnContent: true,
-          SocialMedia: true,
           Centers: {
             include: {
               arContent: true,
