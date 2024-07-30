@@ -34,14 +34,13 @@ const CardPreview = ({
         <div className="w-full h-[200px] max-h-[200px] rounded-sm ">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
             <Image
-              src={src ?? env.NotFoundImage as string}
+              src={src ?? (env.NotFoundImage as string)}
               alt={alt}
               loading="lazy"
               width={1000}
               height={1000}
               className="object-cover w-full h-full"
             />
-
           </Suspense>
 
           <div className="px-2 py-1 flex-1">

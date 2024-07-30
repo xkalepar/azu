@@ -12,9 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { MdOutlineCancel } from "react-icons/md";
 import Image from "next/image";
-import {
-  UploadDropzone,
-} from "@/app/dashboard/components/upload";
+import { UploadDropzone } from "@/app/dashboard/components/upload";
 import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
@@ -25,7 +23,7 @@ import { useParams } from "next/navigation";
 import { env } from "process";
 
 export const CreateMagazineForm = () => {
-  const { id } = useParams()
+  const { id } = useParams();
   const [image, setImage] = useState<string>("");
   const [pdf, setPdf] = useState<string>("");
   const [body, setBody] = useState<string>("");
@@ -38,7 +36,6 @@ export const CreateMagazineForm = () => {
       action={newMagazineAction}
       replaceLink={`/dashboard/collages/${id}/magazines`}
     >
-
       <div className="flex gap-2 items-start  justify-between px-4 flex-col sm:flex-row w-full">
         {image ? (
           <div className="w-[200px] h-[200px] rounded-lg overflow-hidden relative">
@@ -197,7 +194,7 @@ export const UpdateMagazineForm = ({
   const [body, setBody] = useState<string>(oldBody);
   const [enBody, setEnBody] = useState<string>(oldEnBody);
   const [pdf, setPdf] = useState<string>(oldPdf);
-  const { id } = useParams()
+  const { id } = useParams();
 
   return (
     <Form

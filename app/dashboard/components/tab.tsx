@@ -14,7 +14,7 @@ export default function NavigationTabs({
   return (
     <nav
       className={cn(
-        "flex flex-row justify-start flex-wrap gap-1 px-4 py-2 bg-secondary",
+        "flex flex-row justify-start flex-wrap gap-1 px-4 py-2 bg-background",
         className
       )}
       dir="rtl"
