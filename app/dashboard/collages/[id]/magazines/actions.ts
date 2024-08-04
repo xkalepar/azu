@@ -146,9 +146,6 @@ export async function deleteMagazineAction(
       enId: formData.get("enId"),
       arId: formData.get("arId"),
     });
-    // console.log(data);
-
-    // console.log(data.success);
     if (!data.success) {
       return { message: "يجب أن يتم ملء جميع الحقول" };
     }

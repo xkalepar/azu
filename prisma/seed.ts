@@ -242,6 +242,9 @@ export const getAllnews = async (university: boolean = false) => {
       where: {
         universityId: university ? uniId : null,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     if (!news) {
       return [];
@@ -268,19 +271,15 @@ export const getUniNews = unstable_cache(
       const news = await prisma.news.findMany({
         where: {
           universityId: uniId,
-          // AND: {
-          //   enContent: {
-          //     body: {
-          //       contains: query,
-          //     },
-          //   },
-          // },
         },
         take: take,
         skip: page === 1 ? 0 : page * take,
         include: {
           arContent: true,
           enContent: true,
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       });
 
@@ -322,7 +321,7 @@ export const getMagazines = async ({
         arContent: true,
         enContent: true,
       },
-      orderBy: { createdAt: "asc" },
+      orderBy: { createdAt: "desc" },
     });
     if (!magazines) {
       return [];
@@ -336,7 +335,11 @@ export const getAllMagazines =
   // unstable_cache(
   async ({}: {}) => {
     try {
-      const magazines = await prisma.mangzine.findMany({});
+      const magazines = await prisma.mangzine.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
       if (!magazines) {
         return [];
       }
@@ -366,7 +369,9 @@ export const getConferences = async ({
         arContent: true,
         enContent: true,
       },
-      orderBy: { createdAt: "asc" },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
     if (!conferences) {
       return [];
@@ -756,6 +761,9 @@ export const getNews = unstable_cache(
           },
           ScientificSection: includeScientificSection,
         },
+        orderBy: {
+          createdAt: "desc",
+        },
         take: qty,
         skip: page !== undefined ? page * qty : 0,
       });
@@ -791,6 +799,9 @@ export const getNewsForSection = unstable_cache(
               ArContent: true,
             },
           },
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       });
       if (!news) {

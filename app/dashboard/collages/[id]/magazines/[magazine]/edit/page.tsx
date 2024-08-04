@@ -1,4 +1,3 @@
-import { getNewsbyId } from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import React from "react";
 import {
@@ -12,11 +11,10 @@ import {
 import Link from "next/link";
 import { UpdateMagazineForm } from "../../components/forms";
 import { getMagazine } from "@/app/dashboard/university/magazines/seed";
-// import { EditNewsForm } from "../../../components/forms";
 
-const page = async ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  console.log(params);
+const page = async ({ params }: { params: { magazine: string } }) => {
+  const { magazine: id } = params;
+
   const magazine = await getMagazine({ id: id });
   console.log(magazine);
   if (magazine === undefined) {

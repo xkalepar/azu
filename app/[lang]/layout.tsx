@@ -13,7 +13,6 @@ import "../globals.css";
 import { getCollages, getUniversity } from "@/prisma/seed";
 import { cn } from "@/lib/utils";
 import HomeFooter from "./components/footers/home-footer";
-import { SocialMedia } from "@prisma/client";
 import { MainRender } from "./components/header/dynamic-header";
 import Header from "./components/header/header";
 import { Metadata } from "next";
@@ -50,21 +49,16 @@ export default async function Root({
               actvities={univeristy?.UniversityActivities}
               graduates={univeristy?.GraduatesForUniversity}
               projects={univeristy?.Projects}
-            >
-
-            </Header>
+            ></Header>
           </MainRender>
 
           <div className=" flex-1">{children}</div>
 
           <MainRender>
-            <HomeFooter
-              lang={lang}
-            ></HomeFooter>
+            <HomeFooter lang={lang}></HomeFooter>
           </MainRender>
         </main>
         <Toaster />
-
       </body>
     </html>
   );

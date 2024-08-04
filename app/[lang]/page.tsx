@@ -32,7 +32,6 @@ export default async function home({
   const conferences = await getConferences({ page: 1, qty: 9 });
   const magazines = await getMagazines({ page: 1, qty: 9 });
 
-
   return (
     <main>
       <div className="bg-[url('/bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
@@ -46,18 +45,7 @@ export default async function home({
             >
               <FaUniversity size={128} className="hidden md:block" />
               <div className="flex flex-col justify-between gap-1">
-                <div className=" relative z-[100]">
-                  {/* <Input
-                    type="text"
-                    className=" bg-secondary z-50 text-primary hidden md:block"
-                  />
-                  <Button
-                    size={"icon"}
-                    className="hidden md:flex absolute left-0 top-0"
-                  >
-                    <SearchIcon />
-                  </Button> */}
-                </div>
+                <div className=" relative z-[100]"></div>
                 <h1 className="text-3xl my-4">
                   {dictionary["pages"]["univeristy"]["overview"]["title"]}
                 </h1>
@@ -80,8 +68,8 @@ export default async function home({
           {<Lang lang={lang} ar={"معرض الصور"} en={"Gallery"} />}
         </h3>
         {univeristy !== undefined &&
-          univeristy !== null &&
-          univeristy.gallery.length > 0 ? (
+        univeristy !== null &&
+        univeristy.gallery.length > 0 ? (
           <ImageGridView list={univeristy.gallery} />
         ) : (
           <div>
@@ -116,13 +104,15 @@ export default async function home({
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
                 className=" min-h-[300px]"
-                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
+                title={
+                  lang === "en"
+                    ? item?.enContent?.title
+                    : item?.arContent?.title
+                }
                 src={item.image}
                 lang={lang}
                 href={`/news/${item.id}`}
-              >
-
-              </CardPreview>
+              ></CardPreview>
             </AnimatedCard>
           ))}
         </div>
@@ -156,13 +146,15 @@ export default async function home({
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
                 className=" min-h-[300px]"
-                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
+                title={
+                  lang === "en"
+                    ? item?.enContent?.title
+                    : item?.arContent?.title
+                }
                 src={item.logo}
                 lang={lang}
                 href={`/conferences/${item.id}`}
-              >
-
-              </CardPreview>
+              ></CardPreview>
             </AnimatedCard>
           ))}
         </div>
@@ -196,13 +188,15 @@ export default async function home({
             <AnimatedCard key={i} XorY="x" intialX={20}>
               <CardPreview
                 className=" min-h-[300px]"
-                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
+                title={
+                  lang === "en"
+                    ? item?.enContent?.title
+                    : item?.arContent?.title
+                }
                 src={item.logo}
                 lang={lang}
                 href={`/magazine/${item.id}`}
-              >
-
-              </CardPreview>
+              ></CardPreview>
             </AnimatedCard>
           ))}
         </div>
