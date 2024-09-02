@@ -7,19 +7,27 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import Lang from "../[lang]/components/lang";
 import { useParams } from "next/navigation";
+import InputValidator from "../[lang]/components/phone-input";
 
-const LoginForm = ({
-  className,
-}: {
-  className?: string;
-}) => {
-  const { lang }: { lang: "en" | "ar" } = useParams()
+const LoginForm = ({ className }: { className?: string }) => {
+  const { lang }: { lang: "en" | "ar" } = useParams();
   return (
-    <Form className={className} replaceLink={`/${lang}/`} sucess="تم تسجيل الدخول بنجاح" action={signIn}>
+    <Form
+      className={className}
+      replaceLink={`/${lang}/`}
+      sucess="تم تسجيل الدخول بنجاح"
+      action={signIn}
+    >
       <Label htmlFor="phone">
         <Lang ar={"رقم الهاتف"} en={"phone number"} lang={lang} />
       </Label>
-      <Input type={"tel"} name="phone" id="phone" required className="bg-white" />
+      <InputValidator
+        type={"tel"}
+        name="phone"
+        id="phone"
+        required
+        className="bg-white"
+      />
 
       <Label htmlFor="password">
         <Lang ar={"كلمة المرور"} en={"password"} lang={lang} />

@@ -20,15 +20,14 @@ const collagesPage = async () => {
   const collages = await getCollages();
   const user = await getSession();
   if (!user) {
-    return redirect('/')
+    return redirect("/login");
   }
   if (user.role === "admin") {
-    redirect(`/dashboard/collages/${user.collageId}`)
+    redirect(`/dashboard/collages/${user.collageId}`);
   }
   if (user.role !== "superAdmin") {
-    redirect('/login')
+    redirect("/login");
   }
-
 
   return (
     <main>

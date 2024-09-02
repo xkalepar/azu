@@ -1,6 +1,5 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
 import { hashPassword } from "@/lib/auth";
 import prisma from "@/prisma/db";
 type UserRole = "admin" | "teacher" | "superAdmin" | "student";
