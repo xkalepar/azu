@@ -19,7 +19,7 @@ import { buttonVariants } from "@/lib/constant";
 import { ReactNode } from "react";
 import { GiTeacher } from "react-icons/gi";
 import Lang from "./components/lang";
-
+//test
 export default async function home({
   params: { lang },
 }: {
