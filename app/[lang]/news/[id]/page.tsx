@@ -33,8 +33,8 @@ export async function generateMetadata({
       lang === "ar"
         ? ` الأخبار | ${center.arContent?.title}`
         : ` News | ${center.enContent?.title}`,
-    description:
-      lang === "ar" ? center.arContent?.body : center.enContent?.body,
+    // description:
+    //   lang === "ar" ? center.arContent?.body : center.enContent?.body,
   };
 }
 
