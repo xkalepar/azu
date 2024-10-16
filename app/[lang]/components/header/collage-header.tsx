@@ -50,23 +50,39 @@ type CollageProps = {
   id: string;
   logo: string;
   category: $Enums.Category;
-  graduates: { title: string, body: string, enTitle: string, enBody: string, id: string }[][] | undefined
-  offices: { title: string, body: string, enTitle: string, enBody: string, id: string }[][] | undefined;
+  graduates:
+    | {
+        title: string;
+        body: string;
+        enTitle: string;
+        enBody: string;
+        id: string;
+      }[][]
+    | undefined;
+  offices:
+    | {
+        title: string;
+        body: string;
+        enTitle: string;
+        enBody: string;
+        id: string;
+      }[][]
+    | undefined;
   sections: {
     title?: string | null;
     enTitle?: string | null;
     body?: string | null;
     enBody?: string | null;
     id: string;
-  }[]
+  }[];
 };
 function DesktopMenuHeaderCollage({
   id,
   graduates,
-  offices, sections,
-
+  offices,
+  sections,
 }: CollageProps) {
-  const { lang, collage }: { lang: "ar" | "en", collage: string } = useParams();
+  const { lang, collage }: { lang: "ar" | "en"; collage: string } = useParams();
 
   return (
     <NavigationMenu
@@ -93,94 +109,94 @@ function DesktopMenuHeaderCollage({
 
         <DropdownMenuButton
           title={
-            <Lang
-              lang={lang}
-              ar={"البحث العلمي"}
-              en={"Scientific Research"}
-            />}
+            <Lang lang={lang} ar={"البحث العلمي"} en={"Scientific Research"} />
+          }
         >
           <Link href={`/${lang}/collages/${collage}/magazines/`}>
             <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-              <Lang lang={lang} ar={"مؤتمرات و مجلات "} en={"magazines"} />
+              <Lang lang={lang} ar={" مجلات "} en={"magazines"} />
+              {/* <Lang lang={lang} ar={"مؤتمرات و مجلات "} en={"magazines"} /> */}
             </div>
           </Link>
         </DropdownMenuButton>
 
         <DropdownMenuButton
           title={
-
             <Lang lang={lang} ar={"الدراسات العليا"} en={"graduate studies"} />
-
           }
         >
           <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-            {graduates?.map((page) => (
-              page.map((data, i) => (<li className="row-span-3" key={i}>
-                {" "}
-                <NavigationMenuLink asChild>
-                  <Link
-                    className={cn(
-                      "text-sm w-full ",
-                      buttonVariants.default,
-                      buttonVariants.variants.variant.secondary,
-                      buttonVariants.variants.size.default,
-                      "justify-start bg-transparent"
-                    )}
-                    href={`/${lang}/collages/${collage}/graduate-studies/${data.id}`}
-                  >
-                    {" "}
-                    <Lang
-                      ar={data?.title}
-                      en={data?.enTitle}
-                      lang={lang}
-                    />
-                  </Link>
-                </NavigationMenuLink>
-              </li>))
-            ))}
+            {graduates?.map((page) =>
+              page.map((data, i) => (
+                <li className="row-span-3" key={i}>
+                  {" "}
+                  <NavigationMenuLink asChild>
+                    <Link
+                      className={cn(
+                        "text-sm w-full ",
+                        buttonVariants.default,
+                        buttonVariants.variants.variant.secondary,
+                        buttonVariants.variants.size.default,
+                        "justify-start bg-transparent"
+                      )}
+                      href={`/${lang}/collages/${collage}/graduate-studies/${data.id}`}
+                    >
+                      {" "}
+                      <Lang ar={data?.title} en={data?.enTitle} lang={lang} />
+                    </Link>
+                  </NavigationMenuLink>
+                </li>
+              ))
+            )}
           </ul>
         </DropdownMenuButton>
         <DropdownMenuButton
           title={
-            <Lang lang={lang} ar={"المكاتب والأقسام الإدارية"} en={"offices and administrative departments"} />
+            <Lang
+              lang={lang}
+              ar={"المكاتب والأقسام الإدارية"}
+              en={"offices and administrative departments"}
+            />
           }
         >
           <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-            {offices?.map((page) => (
-              page.map((data, i) => (<li className="row-span-3" key={i}>
-                {" "}
-                <NavigationMenuLink asChild>
-                  <Link
-                    className={cn(
-                      "text-sm w-full ",
-                      buttonVariants.default,
-                      buttonVariants.variants.variant.secondary,
-                      buttonVariants.variants.size.default,
-                      "justify-start bg-transparent"
-                    )}
-                    href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}
-                  >
-                    {" "}
-                    <Lang
-                      ar={data?.title}
-                      en={data?.enTitle}
-                      lang={lang}
-                    />
-                  </Link>
-                </NavigationMenuLink>
-              </li>))
-            ))}
+            {offices?.map((page) =>
+              page.map((data, i) => (
+                <li className="row-span-3" key={i}>
+                  {" "}
+                  <NavigationMenuLink asChild>
+                    <Link
+                      className={cn(
+                        "text-sm w-full ",
+                        buttonVariants.default,
+                        buttonVariants.variants.variant.secondary,
+                        buttonVariants.variants.size.default,
+                        "justify-start bg-transparent"
+                      )}
+                      href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}
+                    >
+                      {" "}
+                      <Lang ar={data?.title} en={data?.enTitle} lang={lang} />
+                    </Link>
+                  </NavigationMenuLink>
+                </li>
+              ))
+            )}
           </ul>
         </DropdownMenuButton>
 
         <DropdownMenuButton
           title={
-            <Lang lang={lang} ar={"الأقسام العلمية"} en={"Scientific section"} />
+            <Lang
+              lang={lang}
+              ar={"الأقسام العلمية"}
+              en={"Scientific section"}
+            />
           }
         >
           <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
             {sections?.map((page, i) => (
-              (<li className="row-span-3" key={i}>
+              <li className="row-span-3" key={i}>
                 {" "}
                 <NavigationMenuLink asChild>
                   <Link
@@ -194,18 +210,13 @@ function DesktopMenuHeaderCollage({
                     href={`/${lang}/collages/${collage}/sections/${page.id}`}
                   >
                     {" "}
-                    <Lang
-                      ar={page?.title}
-                      en={page?.enTitle}
-                      lang={lang}
-                    />
+                    <Lang ar={page?.title} en={page?.enTitle} lang={lang} />
                   </Link>
                 </NavigationMenuLink>
-              </li>)
+              </li>
             ))}
           </ul>
         </DropdownMenuButton>
-
       </NavigationMenuList>
     </NavigationMenu>
   );
@@ -215,10 +226,10 @@ function MobileNavigationBarCollage({
   id,
   graduates,
   offices,
-  sections
+  sections,
 }: CollageProps) {
   const [open, setOpen] = useState(false);
-  const { lang, collage }: { lang: "ar" | "en", collage: string } = useParams();
+  const { lang, collage }: { lang: "ar" | "en"; collage: string } = useParams();
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -256,8 +267,6 @@ function MobileNavigationBarCollage({
               </Link>
             </AccordionItem>
 
-
-
             {/* البحث العلمي */}
             <AccordionItem
               value="magazines"
@@ -273,7 +282,7 @@ function MobileNavigationBarCollage({
               <AccordionContent className=" w-4/5 mx-auto my-2">
                 <Link href={`/${lang}/collages/${collage}/magazines/`}>
                   <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-                    <Lang lang={lang} ar={"مؤتمرات و مجلات "} en={"magazines"} />
+                    <Lang lang={lang} ar={" مجلات "} en={"magazines"} />
                   </div>
                 </Link>
               </AccordionContent>
@@ -284,24 +293,34 @@ function MobileNavigationBarCollage({
               className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
             >
               <AccordionTrigger className=" text-sm ">
-                <Lang lang={lang} ar={"الدراسات العليا"} en={"graduate studies"} />
-
+                <Lang
+                  lang={lang}
+                  ar={"الدراسات العليا"}
+                  en={"graduate studies"}
+                />
               </AccordionTrigger>
               <AccordionContent className=" w-4/5 mx-auto my-2">
                 {graduates !== undefined &&
                   graduates.length > 0 &&
-                  graduates?.map((pages) => (
-                    pages.map((data, index) => (<div onClick={() => setOpen(!open)} key={index}>
-                      <Link href={`/${lang}/collages/${collage}/graduate-studies/${data.id}`}>
-                        <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-                          <Lang lang={lang} ar={data.title} en={data.enTitle} />
-                        </div>
-                      </Link>
-                    </div>))
-                  ))}
+                  graduates?.map((pages) =>
+                    pages.map((data, index) => (
+                      <div onClick={() => setOpen(!open)} key={index}>
+                        <Link
+                          href={`/${lang}/collages/${collage}/graduate-studies/${data.id}`}
+                        >
+                          <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                            <Lang
+                              lang={lang}
+                              ar={data.title}
+                              en={data.enTitle}
+                            />
+                          </div>
+                        </Link>
+                      </div>
+                    ))
+                  )}
               </AccordionContent>
             </AccordionItem>
-
 
             {/* offices */}
             <AccordionItem
@@ -318,15 +337,23 @@ function MobileNavigationBarCollage({
               <AccordionContent className=" w-4/5 mx-auto my-2">
                 {offices !== undefined &&
                   offices.length > 0 &&
-                  offices?.map((pages) => (
-                    pages.map((data, index) => (<div onClick={() => setOpen(!open)} key={index}>
-                      <Link href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}>
-                        <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-                          <Lang lang={lang} ar={data.title} en={data.enTitle} />
-                        </div>
-                      </Link>
-                    </div>))
-                  ))}
+                  offices?.map((pages) =>
+                    pages.map((data, index) => (
+                      <div onClick={() => setOpen(!open)} key={index}>
+                        <Link
+                          href={`/${lang}/collages/${collage}/offices-and-administrative-departments/${data.id}`}
+                        >
+                          <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                            <Lang
+                              lang={lang}
+                              ar={data.title}
+                              en={data.enTitle}
+                            />
+                          </div>
+                        </Link>
+                      </div>
+                    ))
+                  )}
               </AccordionContent>
             </AccordionItem>
             {/* Scientific-sections */}
@@ -336,18 +363,30 @@ function MobileNavigationBarCollage({
               className=" border-none bg-secondary my-2 w-full px-2 rounded-md"
             >
               <AccordionTrigger className=" text-sm ">
-                <Lang lang={lang} ar={"الأقسام العلمية"} en={"Scientific section"} />
+                <Lang
+                  lang={lang}
+                  ar={"الأقسام العلمية"}
+                  en={"Scientific section"}
+                />
               </AccordionTrigger>
               <AccordionContent className=" w-4/5 mx-auto my-2">
                 {sections !== undefined &&
                   sections.length > 0 &&
                   sections.map((section, index) => {
-                    return <Link key={index} href={`/${lang}/collages/${collage}/sections/${section.id}`}>
-                      <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
-                        <Lang lang={lang} ar={section?.title} en={section?.enTitle} />
-                      </div>
-
-                    </Link>
+                    return (
+                      <Link
+                        key={index}
+                        href={`/${lang}/collages/${collage}/sections/${section.id}`}
+                      >
+                        <div className="flex text-sm group border-accent flex-start gap-2 select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-primary hover:text-white focus:bg-accent  focus:text-accent-foreground">
+                          <Lang
+                            lang={lang}
+                            ar={section?.title}
+                            en={section?.enTitle}
+                          />
+                        </div>
+                      </Link>
+                    );
                   })}
               </AccordionContent>
             </AccordionItem>
@@ -381,7 +420,7 @@ const ListItem = ({
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className
           )}
-        // {...props}
+          // {...props}
         >
           <div className="text-sm font-medium leading-none">{title}</div>
           <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -402,7 +441,7 @@ const CollegeHeader = ({
   category,
   graduates,
   offices,
-  sections
+  sections,
 }: CollageProps) => {
   const { lang }: { lang: "ar" | "en" } = useParams();
   // console.log(graduates)
@@ -418,7 +457,8 @@ const CollegeHeader = ({
               offices={offices}
               category={category}
               logo={logo}
-              id={id} graduates={graduates}
+              id={id}
+              graduates={graduates}
               sections={sections}
             />
 
@@ -429,12 +469,13 @@ const CollegeHeader = ({
           <MobileNavigationBarCollage
             offices={offices}
             sections={sections}
-
             ArCollageData={ArCollageData}
             EnCollageData={EnCollageData}
             category={category}
             logo={logo}
-            id={id} graduates={graduates} />
+            id={id}
+            graduates={graduates}
+          />
         </ParseToScreenLessThanWidth>
       </header>
       <Separator />

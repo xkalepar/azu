@@ -1,5 +1,5 @@
 import { Skeleton } from "@/components/ui/skeleton";
-import { cn } from "@/lib/utils";
+import { cn, cutString } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { env } from "process";
@@ -49,7 +49,7 @@ const CardPreview = ({
               className=" text-lg font-medium text-center"
               dir={lang === "ar" ? "rtl" : "ltr"}
             >
-              {title}
+              {cutString(title ?? "", 80)}
             </h3>
             {children}
           </div>

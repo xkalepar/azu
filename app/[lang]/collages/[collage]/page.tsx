@@ -1,4 +1,9 @@
-import { getCollageById, getCollages, getNews } from "@/prisma/seed";
+import {
+  getCollageById,
+  getCollages,
+  getMagazines,
+  getNews,
+} from "@/prisma/seed";
 import { notFound } from "next/navigation";
 import { Metadata } from "next/types";
 import Lang from "../../components/lang";
@@ -42,10 +47,14 @@ const collagePage = async ({
   const { lang } = params;
   const dictionary = await getDictionary(lang);
   const news = await getNews({ collageId: params.collage });
-
+  const magazines = await getMagazines({
+    page: 1,
+    qty: 9,
+    linkedId: params.collage,
+  });
   return (
     <main>
-      <div className="bg-[url('/bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] container text-center">
+      <div className="bg-[url('/bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] text-center">
         <div className="z-10 min-w-full min-h-full bg-black absolute top-0 left-0 opacity-40"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
           <AnimatedCard XorY="x">
@@ -72,13 +81,12 @@ const collagePage = async ({
         </div>
       </div>
       <div className="container">
-
         <h3 className="text-xl text-center my-4 font-bold">
           {<Lang lang={lang} ar={"معرض الصور"} en={"Gallery"} />}
         </h3>
         {collage !== undefined &&
-          collage !== null &&
-          collage.gallery.length > 0 ? (
+        collage !== null &&
+        collage.gallery.length > 0 ? (
           <ImageGridView list={collage.gallery} />
         ) : (
           <div>
@@ -95,47 +103,93 @@ const collagePage = async ({
           {dictionary.pages.univeristy["overview"]["statistics"]}
         </h3>
         <Statiscs />
-        <h3 className="text-xl text-center my-4 font-bold">
-          {<Lang lang={lang} ar={"اخر الأخبار"} en={"Latest News"} />}
-        </h3>
-        {news.length === 0 && (
-          <div>
-            <Lang
-              ar={"لا يوجد أخبار"}
-              en={"no news have been uploaded yet"}
-              lang={lang}
-            />
-          </div>
-        )}
-        <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
-          {news.map((item, i) => (
-            <AnimatedCard key={i} XorY="x" intialX={20}>
-              <CardPreview
-                className=" min-h-[300px]"
-                title={lang === "en" ? item?.enContent?.title : item?.arContent?.title}
-                src={item.image}
+        <div>
+          <h3 className="text-xl text-center my-4 font-bold">
+            {<Lang lang={lang} ar={"اخر الأخبار"} en={"Latest News"} />}
+          </h3>
+          {news.length === 0 && (
+            <div>
+              <Lang
+                ar={"لا يوجد أخبار"}
+                en={"no news have been uploaded yet"}
                 lang={lang}
-                href={`/${lang}/collages/${params.collage}/news/${item.id}`}
-              >
-              </CardPreview>
-            </AnimatedCard>
-          ))}
-        </div>
-        <Link
-          className={cn(
-            buttonVariants.variants.variant.link,
-            buttonVariants.variants.size.default,
-            buttonVariants.default,
-            "mx-auto w-fit mb-2"
+              />
+            </div>
           )}
-          href={`/${lang}/collages/${params.collage}/news`}
-        >
-          {dictionary.pages.univeristy.overview.allnews}
-        </Link>
+          <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+            {news.map((item, i) => (
+              <AnimatedCard key={i} XorY="x" intialX={20}>
+                <CardPreview
+                  className=" min-h-[300px]"
+                  title={
+                    lang === "en"
+                      ? item?.enContent?.title
+                      : item?.arContent?.title
+                  }
+                  src={item.image}
+                  lang={lang}
+                  href={`/${lang}/collages/${params.collage}/news/${item.id}`}
+                ></CardPreview>
+              </AnimatedCard>
+            ))}
+          </div>
+          <Link
+            className={cn(
+              buttonVariants.variants.variant.link,
+              buttonVariants.variants.size.default,
+              buttonVariants.default,
+              "mx-auto w-fit mb-2"
+            )}
+            href={`/${lang}/collages/${params.collage}/news`}
+          >
+            {dictionary.pages.univeristy.overview.allnews}
+          </Link>
+        </div>
+        <div>
+          <h3 className="text-xl text-center my-4 font-bold">
+            {<Lang lang={lang} ar={"اخر المجلات"} en={"Latest Magazines"} />}
+          </h3>
+          {magazines.length === 0 && (
+            <div>
+              <Lang
+                ar={"لا يوجد المجلات"}
+                en={"no magazines have been uploaded yet"}
+                lang={lang}
+              />
+            </div>
+          )}
+          <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+            {magazines.map((item, i) => (
+              <AnimatedCard key={i} XorY="x" intialX={20}>
+                <CardPreview
+                  className=" min-h-[300px]"
+                  title={
+                    lang === "en"
+                      ? item?.enContent?.title
+                      : item?.arContent?.title
+                  }
+                  src={item.logo}
+                  lang={lang}
+                  href={`/${lang}/collages/${params.collage}/magazines/${item.id}`}
+                />
+              </AnimatedCard>
+            ))}
+          </div>
+          <Link
+            className={cn(
+              buttonVariants.variants.variant.link,
+              buttonVariants.variants.size.default,
+              buttonVariants.default,
+              "mx-auto w-fit mb-2"
+            )}
+            href={`/${lang}/collages/${params.collage}/magazines`}
+          >
+            <Lang ar={"كل المجلات"} en={"More"} lang={lang} />{" "}
+          </Link>
+        </div>
       </div>
     </main>
   );
 };
-
 
 export default collagePage;
