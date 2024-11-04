@@ -660,7 +660,13 @@ const Toolbar = ({ editor, content }: ToolbarProps) => {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogHeader>اضف صورة</DialogHeader>
+            <DialogHeader
+            // onClick={() => {
+            //   // toast({ title: "out_of_space", className: " uppercase " });
+            // }}
+            >
+              اضف صورة
+            </DialogHeader>
 
             <UploadButton
               endpoint="imageUploader"
