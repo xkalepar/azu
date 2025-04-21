@@ -13,19 +13,22 @@ import Link from "next/link";
 import { cutString } from "@/lib/utils";
 import ParseData from "@/app/components/parse-data";
 import { Metadata } from "next";
-import { env } from "process";
 import Lang from "@/app/[lang]/components/lang";
 import { getDir } from "@/app/[lang]/components/footers/home-footer";
 type Lang = "en" | "ar";
 export const metadata: Metadata = {
   title: "المجلات العلمية",
 };
-const page = async ({ params }: { params: { lang: Lang, collage: string } }) => {
+const page = async ({
+  params,
+}: {
+  params: { lang: Lang; collage: string };
+}) => {
   const { lang } = params;
   const magazines = await getMagazines({
     page: 1,
     qty: 20,
-    linkedId: params.collage
+    linkedId: params.collage,
   });
   return (
     <main className=" container ">

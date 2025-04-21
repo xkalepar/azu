@@ -12,9 +12,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { MdOutlineCancel } from "react-icons/md";
 import Image from "next/image";
-import {
-  UploadDropzone,
-} from "@/app/dashboard/components/upload";
+import { UploadDropzone } from "@/app/dashboard/components/upload";
 import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
