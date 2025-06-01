@@ -15,6 +15,12 @@ import Statiscs from "../../components/statiscs";
 import { getDictionary } from "@/get-dictionary";
 import { buttonVariants } from "@/lib/constant";
 import Gallery from "@/components/gallery";
+import { CustomLink } from "@/components/custom-link";
+import { ArrowRight } from "lucide-react";
+import { FaBook } from "react-icons/fa";
+import ReusableCard from "@/components/reusable-card";
+import { BsNewspaper } from "react-icons/bs";
+import CollageHeroSection from "@/components/sections/collage-hero-section";
 export async function generateMetadata({
   params,
 }: {
@@ -54,7 +60,7 @@ const collagePage = async ({
   });
   return (
     <main>
-      <div className="bg-[url('/bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] text-center">
+      {/* <div className="bg-[url('/bg.jpeg')] bg-center bg-cover h-screen min-h-screen relative -z-[1] text-center">
         <div className="z-10 min-w-full min-h-full bg-black absolute top-0 left-0 opacity-40"></div>
         <div className="h-full w-full flex relative z-50 justify-center flex-col items-center">
           <AnimatedCard XorY="x">
@@ -79,7 +85,15 @@ const collagePage = async ({
             </p>
           </AnimatedCard>
         </div>
-      </div>
+      </div> */}
+      <CollageHeroSection
+        locale={lang}
+        title={
+          lang === "ar"
+            ? collage.ArCollageData?.title ?? "كلية غير موجودة"
+            : collage.EnCollageData?.title ?? "Collage not found"
+        }
+      />
       <div className="container">
         <h3 className="text-xl text-center my-4 font-bold">
           {<Lang lang={lang} ar={"معرض الصور"} en={"Gallery"} />}
@@ -103,94 +117,151 @@ const collagePage = async ({
             }
           </div>
         )}
-        <h3 className="text-xl text-center my-4 font-bold">
-          {dictionary.pages.univeristy["overview"]["statistics"]}
-        </h3>
-        <Statiscs lang={lang} />
-        <div>
-          <h3 className="text-xl text-center my-4 font-bold">
-            {<Lang lang={lang} ar={"اخر الأخبار"} en={"Latest News"} />}
-          </h3>
-          {news.length === 0 && (
-            <div>
-              <Lang
-                ar={"لا يوجد أخبار"}
-                en={"no news have been uploaded yet"}
-                lang={lang}
-              />
+      </div>
+      <div>
+        {/* <Statiscs lang={lang} /> */}
+        <section id="news" className="my-10 bg-secondary py-4">
+          <div className="container">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-forest-500 rounded-full flex items-center justify-center mr-3 rtl:mr-0 rtl:ml-3">
+                  <BsNewspaper className="h-6 w-6 text-white" />
+                </div>
+                <div className="h-1 w-20 bg-gradient-to-r from-forest-500 to-sage-500 rounded"></div>
+              </div>
+
+              <h4 className="text-4xl md:text-5xl font-bold text-forest-800 mb-6">
+                {<Lang lang={lang} ar={"اخر الأخبار"} en={"Latest News"} />}
+              </h4>
+
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                {lang === "ar"
+                  ? `تابع أحدث الأخبار من ${collage.ArCollageData?.title}`
+                  : `Stay updated with the latest news from ${collage.EnCollageData?.title}`}
+              </p>
             </div>
-          )}
-          <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
-            {news.map((item, i) => (
-              <AnimatedCard key={i} XorY="x" intialX={20}>
-                <CardPreview
-                  className=" min-h-[300px]"
-                  title={
-                    lang === "en"
-                      ? item?.enContent?.title
-                      : item?.arContent?.title
-                  }
-                  src={item.image}
+            {news.length === 0 && (
+              <div>
+                <Lang
+                  ar={"لا يوجد أخبار"}
+                  en={"no news have been uploaded yet"}
                   lang={lang}
-                  href={`/${lang}/collages/${params.collage}/news/${item.id}`}
-                ></CardPreview>
-              </AnimatedCard>
-            ))}
-          </div>
-          <Link
-            className={cn(
-              buttonVariants.variants.variant.link,
-              buttonVariants.variants.size.default,
-              buttonVariants.default,
-              "mx-auto w-fit mb-2"
+                />
+              </div>
             )}
-            href={`/${lang}/collages/${params.collage}/news`}
-          >
-            {dictionary.pages.univeristy.overview.allnews}
-          </Link>
-        </div>
-        <div>
-          <h3 className="text-xl text-center my-4 font-bold">
-            {<Lang lang={lang} ar={"اخر المجلات"} en={"Latest Magazines"} />}
-          </h3>
+            <div className="grid my-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {news.map((item, i) => (
+                <ReusableCard
+                  href={`/${lang}/news/${item.id}`}
+                  key={item.id}
+                  news={{
+                    featured: true,
+                    image: item.image,
+                    category: {
+                      ar: "أخبار",
+                      en: "News",
+                    },
+                    date: item.createdAt.toLocaleString(),
+                    excerpt: {
+                      ar: item?.arContent?.body ?? "",
+                      en: item?.enContent?.body ?? "",
+                    },
+                    id: item.id,
+                    title: {
+                      ar: item?.arContent?.title ?? "",
+                      en: item?.enContent?.title ?? "",
+                    },
+                  }}
+                  locale={lang}
+                  featured={false}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${(i + 2) * 0.1}s` }}
+                />
+              ))}
+            </div>
+            <div className="text-center">
+              <CustomLink
+                size="lg"
+                className="bg-gradient-to-r mx-auto max-w-sm flex from-forest-600 to-sage-600 hover:from-forest-700 hover:to-sage-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                href={`${lang}/news`}
+              >
+                {dictionary.pages.univeristy.overview.allnews}
+                <ArrowRight className="ml-2 h-5  w-5 rtl:ml-0 rtl:mr-2 rtl:rotate-180" />
+              </CustomLink>
+            </div>
+          </div>
+        </section>
+        {/* magazines */}
+        <section id="magazines" className="my-10 container">
+          <div className="text-center mb-16">
+            <div className="flex items-center justify-center mb-4">
+              <div className="w-12 h-12 bg-forest-500 rounded-full flex items-center justify-center mr-3 rtl:mr-0 rtl:ml-3">
+                <FaBook className="h-6 w-6 text-white" />
+              </div>
+              <div className="h-1 w-20 bg-gradient-to-r from-forest-500 to-sage-500 rounded"></div>
+            </div>
+
+            <h4 className="text-4xl md:text-5xl font-bold text-forest-800 mb-6">
+              <Lang lang={lang} ar={"اخر المجلات"} en={"Latest magazines"} />
+            </h4>
+
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              {lang === "ar"
+                ? `تابع أحدث المجلات من ${collage.ArCollageData?.title}`
+                : `Stay updated with the latest magazines from ${collage.EnCollageData?.title}`}
+            </p>
+          </div>
+
           {magazines.length === 0 && (
             <div>
               <Lang
-                ar={"لا يوجد المجلات"}
+                ar={"لا يوجد مجلات بعد"}
                 en={"no magazines have been uploaded yet"}
                 lang={lang}
               />
             </div>
           )}
-          <div className="grid md:grid-cols-2 gap-2 my-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="grid my-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {magazines.map((item, i) => (
-              <AnimatedCard key={i} XorY="x" intialX={20}>
-                <CardPreview
-                  className=" min-h-[300px]"
-                  title={
-                    lang === "en"
-                      ? item?.enContent?.title
-                      : item?.arContent?.title
-                  }
-                  src={item.logo}
-                  lang={lang}
-                  href={`/${lang}/collages/${params.collage}/magazines/${item.id}`}
-                />
-              </AnimatedCard>
+              <ReusableCard
+                href={`/${lang}/magazine/${item.id}`}
+                key={item.id}
+                news={{
+                  featured: true,
+                  image: item.logo,
+                  category: {
+                    ar: "مجلات",
+                    en: "Magazines",
+                  },
+                  date: item.createdAt.toLocaleString(),
+                  excerpt: {
+                    ar: item?.arContent?.body ?? "",
+                    en: item?.enContent?.body ?? "",
+                  },
+                  id: item.id,
+                  title: {
+                    ar: item?.arContent?.title ?? "",
+                    en: item?.enContent?.title ?? "",
+                  },
+                }}
+                locale={lang}
+                featured={false}
+                className="animate-fade-in"
+                style={{ animationDelay: `${(i + 2) * 0.1}s` }}
+              />
             ))}
           </div>
-          <Link
-            className={cn(
-              buttonVariants.variants.variant.link,
-              buttonVariants.variants.size.default,
-              buttonVariants.default,
-              "mx-auto w-fit mb-2"
-            )}
-            href={`/${lang}/collages/${params.collage}/magazines`}
-          >
-            <Lang ar={"كل المجلات"} en={"More"} lang={lang} />{" "}
-          </Link>
-        </div>
+          <div className="text-center">
+            <CustomLink
+              size="lg"
+              className="bg-gradient-to-r mx-auto max-w-sm flex from-forest-600 to-sage-600 hover:from-forest-700 hover:to-sage-700 text-white px-8 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              href={`/${lang}/magazine`}
+            >
+              <Lang ar={"كل المجلات"} en={"magazine"} lang={lang} />
+              <ArrowRight className="ml-2 h-5  w-5 rtl:ml-0 rtl:mr-2 rtl:rotate-180" />
+            </CustomLink>
+          </div>
+        </section>
       </div>
     </main>
   );
