@@ -76,7 +76,12 @@ export const getUniversity = unstable_cache(
     try {
       const university = await prisma.university.findFirst({
         include: {
-          News: true,
+          News: {
+            include: {
+              arContent: true,
+              enContent: true,
+            },
+          },
           ArContent: true,
           EnContent: true,
           Centers: {
@@ -254,26 +259,111 @@ export const getAllnews = async (university: boolean = false) => {
     return [];
   }
 };
+
+// export const getUniNews = unstable_cache(
+//   async ({
+//     page = 1,
+//     take = 20,
+//     query,
+//   }: {
+//     page?: number;
+//     query?: string;
+//     take?: number;
+//   }) => {
+//     try {
+//       const news = await prisma.news.findMany({
+//         where: {
+//           universityId: uniId,
+//           arContent: {
+//             title: {
+//               contains: query,
+//               mode: "insensitive",
+//             },
+//             body: {
+//               contains: query,
+//               mode: "insensitive",
+//             },
+//           },
+//           enContent: {
+//             title: {
+//               contains: query,
+//               mode: "insensitive",
+//             },
+//             body: {
+//               contains: query,
+//               mode: "insensitive",
+//             },
+//           },
+//         },
+//         take: take,
+//         skip: page === 1 ? 0 : page * take,
+//         include: {
+//           arContent: true,
+//           enContent: true,
+//         },
+//         orderBy: {
+//           createdAt: "desc",
+//         },
+//       });
+
+//       if (!news) {
+//         console.log("error1");
+//         return [];
+//       }
+
+//       return news;
+//     } catch (error) {
+//       console.log("error");
+//       console.log(error);
+//       return [];
+//     }
+//   },
+//   ["uniNews", "university"],
+//   { tags: ["uniNews", "university"] }
+// );
+
 export const getUniNews = unstable_cache(
   async ({
     page = 1,
     take = 20,
-    query,
+    query = "",
+    withCount = false,
   }: {
     page?: number;
     query?: string;
     take?: number;
+    withCount?: boolean;
   }) => {
     try {
-      console.log(`take: ${take}`);
-      console.log(`take: ${page}`);
-      console.log(`take*page: ${page * take}`);
+      // Build the filter for both arContent and enContent
+      const filter: any = {
+        universityId: uniId,
+        OR: [
+          {
+            arContent: {
+              OR: [
+                { title: { contains: query, mode: "insensitive" } },
+                { body: { contains: query, mode: "insensitive" } },
+              ],
+            },
+          },
+          {
+            enContent: {
+              OR: [
+                { title: { contains: query, mode: "insensitive" } },
+                { body: { contains: query, mode: "insensitive" } },
+              ],
+            },
+          },
+        ],
+      };
+      let total = 0;
+
+      // Fetch paginated news
       const news = await prisma.news.findMany({
-        where: {
-          universityId: uniId,
-        },
-        take: take,
-        skip: page === 1 ? 0 : page * take,
+        where: filter,
+        take,
+        skip: (page - 1) * take,
         include: {
           arContent: true,
           enContent: true,
@@ -284,15 +374,17 @@ export const getUniNews = unstable_cache(
       });
 
       if (!news) {
-        console.log("error1");
-        return [];
+        return { news: [], total: 0 };
       }
 
-      return news;
+      if (withCount) {
+        total = await prisma.news.count({ where: filter });
+      }
+
+      return { news, total };
     } catch (error) {
-      console.log("error");
-      console.log(error);
-      return [];
+      console.log("error", error);
+      return { news: [], total: 0 };
     }
   },
   ["uniNews", "university"],
@@ -302,7 +394,7 @@ export const getUniNews = unstable_cache(
 export const getMagazines = async ({
   qty,
   page = 1,
-  query,
+  query = "",
   linkedId,
   withCount = false,
 }: {
@@ -313,13 +405,34 @@ export const getMagazines = async ({
   withCount?: boolean;
 }) => {
   try {
+    // Build the filter for search and linkedId
+    const filter: any = {
+      // universityId: uniId,
+      ...(linkedId && { linkedId }),
+      OR: [
+        {
+          arContent: {
+            OR: [
+              { title: { contains: query, mode: "insensitive" } },
+              { body: { contains: query, mode: "insensitive" } },
+            ],
+          },
+        },
+        {
+          enContent: {
+            OR: [
+              { title: { contains: query, mode: "insensitive" } },
+              { body: { contains: query, mode: "insensitive" } },
+            ],
+          },
+        },
+      ],
+    };
+
     let total = 0;
     const magazines = await prisma.mangzine.findMany({
-      where: {
-        linkedId: linkedId,
-      },
       take: qty,
-      skip: page === 1 ? 0 : (page - 1) * qty,
+      skip: (page - 1) * qty,
       include: {
         arContent: true,
         enContent: true,
@@ -327,16 +440,12 @@ export const getMagazines = async ({
       orderBy: { createdAt: "desc" },
     });
 
-    if (!magazines) {
-      return { magazines: [], total: 0 };
-    }
     if (withCount) {
       total = await prisma.mangzine.count({
-        where: {
-          linkedId: linkedId,
-        },
+        where: filter,
       });
     }
+
     return { magazines, total };
   } catch (error) {
     return { magazines: [], total: 0 };
@@ -361,18 +470,44 @@ export const getAllMagazines =
   };
 
 export const getConferences = async ({
-  qty,
+  take,
   page = 1,
-  query,
+  query = "",
+  withCount = false,
 }: {
   query?: string;
-  qty: number;
+  take: number;
   page?: number;
+  withCount?: boolean;
 }) => {
   try {
+    // Build filter for search
+    const filter: any = {
+      OR: [
+        {
+          arContent: {
+            OR: [
+              { title: { contains: query, mode: "insensitive" } },
+              { body: { contains: query, mode: "insensitive" } },
+            ],
+          },
+        },
+        {
+          enContent: {
+            OR: [
+              { title: { contains: query, mode: "insensitive" } },
+              { body: { contains: query, mode: "insensitive" } },
+            ],
+          },
+        },
+      ],
+    };
+
+    let total = 0;
     const conferences = await prisma.conferences.findMany({
-      take: qty,
-      skip: page === 1 ? 0 : page * qty,
+      where: query ? filter : undefined,
+      take: take,
+      skip: (page - 1) * take,
       include: {
         arContent: true,
         enContent: true,
@@ -382,11 +517,18 @@ export const getConferences = async ({
       },
     });
     if (!conferences) {
-      return [];
+      return { conferences: [], total: 0 };
     }
-    return conferences;
+
+    if (withCount) {
+      total = await prisma.conferences.count({
+        where: query ? filter : undefined,
+      });
+    }
+
+    return { conferences, total };
   } catch (error) {
-    return [];
+    return { conferences: [], total: 0 };
   }
 };
 
@@ -398,9 +540,6 @@ export const newCollage = async ({
   welcome,
 }: NewCollageProps): Promise<{ message: string }> => {
   try {
-    // console.log(`arProps: ${arProps}`);
-    // console.log(`enProps: ${enProps}`);
-    // console.log(`list: ${list}`);
     const newCollage = await prisma.collage.create({
       data: {
         logo,
@@ -410,38 +549,12 @@ export const newCollage = async ({
           create: {
             title: arProps.title,
             content: arProps.content,
-            // desk: arProps.desk,
-            // goals: arProps.goals,
-            // management: arProps.management,
-            // name: arProps.name,
-            // origin: arProps.origin,
-            // rating: arProps.rating,
-            // shoan: arProps.shoan,
-            // structure: arProps.structure,
-            // List: {
-            //   createMany: {
-            //     data: list,
-            //   },
-            // },
           },
         },
         EnCollageData: {
           create: {
             title: enProps.title,
             content: enProps.content,
-            // desk: enProps.desk,
-            // goals: enProps.goals,
-            // management: enProps.management,
-            // name: enProps.name,
-            // origin: enProps.origin,
-            // rating: enProps.rating,
-            // shoan: enProps.shoan,
-            // structure: enProps.structure,
-            // List: {
-            //   createMany: {
-            //     data: enList,
-            //   },
-            // },
           },
         },
       },

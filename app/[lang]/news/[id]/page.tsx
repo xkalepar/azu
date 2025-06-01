@@ -15,6 +15,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
+import summarizeHtmlContent from "@/lib/summarize-html-content";
 export async function generateMetadata({
   params,
 }: {
@@ -33,8 +34,10 @@ export async function generateMetadata({
       lang === "ar"
         ? ` الأخبار | ${center.arContent?.title}`
         : ` News | ${center.enContent?.title}`,
-    // description:
-    //   lang === "ar" ? center.arContent?.body : center.enContent?.body,
+    description:
+      lang === "ar"
+        ? summarizeHtmlContent(center?.arContent?.body ?? "")
+        : summarizeHtmlContent(center?.enContent?.body ?? ""),
   };
 }
 
@@ -159,11 +162,13 @@ const centerPage = async ({
           </>
         }
       >
-        <Lang
-          lang={lang}
-          ar={<ParseData dir="rtl" content={news.arContent?.body ?? ""} />}
-          en={<ParseData dir="ltr" content={news.enContent?.body ?? ""} />}
-        />
+        <div className="sm:w-[80%] my-10 lg:w-[60%] mx-auto">
+          <Lang
+            lang={lang}
+            ar={<ParseData dir="rtl" content={news.arContent?.body ?? ""} />}
+            en={<ParseData dir="ltr" content={news.enContent?.body ?? ""} />}
+          />
+        </div>
       </Suspense>
     </main>
   );

@@ -13,12 +13,11 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import Link from "next/link";
-
 import { getMagazine } from "@/app/dashboard/university/magazines/seed";
-import { getAllMagazines, getMagazines } from "@/prisma/seed";
+import { getAllMagazines } from "@/prisma/seed";
 import { DownloadCloudIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/lib/constant";
+import BreadCrumbsSepratorLang from "../../components/bread-crumbs-seprator";
 
 export async function generateMetadata({
   params,
@@ -36,16 +35,14 @@ export async function generateMetadata({
   return {
     title:
       lang === "ar"
-        ? ` المجلات | ${magazine.arContent?.title}`
-        : ` magazines | ${magazine.enContent?.title}`,
+        ? `المجلات | ${magazine.arContent?.title}`
+        : `Magazines | ${magazine.enContent?.title}`,
     description:
       lang === "ar" ? magazine.arContent?.body : magazine.enContent?.body,
   };
 }
 
-export async function generateStaticParams(
-
-) {
+export async function generateStaticParams() {
   const magazine = await getAllMagazines({});
   return magazine.map((id) => ({ id: id.id }));
 }
@@ -55,37 +52,44 @@ const magazinePage = async ({
 }: {
   params: { id: string; lang: "ar" | "en" };
 }) => {
-  const { id } = params;
+  const { id, lang } = params;
   const magazine = await getMagazine({ id });
-  console.log(magazine)
-  // console.log("#".repeat(30));
-  // console.log(conference);
-  // console.log("#".repeat(30));
   if (!magazine) {
     return notFound();
   }
-  const { lang } = params;
+
+  // Format the publish date
+  const publishDate =
+    magazine.createdAt &&
+    new Date(magazine.createdAt).toLocaleDateString(
+      lang === "ar" ? "ar-EG" : "en-US",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    );
+
   return (
-    <main className="container xl:mx-4 xl:px-4">
-      <Breadcrumb>
+    <main className="container max-w-3xl mx-auto py-10 px-4">
+      <Breadcrumb className="mb-8">
         <BreadcrumbList>
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
               <Link href={`/${lang}`}>
-                <Lang lang={lang} ar={"الرئيسية"} en={"home"} />
+                <Lang lang={lang} ar="الرئيسية" en="Home" />
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-          <BreadcrumbSeparator />
+          <BreadCrumbsSepratorLang />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
               <Link href={`/${lang}/magazine`}>
-                <Lang lang={lang} ar={"المجلة"} en={"magazine"} />
+                <Lang lang={lang} ar="المجلات" en="Magazines" />
               </Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
-
-          <BreadcrumbSeparator />
+          <BreadCrumbsSepratorLang />
           <BreadcrumbItem>
             <BreadcrumbPage>
               <Lang
@@ -98,102 +102,60 @@ const magazinePage = async ({
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Suspense
-        fallback={
-          <>
-            <Skeleton className=" min-w-full max-w-full min-h-full"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-            <Skeleton className=" min-w-full h-1 my-1"></Skeleton>
-          </>
-        }
-      >
-        <Lang
-          lang={lang}
-          ar={
-            <ParseData dir="rtl" content={magazine.arContent?.body ?? ""} />
-          }
-          en={
-            <ParseData dir="ltr" content={magazine.enContent?.body ?? ""} />
-          }
-        />
-
-        <Link className={cn(" w-full my-2 sm:w-fit mx-auto flex justify-center items-center gap-2", "bg-primary text-primary-foreground shadow hover:bg-primary/90 rounded-md px-4 py-2")} target={"_blank"}
-          download={true}
-          href={magazine!.pdfUri as string}>
-          <DownloadCloudIcon></DownloadCloudIcon>
+      <section className="bg-white/90 rounded-2xl shadow-lg p-8 flex flex-col gap-6">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-forest-800 mb-2 text-center">
           <Lang
+            ar={magazine.arContent?.title}
+            en={magazine.enContent?.title}
             lang={lang}
-            ar={
-              "تحميل"
-            }
-            en={
-              "download"
-            }
           />
-        </Link>
-
-      </Suspense>
+        </h1>
+        {publishDate && (
+          <div className="text-center text-gray-500 text-sm mb-2">
+            {lang === "ar"
+              ? `تاريخ النشر: ${publishDate}`
+              : `Published: ${publishDate}`}
+          </div>
+        )}
+        <div className="flex flex-col gap-4">
+          <Suspense
+            fallback={
+              <div className="space-y-2">
+                <Skeleton className="w-full h-8" />
+                <Skeleton className="w-full h-4" />
+                <Skeleton className="w-full h-4" />
+                <Skeleton className="w-full h-4" />
+              </div>
+            }
+          >
+            <Lang
+              lang={lang}
+              ar={
+                <ParseData dir="rtl" content={magazine.arContent?.body ?? ""} />
+              }
+              en={
+                <ParseData dir="ltr" content={magazine.enContent?.body ?? ""} />
+              }
+            />
+          </Suspense>
+        </div>
+        {magazine.pdfUri && (
+          <div className="flex justify-center mt-6">
+            <Link
+              className={cn(
+                "flex items-center gap-2 bg-primary text-primary-foreground shadow hover:bg-primary/90 rounded-full px-6 py-3 font-semibold transition-all duration-200",
+                "focus:outline-none focus:ring-2 focus:ring-primary/60"
+              )}
+              target="_blank"
+              download
+              href={magazine.pdfUri as string}
+            >
+              <DownloadCloudIcon className="w-5 h-5" />
+              <Lang lang={lang} ar="تحميل المجلة PDF" en="Download PDF" />
+            </Link>
+          </div>
+        )}
+      </section>
     </main>
   );
 };

@@ -15,6 +15,7 @@ import Statiscs from "../../components/statiscs";
 import { getDictionary } from "@/get-dictionary";
 import ImageGridView from "../../components/image-grid-view";
 import { buttonVariants } from "@/lib/constant";
+import Gallery from "@/components/gallery";
 export async function generateMetadata({
   params,
 }: {
@@ -87,7 +88,11 @@ const collagePage = async ({
         {collage !== undefined &&
         collage !== null &&
         collage.gallery.length > 0 ? (
-          <ImageGridView list={collage.gallery} />
+          <Gallery
+            arAlt={collage.ArCollageData?.title ?? "صور الكلية"}
+            enAlt={collage.EnCollageData?.title ?? "Collage Photos"}
+            images={collage.gallery?.slice(0, 9)?.reverse() ?? []}
+          />
         ) : (
           <div>
             {
@@ -102,7 +107,7 @@ const collagePage = async ({
         <h3 className="text-xl text-center my-4 font-bold">
           {dictionary.pages.univeristy["overview"]["statistics"]}
         </h3>
-        <Statiscs />
+        <Statiscs lang={lang} />
         <div>
           <h3 className="text-xl text-center my-4 font-bold">
             {<Lang lang={lang} ar={"اخر الأخبار"} en={"Latest News"} />}

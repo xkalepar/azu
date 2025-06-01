@@ -12,6 +12,7 @@ interface Props {
   children?: ReactNode;
   lang?: "ar" | "en";
   className?: string;
+  contain?: boolean;
 }
 const CardPreview = ({
   src,
@@ -21,6 +22,7 @@ const CardPreview = ({
   children,
   lang,
   className,
+  contain = false,
 }: Props) => {
   return (
     <Link dir={lang === "ar" ? "rtl" : "ltr"} href={href}>
@@ -31,7 +33,7 @@ const CardPreview = ({
           className
         )}
       >
-        <div className="w-full h-[200px] max-h-[200px] rounded-sm ">
+        <div className="w-full h-[200px] max-h-[200px] aspect-square rounded-sm ">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
             <RemoteImage
               src={src ?? (env.NotFoundImage as string)}
@@ -39,7 +41,10 @@ const CardPreview = ({
               loading="lazy"
               width={1000}
               height={1000}
-              className="object-cover w-full h-full"
+              className={cn(
+                "w-full h-full",
+                contain ? "object-contain" : "object-cover"
+              )}
             />
           </Suspense>
 

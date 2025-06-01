@@ -1,6 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import React, { Suspense } from "react";
-import { cn } from "@/lib/utils";
 import AnimatedCard from "./animated-card";
 import RemoteImage from "@/components/remote-image";
 type props = {
@@ -11,37 +8,31 @@ type props = {
  * list of images parse them in grid view
  */
 const ImageGridView = ({ list, className }: props) => {
-  // console.log(4 % 2);
   return (
-    <div
-      className={cn(
-        "grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4",
-        className
-      )}
-    >
-      {list.map((link, index) => {
+    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      {list.map((img, idx) => {
+        const src = img;
+        const alt = `gallery image -${idx}`;
         return (
-          <AnimatedCard
-            key={index}
-            intialX={index % 2 === 0 ? 20 : -20}
-            XorY="x"
+          <div
+            key={idx}
+            className="rounded shadow overflow-hidden bg-white flex flex-col"
           >
-            <div
-              // key={index}
-              className="w-full h-[200px] rounded-sm overflow-hidden"
+            <AnimatedCard
+              intialX={idx % 2 === 0 ? 20 : -20}
+              XorY="x"
+              className="relative w-full aspect-[4/3]"
             >
-              <Suspense fallback={<Skeleton className="w-full h-full" />}>
-                <RemoteImage
-                  src={link}
-                  alt={link}
-                  loading="lazy"
-                  width={1000}
-                  height={1000}
-                  className="object-cover w-full scale-110 transition-all h-full duration-300 hover:scale-100"
-                />
-              </Suspense>
-            </div>
-          </AnimatedCard>
+              <RemoteImage
+                src={src}
+                alt={alt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 600px"
+                priority={idx < 4}
+              />
+            </AnimatedCard>
+          </div>
         );
       })}
     </div>
