@@ -30,7 +30,7 @@ export default async function home({
   const univeristy = await getUniversity();
   const news = await getUniNews({ page: 1, take: 9 });
   const conferences = await getConferences({ page: 1, qty: 9 });
-  const magazines = await getMagazines({ page: 1, qty: 9 });
+  const { magazines } = await getMagazines({ page: 1, qty: 9 });
 
   return (
     <main>

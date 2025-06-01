@@ -21,7 +21,7 @@ const page = async ({ params }: { params: { id: string } }) => {
   if (!collage) {
     return notFound();
   }
-  const magazines = await getMagazines({ qty: 1000, linkedId: id })
+  const { magazines } = await getMagazines({ qty: 1000, linkedId: id });
   return (
     <section className=" relative">
       <Breadcrumbs id={id} title={collage.ArCollageData?.title} />
@@ -94,4 +94,3 @@ const Breadcrumbs = ({ title, id }: { title?: string; id: string }) => {
     </Breadcrumb>
   );
 };
-

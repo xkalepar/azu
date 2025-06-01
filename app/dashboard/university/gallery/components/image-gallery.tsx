@@ -8,6 +8,7 @@ import UploadImageForm from "./upload";
 import { Button } from "@/components/ui/button";
 import { imagesGalleryUni } from "@/prisma/seed";
 import { Trash } from "lucide-react";
+import RemoteImage from "@/components/remote-image";
 type props = {
   list: string[];
   className?: string;
@@ -54,7 +55,7 @@ const ImageGridView = ({ list, className }: props) => {
                 />
               </Button>
               <Suspense fallback={<Skeleton className="w-full h-full" />}>
-                <Image
+                <RemoteImage
                   src={link}
                   alt={link}
                   loading="lazy"

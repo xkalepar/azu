@@ -55,18 +55,7 @@ const newsPage = async ({
         newsTitle={currentNew.arContent?.title ?? ""}
         collageTitle={currentNew.Collage?.ArCollageData?.title}
       />
-      {/* <div className="sm:w-1/2 lg:w-1/4 w-full mx-auto my-2 h-40 max-w-full max-h-full rounded-sm overflow-hidden">
-        <Suspense fallback={<Skeleton className="w-full h-full" />}>
-          <Image
-            src={currentNew.image}
-            alt={currentNew.arContent?.title ?? ""}
-            loading="lazy"
-            width={1000}
-            height={1000}
-            className="object-cover w-full scale-110 transition-all duration-300 hover:scale-100"
-          />
-        </Suspense>
-      </div> */}
+
       <div className="relative">
         <div className=" absolute gap-2 left-2 top-2 flex-between" dir="rtl">
           <Link

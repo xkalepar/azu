@@ -1,6 +1,6 @@
+import RemoteImage from "@/components/remote-image";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, cutString } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import { env } from "process";
 import React, { ReactNode, Suspense } from "react";
@@ -33,7 +33,7 @@ const CardPreview = ({
       >
         <div className="w-full h-[200px] max-h-[200px] rounded-sm ">
           <Suspense fallback={<Skeleton className="w-full h-full" />}>
-            <Image
+            <RemoteImage
               src={src ?? (env.NotFoundImage as string)}
               alt={alt}
               loading="lazy"

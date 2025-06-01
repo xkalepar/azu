@@ -22,10 +22,10 @@ export const metadata: Metadata = {
 };
 const page = async ({ params }: { params: { lang: Lang } }) => {
   const { lang } = params;
-  const magazines = await getMagazines({
+  const { magazines } = await getMagazines({
     page: 1,
     qty: 20,
-    linkedId: env.UniveristyId
+    linkedId: env.UniveristyId,
   });
   return (
     <main className=" container ">

@@ -47,7 +47,7 @@ const collagePage = async ({
   const { lang } = params;
   const dictionary = await getDictionary(lang);
   const news = await getNews({ collageId: params.collage });
-  const magazines = await getMagazines({
+  const { magazines } = await getMagazines({
     page: 1,
     qty: 9,
     linkedId: params.collage,

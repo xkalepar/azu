@@ -7,7 +7,6 @@ import { Suspense, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { MdOutlineCancel } from "react-icons/md";
-import Image from "next/image";
 import { UploadButton } from "@/app/dashboard/components/upload";
 import { toast } from "@/components/ui/use-toast";
 import { Separator } from "@/components/ui/separator";
@@ -15,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Editor from "@/app/components/editor";
 import LangTabs from "@/app/components/tabs";
+import RemoteImage from "@/components/remote-image";
 
 export const NewsFormUni = () => {
   const [image, setImage] = useState<string>("");
@@ -45,7 +45,7 @@ export const NewsFormUni = () => {
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}
@@ -158,7 +158,7 @@ export const EditNewsForm = ({
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}

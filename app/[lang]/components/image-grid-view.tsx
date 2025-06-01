@@ -1,8 +1,8 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import React, { Suspense } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import AnimatedCard from "./animated-card";
+import RemoteImage from "@/components/remote-image";
 type props = {
   list: string[];
   className?: string;
@@ -31,7 +31,7 @@ const ImageGridView = ({ list, className }: props) => {
               className="w-full h-[200px] rounded-sm overflow-hidden"
             >
               <Suspense fallback={<Skeleton className="w-full h-full" />}>
-                <Image
+                <RemoteImage
                   src={link}
                   alt={link}
                   loading="lazy"

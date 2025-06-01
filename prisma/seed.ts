@@ -304,31 +304,42 @@ export const getMagazines = async ({
   page = 1,
   query,
   linkedId,
+  withCount = false,
 }: {
   query?: string;
   qty: number;
   page?: number;
   linkedId?: string;
+  withCount?: boolean;
 }) => {
   try {
+    let total = 0;
     const magazines = await prisma.mangzine.findMany({
       where: {
         linkedId: linkedId,
       },
       take: qty,
-      skip: page === 1 ? 0 : page * qty,
+      skip: page === 1 ? 0 : (page - 1) * qty,
       include: {
         arContent: true,
         enContent: true,
       },
       orderBy: { createdAt: "desc" },
     });
+
     if (!magazines) {
-      return [];
+      return { magazines: [], total: 0 };
     }
-    return magazines;
+    if (withCount) {
+      total = await prisma.mangzine.count({
+        where: {
+          linkedId: linkedId,
+        },
+      });
+    }
+    return { magazines, total };
   } catch (error) {
-    return [];
+    return { magazines: [], total: 0 };
   }
 };
 export const getAllMagazines =
@@ -348,9 +359,6 @@ export const getAllMagazines =
       return [];
     }
   };
-// ["magazine", "university"],
-// { tags: ["magazine", "university"] }
-// );
 
 export const getConferences = async ({
   qty,

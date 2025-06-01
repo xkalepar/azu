@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Editor from "@/app/components/editor";
 import LangTabs from "@/app/components/tabs";
+import RemoteImage from "@/components/remote-image";
 
 interface NewsFormProps {
   collageId: string;
@@ -48,7 +49,7 @@ export const NewsForm = ({ collageId }: NewsFormProps) => {
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}
@@ -70,8 +71,6 @@ export const NewsForm = ({ collageId }: NewsFormProps) => {
             }}
           />
         )}
-
-
       </div>
       <LangTabs
         ar={
@@ -165,7 +164,7 @@ export const EditNewsForm = ({
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}

@@ -5,13 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { Suspense, useState } from "react";
 import { FaSave } from "react-icons/fa";
-import {
-  newUserAction,
-  updateUserAction,
-} from "../../sections/[collageId]/[sectionId]/teachers/actions";
+import { updateUserAction } from "../../sections/[collageId]/[sectionId]/teachers/actions";
 import { useParams } from "next/navigation";
 import { MdOutlineCancel } from "react-icons/md";
-import Image from "next/image";
 import { env } from "process";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -19,6 +15,7 @@ import { UploadDropzone } from "@/app/dashboard/components/upload";
 import { toast } from "@/components/ui/use-toast";
 import Editor from "@/app/components/editor";
 import InputValidator from "@/app/[lang]/components/phone-input";
+import RemoteImage from "@/components/remote-image";
 
 interface Props {
   fullName: string;
@@ -92,7 +89,7 @@ const UpdateTeacherForm = ({
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}
@@ -137,7 +134,7 @@ const UpdateTeacherForm = ({
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={env.PDf_LOGO as string}
                   alt="pdf"
                   width={500}

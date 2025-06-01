@@ -30,6 +30,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Editor from "@/app/components/editor";
 import SubmitButton from "@/app/components/custom-sumbit-btn";
 import { Trash } from "lucide-react";
+import RemoteImage from "@/components/remote-image";
 
 const init = {
   message: "",
@@ -101,7 +102,7 @@ export default function CollageForm({
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}
@@ -157,7 +158,7 @@ export default function CollageForm({
               type={"text"}
               placeholder="Enter the name of the college"
               name={"enname"}
-            // value={enContent}
+              // value={enContent}
             />
           </div>
 

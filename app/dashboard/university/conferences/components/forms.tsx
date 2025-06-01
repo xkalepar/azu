@@ -23,6 +23,7 @@ import { Label } from "@/components/ui/label";
 import Editor from "@/app/components/editor";
 import LangTabs from "@/app/components/tabs";
 import { env } from "process";
+import RemoteImage from "@/components/remote-image";
 
 export const CreateMagazineForm = () => {
   const [image, setImage] = useState<string>("");
@@ -54,7 +55,7 @@ export const CreateMagazineForm = () => {
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}
@@ -95,7 +96,7 @@ export const CreateMagazineForm = () => {
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={env.PDf_LOGO as string}
                   alt="pdf"
                   width={500}
@@ -220,7 +221,7 @@ export const UpdateMagazineForm = ({
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={image}
                   alt="some name"
                   width={500}
@@ -261,7 +262,7 @@ export const UpdateMagazineForm = ({
                 >
                   <MdOutlineCancel />
                 </Button>
-                <Image
+                <RemoteImage
                   src={env.PDf_LOGO as string}
                   alt="pdf"
                   width={500}

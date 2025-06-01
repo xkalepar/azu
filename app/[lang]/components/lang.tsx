@@ -2,7 +2,7 @@ import React, { Fragment, ReactNode } from "react";
 type Props = {
   ar?: ReactNode;
   en?: ReactNode;
-  lang: "ar" | "en";
+  lang: Locale;
 };
 const Lang = ({ lang, ar, en }: Props) => {
   return (

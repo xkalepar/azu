@@ -2,12 +2,12 @@
 
 import { Skeleton } from "@/components/ui/skeleton";
 import React, { Suspense, useState } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import UploadImageForm from "./upload";
 import { Button } from "@/components/ui/button";
 import { imagesGallery } from "@/prisma/seed";
 import { Trash } from "lucide-react";
+import RemoteImage from "@/components/remote-image";
 type props = {
   list: string[];
   className?: string;
@@ -54,7 +54,7 @@ const ImageGridView = ({ list, className, id }: props) => {
                 />
               </Button>
               <Suspense fallback={<Skeleton className="w-full h-full" />}>
-                <Image
+                <RemoteImage
                   src={link}
                   alt={link}
                   loading="lazy"
