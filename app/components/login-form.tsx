@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 
 const LoginForm = ({ className }: { className?: string }) => {
   const { lang }: { lang: Locale } = useParams();
-  const [isVisible, setIsVisible] = React.useState<boolean>(true);
+  const [isVisible, setIsVisible] = React.useState<boolean>(false);
 
   return (
     <Form
@@ -44,7 +44,7 @@ const LoginForm = ({ className }: { className?: string }) => {
             type={isVisible ? "text" : "password"}
             id="pass"
             required
-            name="paaword"
+            name="password"
             placeholder={lang === "ar" ? "كلمة المرور" : "password"}
             className="py-2 border-2 "
           />

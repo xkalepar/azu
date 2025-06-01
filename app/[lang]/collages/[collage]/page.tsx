@@ -13,7 +13,6 @@ import AnimatedCard from "../../components/animated-card";
 import CardPreview from "@/app/components/card-preview";
 import Statiscs from "../../components/statiscs";
 import { getDictionary } from "@/get-dictionary";
-import ImageGridView from "../../components/image-grid-view";
 import { buttonVariants } from "@/lib/constant";
 import Gallery from "@/components/gallery";
 export async function generateMetadata({
