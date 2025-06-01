@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     // Allow only URLs starting with https:// and ending with .ufs.sh
     const url = new URL(imageUrl);
 
-    const allowedHosts = ["ufs.sh", "utfs.io"];
+    const allowedHosts = ["ufs.sh", "utfs.io", "utfs.io"];
     const isAllowedHost = allowedHosts.some(
       (host) => url.hostname === host || url.hostname.endsWith(`.${host}`)
     );

@@ -76,21 +76,23 @@ const page = async ({ params }: { params: { lang: "en" | "ar" } }) => {
             </div>
           }
         >
-          <Lang
-            ar={
-              <ParseData
-                dir={getDir(lang)}
-                content={univeristy?.ArContent?.body ?? ""}
-              />
-            }
-            en={
-              <ParseData
-                dir={getDir(lang)}
-                content={univeristy?.EnContent?.body ?? ""}
-              />
-            }
-            lang={lang}
-          />
+          <div className="sm:w-[80%] my-10 lg:w-[60%] mx-auto">
+            <Lang
+              ar={
+                <ParseData
+                  dir={getDir(lang)}
+                  content={univeristy?.ArContent?.body ?? ""}
+                />
+              }
+              en={
+                <ParseData
+                  dir={getDir(lang)}
+                  content={univeristy?.EnContent?.body ?? ""}
+                />
+              }
+              lang={lang}
+            />
+          </div>
         </Suspense>
       </section>
     </main>

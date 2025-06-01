@@ -14,7 +14,7 @@ import Link from "next/link";
 import { IoIosAdd } from "react-icons/io";
 
 const page = async ({ params }: { params: { query?: string } }) => {
-  const news = await getUniNews({ page: 1, take: 100 });
+  const { news } = await getUniNews({ page: 1, take: 100 });
   return (
     <section className="relative">
       <Breadcrumbs />

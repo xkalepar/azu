@@ -9,7 +9,9 @@ import {
 import { $Enums, Centers } from "@prisma/client";
 import { DesktopMenuHeader } from "./desktop-menu-bar";
 import ToggleLangauge from "./toggle-lang";
-import RenderToRole, { DontRenderUnlessSessionIsDefined } from "@/app/components/render-to-role";
+import RenderToRole, {
+  DontRenderUnlessSessionIsDefined,
+} from "@/app/components/render-to-role";
 import Link from "next/link";
 import Lang from "../lang";
 import { getSession } from "@/lib/auth";
@@ -151,7 +153,7 @@ const Header = async ({
   lang = "ar",
   logo = "https://utfs.io/f/5be98e8b-80a7-4898-a05a-5e8d330548a0-7plzqw.jpg",
 }: Props) => {
-  const currnetUser = await getSession()
+  const currnetUser = await getSession();
   return (
     <Fragment>
       <MainRender>
@@ -169,38 +171,43 @@ const Header = async ({
                 projects={projects}
               >
                 <>
-                  <DontRenderUnlessSessionIsDefined currnetUser={currnetUser} >
+                  <DontRenderUnlessSessionIsDefined currnetUser={currnetUser}>
                     <Link className="text-sm" href={`/${lang}/login`}>
                       <Lang lang={lang} ar={"تسجيل الدخول"} en={"login"} />
                     </Link>
-
                   </DontRenderUnlessSessionIsDefined>
                   <RenderToRole currnetUser={currnetUser} appliedRole={"admin"}>
-                    <Link className=" text-sm " href={`/dashboard/collages/${currnetUser?.collageId}`}>
+                    <Link
+                      className=" text-sm "
+                      href={`/dashboard/collages/${currnetUser?.collageId}`}
+                    >
                       <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                     </Link>
-
                   </RenderToRole>
-                  <RenderToRole currnetUser={currnetUser} appliedRole={'superAdmin'}>
+                  <RenderToRole
+                    currnetUser={currnetUser}
+                    appliedRole={"superAdmin"}
+                  >
                     <Link className=" text-sm " href={`/dashboard/users`}>
                       <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                     </Link>
-
                   </RenderToRole>
-                  <RenderToRole currnetUser={currnetUser} appliedRole={"teacher"}>
-                    <Link className=" text-sm " href={`/dashboard/teachers/${currnetUser?.id}`}>
+                  <RenderToRole
+                    currnetUser={currnetUser}
+                    appliedRole={"teacher"}
+                  >
+                    <Link
+                      className=" text-sm "
+                      href={`/dashboard/teachers/${currnetUser?.id}`}
+                    >
                       <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                     </Link>
-
                   </RenderToRole>
                 </>
               </DesktopMenuHeader>
-
             </div>
 
-
             <ToggleLangauge />
-
           </ParseToScreenMoreThanWidth>
           <ParseToScreenLessThanWidth>
             <MobileNavigationBar
@@ -213,32 +220,36 @@ const Header = async ({
               projects={projects}
             >
               <>
-                <DontRenderUnlessSessionIsDefined currnetUser={currnetUser} >
+                <DontRenderUnlessSessionIsDefined currnetUser={currnetUser}>
                   <Link className="text-sm" href={`/${lang}/login`}>
                     <Lang lang={lang} ar={"تسجيل الدخول"} en={"login"} />
                   </Link>
-
                 </DontRenderUnlessSessionIsDefined>
                 <RenderToRole currnetUser={currnetUser} appliedRole={"admin"}>
-                  <Link className=" text-sm " href={`/dashboard/collages/${currnetUser?.collageId}`}>
+                  <Link
+                    className=" text-sm "
+                    href={`/dashboard/collages/${currnetUser?.collageId}`}
+                  >
                     <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                   </Link>
-
                 </RenderToRole>
-                <RenderToRole currnetUser={currnetUser} appliedRole={'superAdmin'}>
+                <RenderToRole
+                  currnetUser={currnetUser}
+                  appliedRole={"superAdmin"}
+                >
                   <Link className=" text-sm " href={`/dashboard/users`}>
                     <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                   </Link>
-
                 </RenderToRole>
                 <RenderToRole currnetUser={currnetUser} appliedRole={"teacher"}>
-                  <Link className=" text-sm " href={`/dashboard/teachers/${currnetUser?.id}`}>
+                  <Link
+                    className=" text-sm "
+                    href={`/dashboard/teachers/${currnetUser?.id}`}
+                  >
                     <Lang lang={lang} ar={"لوحة التحكم"} en={"dashboard"} />
                   </Link>
-
                 </RenderToRole>
               </>
-
             </MobileNavigationBar>
           </ParseToScreenLessThanWidth>
         </header>

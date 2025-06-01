@@ -178,9 +178,8 @@ export default function MobileNavigationBar({
   projects,
   graduates,
   actvities: activities,
-  children
+  children,
 }: Props & { children: ReactNode }) {
-  console.log(centers);
   const [open, setOpen] = useState(false);
   const { lang }: { lang: Lang } = useParams();
 
@@ -435,7 +434,6 @@ export default function MobileNavigationBar({
                   </AccordionContent>
                 </AccordionItem>
               </AccordionContent>
-
             </AccordionItem>
 
             {/* Graduates */}
@@ -517,7 +515,6 @@ export default function MobileNavigationBar({
             >
               {children}
             </AccordionItem>
-
           </Accordion>
         </ScrollArea>
       </SheetContent>
